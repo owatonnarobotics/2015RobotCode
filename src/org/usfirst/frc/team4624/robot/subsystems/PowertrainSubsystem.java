@@ -1,15 +1,17 @@
 
 package org.usfirst.frc.team4624.robot.subsystems;
 
-import org.usfirst.frc.team4624.robot.RobotMap;	// Import the ENUMS for the ports
+import org.usfirst.frc.team4624.robot.RobotMap;	// ENUMS for the ports
+import org.usfirst.frc.team4624.robot.commands.DriveCommand;
+
 import edu.wpi.first.wpilibj.command.Subsystem;	// ...ehh?
 
 /**
  *	
  */
-public class DriveTrain extends Subsystem {
+public class PowertrainSubsystem extends Subsystem {
 	
-	public DriveTrain() {
+	public PowertrainSubsystem() {
 		this.init();
 	}
 	
@@ -23,7 +25,7 @@ public class DriveTrain extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		//setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand( new Drive() );
+		setDefaultCommand( new DriveCommand() );
 	}
 	
 	

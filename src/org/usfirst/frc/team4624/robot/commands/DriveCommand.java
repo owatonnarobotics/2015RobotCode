@@ -8,11 +8,11 @@ import org.usfirst.frc.team4624.robot.Robot;
 /**
  *
  */
-public class Drive extends Command {
+public class DriveCommand extends Command {
 	
-	public Drive() {
+	public DriveCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires( Robot.driveTrain );
+		requires( Robot.powertrain );
 	}
 	
 	// Called just before this Command runs the first time
@@ -23,7 +23,7 @@ public class Drive extends Command {
 	
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.driveTrain.set( Robot.OI.leftStick.getY(), Robot.OI.rightStick.getY() );	// Should work.
+		Robot.powertrain.set( Robot.OI.leftStick.getY(), Robot.OI.rightStick.getY() );	// Should work.
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()
