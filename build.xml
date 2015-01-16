@@ -20,6 +20,14 @@
   <!-- <property name="target" value=""/> -->
 
   <!-- Any other property in build.properties can also be overridden. -->
+	<property name="version" value="current"/>
+	<property name="team-number" value="4624"/>
+	<property name="user.home" value="U:\userdata"/>
+	<property name="wpilib.ant.dir" value="U:\userdata\wpilib\java\current\ant"/>
+	<property name="src.dir" value="U:\userdata\robotics\2015RobotCode\src"/>
+	<property name="build.dir" value="U:\userdata\robotics\2015RobotCode\build"/>
+	<!-- <property name="classpath" value="${jsch.jar}"/> -->
+	
   
   <property file="${user.home}/wpilib/wpilib.properties"/>
   <property file="build.properties"/>

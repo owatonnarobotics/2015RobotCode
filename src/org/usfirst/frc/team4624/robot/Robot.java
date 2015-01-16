@@ -6,8 +6,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.usfirst.frc.team4624.robot.commands.ExampleCommand;
-import org.usfirst.frc.team4624.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team4624.robot.commands.DriveCommand;
+//import org.usfirst.frc.team4624.robot.commands.ExampleCommand;
+//import org.usfirst.frc.team4624.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team4624.robot.subsystems.PowertrainSubsystem;
 
 /**
@@ -24,13 +25,15 @@ public class Robot extends IterativeRobot {
 	public static final PowertrainSubsystem powertrain = new PowertrainSubsystem();
 	
 	//Command autonomousCommand;
+	Command driveCommand;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		oi = new OI();
+		oi				= new OI();
+		driveCommand	= new DriveCommand();	// Used for moving...?
 		// instantiate the command used for the autonomous period
 		//autonomousCommand = new ExampleCommand();
 	}
@@ -65,6 +68,7 @@ public class Robot extends IterativeRobot {
 				autonomousCommand.cancel();
 			}
 		*/
+		
 	}
 	
 	/**

@@ -4,6 +4,7 @@ package org.usfirst.frc.team4624.robot.subsystems;
 import org.usfirst.frc.team4624.robot.RobotMap;	// ENUMS for the ports
 import org.usfirst.frc.team4624.robot.commands.DriveCommand;
 
+import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;	// ...ehh?
 
 /**
@@ -35,13 +36,13 @@ public class PowertrainSubsystem extends Subsystem {
 		this.stop();
 	}
 	
-	public void set(float x, float y) {
-		left.set(x);
-		right.set(y);
+	public void set(double d, double e) {
+		left.set( d );
+		right.set( e );
 	}
 	
 	public void stop() {
-		left.set(0);
-		right.set(0);
+		left.set( 0 );
+		right.set( 0 );
 	}
 }

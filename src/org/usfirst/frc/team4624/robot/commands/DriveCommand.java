@@ -13,17 +13,18 @@ public class DriveCommand extends Command {
 	public DriveCommand() {
 		// Use requires() here to declare subsystem dependencies
 		requires( Robot.powertrain );
+		// this.initialize(); // I don't know if we need this
 	}
 	
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.driveTrain.stop();
+		Robot.powertrain.stop();
 		
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.powertrain.set( Robot.OI.leftStick.getY(), Robot.OI.rightStick.getY() );	// Should work.
+		Robot.powertrain.set( Robot.oi.leftStick.getY(), Robot.oi.rightStick.getY() );	// Should work.
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()
