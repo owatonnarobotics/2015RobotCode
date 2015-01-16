@@ -36,7 +36,7 @@ public class PowertrainSubsystem extends Subsystem {
 		this.stop();
 	}
 	
-	public void set(double d, double e) {
+	public void set( double d, double e ) {
 		left.set( d );
 		right.set( e );
 	}
