@@ -2,7 +2,9 @@
 package org.usfirst.frc.team4624.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 import org.usfirst.frc.team4624.robot.Robot;
+import org.usfirst.frc.team4624.robot.RobotMap;
 
 /**
  *
@@ -23,7 +25,7 @@ public class DriveCommand extends Command {
 	
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.powertrain.set( Robot.oi.leftStick.getY(), Robot.oi.rightStick.getY() );	// Should work.
+		Robot.powertrain.set( -Robot.oi.xbox.getRawAxis(RobotMap.XBOX_AXIS_Y_LEFT), Robot.oi.xbox.getRawAxis(RobotMap.XBOX_AXIS_Y_RIGHT) );	// Should work.
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()
