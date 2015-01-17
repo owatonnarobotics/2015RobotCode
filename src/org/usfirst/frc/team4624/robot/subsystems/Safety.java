@@ -6,6 +6,6 @@ public class Safety {
 	boolean danger = false;
 	
 	public void stop() {
-		System.out.println("STOP THE CODE");
+		System.out.println( "STOP THE CODE" );
 	}
 }

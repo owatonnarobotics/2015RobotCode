@@ -1,5 +1,5 @@
 
-package org.usfirst.frc.team4624.robot.subsystems;
+package org.usfirst.frc.team4624.robot.templates;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
