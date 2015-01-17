@@ -27,8 +27,8 @@ public class PowertrainSubsystem extends Subsystem {
 	
 	
 	public void init() {
-		left	= new Jaguar( RobotMap.LEFT_MOTOR_PWM_PORT );
-		right	= new Jaguar( RobotMap.RIGHT_MOTOR_PWM_PORT );
+		left	= new Jaguar( RobotMap.MOTOR_PORT_LEFT );
+		right	= new Jaguar( RobotMap.MOTOR_PORT_RIGHT );
 		this.stop();
 	}
 	
