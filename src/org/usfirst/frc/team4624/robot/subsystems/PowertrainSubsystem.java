@@ -7,9 +7,6 @@ import org.usfirst.frc.team4624.robot.commands.DriveCommand;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;	// ...ehh?
 
-/**
- *	
- */
 public class PowertrainSubsystem extends Subsystem {
 	
 	public PowertrainSubsystem() {
@@ -25,20 +22,29 @@ public class PowertrainSubsystem extends Subsystem {
 	
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		//setDefaultCommand(new MySpecialCommand());
 		setDefaultCommand( new DriveCommand() );
 	}
 	
 	
 	public void init() {
-		left	= new Jaguar( RobotMap.LEFT_MOTOR_PORT );
-		right	= new Jaguar( RobotMap.RIGHT_MOTOR_PORT );
+		left	= new Jaguar( RobotMap.LEFT_MOTOR_PWM_PORT );
+		right	= new Jaguar( RobotMap.RIGHT_MOTOR_PWM_PORT );
 		this.stop();
 	}
 	
-	public void set( double d, double e ) {
-		left.set( d );
-		right.set( e );
+	public void setRaw( double l, double r ) {
+		left.set( l );
+		right.set( r );
+	}
+	
+	public void set( double l, double r ) {
+		this.setRaw( -l, r );	// In order to go straight, we need to invert one of the motors (Clockwise && counterclockwise = straight)
+	}
+	
+	public void setFromController( double l, double r ) {
+		double left		= Math.pow( l, 3 );
+		double right	= Math.pow( r, 3 );
+		this.set( left, right );
 	}
 	
 	public void stop() {
