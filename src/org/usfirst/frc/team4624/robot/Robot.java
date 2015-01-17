@@ -29,8 +29,8 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		oi				= new OI();
-		driveCommand	= new DriveCommand();	// Used for moving...?
+		oi           = new OI();
+		driveCommand = new DriveCommand();
 	}
 	
 	public void disabledPeriodic() {
