@@ -31,9 +31,6 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi				= new OI();
 		driveCommand	= new DriveCommand();	// Used for moving...?
-		new XboxControllerByAJ();	// Used for debugging
-		// instantiate the command used for the autonomous period
-		//autonomousCommand = new ExampleCommand();
 	}
 	
 	public void disabledPeriodic() {
