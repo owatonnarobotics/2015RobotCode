@@ -19,11 +19,9 @@ import org.usfirst.frc.team4624.robot.subsystems.PowertrainSubsystem;
  */
 public class Robot extends IterativeRobot {
 	
-	//public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 	public static final PowertrainSubsystem powertrain	= new PowertrainSubsystem();
 	
-	//Command autonomousCommand;
 	Command driveCommand;
 	
 	/**
@@ -33,8 +31,6 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi				= new OI();
 		driveCommand	= new DriveCommand();	// Used for moving...?
-		// instantiate the command used for the autonomous period
-		//autonomousCommand = new ExampleCommand();
 	}
 	
 	public void disabledPeriodic() {
@@ -42,12 +38,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void autonomousInit() {
-		// schedule the autonomous command (example)
-		/*
-			if ( autonomousCommand != null ) {
-				autonomousCommand.start();
-			}
-		*/
+		
 	}
 	
 	/**
@@ -58,15 +49,6 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to 
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		/*
-			if ( autonomousCommand != null ) {
-				autonomousCommand.cancel();
-			}
-		*/
 		driveCommand.start();
 	}
 	

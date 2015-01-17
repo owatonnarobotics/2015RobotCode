@@ -20,12 +20,11 @@ public class DriveCommand extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.powertrain.stop();
-		
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.powertrain.set( -Robot.oi.xbox.getRawAxis(RobotMap.XBOX_AXIS_Y_LEFT), Robot.oi.xbox.getRawAxis(RobotMap.XBOX_AXIS_Y_RIGHT) );	// Should work.
+		Robot.powertrain.setFromController( Robot.oi.xboxController.getRawAxis( RobotMap.XBOX_AXIS_Y_LEFT ), Robot.oi.xboxController.getRawAxis( RobotMap.XBOX_AXIS_Y_RIGHT ) );	// Should work.
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()

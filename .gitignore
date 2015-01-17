@@ -14,5 +14,8 @@ hs_err_pid*
 # Compiled code #
 /bin/
 
+# Eclipse settings #
+.classpath
+
 # Other unnecessary binary files #
 *.lnk
