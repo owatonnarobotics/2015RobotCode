@@ -1,4 +1,4 @@
-package org.usfirst.frc.team4624.robot;
+package org.usfirst.frc.team4624.robot.input;
 
 //import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;

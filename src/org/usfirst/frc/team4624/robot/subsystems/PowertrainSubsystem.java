@@ -1,8 +1,8 @@
 
 package org.usfirst.frc.team4624.robot.subsystems;
 
-import org.usfirst.frc.team4624.robot.RobotMap;	// ENUMS for the ports
 import org.usfirst.frc.team4624.robot.commands.DriveCommand;
+import org.usfirst.frc.team4624.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;	// ...ehh?
