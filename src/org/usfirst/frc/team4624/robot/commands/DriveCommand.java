@@ -12,6 +12,7 @@ import org.usfirst.frc.team4624.robot.input.XboxController;
 public class DriveCommand extends Command {
 	
 	XboxController xboxController;
+	String str = "";	// ==DEBUGGING==
 	
 	public DriveCommand() {
 		// Use requires() here to declare subsystem dependencies
@@ -29,6 +30,24 @@ public class DriveCommand extends Command {
 	protected void execute() {
 		Robot.powertrain.setFromController(	xboxController.leftStick.y(),
 											xboxController.rightStick.y() );
+		
+		// ==DEBUGGING==
+		str += xboxController.a.get() ? "A Button" : "";
+		str += xboxController.b.get() ? "B Button" : "";
+		str += xboxController.back.get() ? "Back Button" : "";
+		str += xboxController.dPad.angle() != 0 ? "DPad" : "";
+		str += xboxController.lb.get() ? "LB Button" : "";
+		str += xboxController.leftStick.y() > .5 ? "Leftstick Y" : "";
+		str += xboxController.lt.get() ? "LT Trigger" : "";
+		str += xboxController.rb.get() ? "RB Button" : "";
+		str += xboxController.start.get() ? "START Button" : "";
+		str += xboxController.x.get() ? "X Button" : "";
+		str += xboxController.y.get() ? "Y Button" : "";
+		
+		if( str.length() > 0 ) {
+			System.out.println( str );
+		}
+		// ==DEBUGGING==
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()

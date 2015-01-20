@@ -77,6 +77,10 @@ public class XboxController {
 	// Something dumb
 	private static final int dPadID	= 0;
 	
+	// Modifiers
+	private static final double thumbstickDeadZone	= 0.1;	// Jiggle room for the thumbsticks
+	private static final double triggerSensitivity	= 0.6;	// If the trigger is beyond this limit, say it has been pressed
+	
 	
 	/*
 	 * LOCAL VARIBLES
@@ -85,16 +89,20 @@ public class XboxController {
 	private int joystickPort;
 	
 	/*
-	 * Default constructor...?
+	 * Constructor
 	 */
 	public XboxController() {
-		new XboxController( 0 );
+		createXboxControllerInstance( 0 );
+	}
+	
+	public XboxController( int port ) {
+		createXboxControllerInstance( port );
 	}
 	
 	/*
 	 * Primary constructor (for when you want to specify the port)
 	 */
-	public XboxController( int port ) {
+	private final void createXboxControllerInstance( int port ) {
 		
 		driverStation		= DriverStation.getInstance();	// Driver station. Needed to access some buttons (Looking at you DPad)
 		this.joystickPort	= port;
@@ -173,10 +181,30 @@ public class XboxController {
 		
 		
 		public double x() {
-			return parent.getRawAxis( xAxisID );
+			double rawInput		= parent.getRawAxis( xAxisID );	// Input from the driver
+			boolean isNegative	= rawInput < 0;	// Duh
+			double adjusted		= Math.abs( rawInput ) - thumbstickDeadZone;	// Subtract the deadzone from the magnitude
+			adjusted = adjusted < 0 ? 0 : adjusted;	// if the new input is negative, make it zero
+			adjusted = adjusted / ( 1 - thumbstickDeadZone );	// Adjust the adjustment so it can max at 1
+			
+			if( isNegative ) {
+				return -1 * adjusted;
+			} else {
+				return adjusted;
+			}
 		}
 		public double y() {
-			return parent.getRawAxis( yAxisID );
+			double rawInput		= parent.getRawAxis( xAxisID );	// Input from the driver
+			boolean isNegative	= rawInput < 0;	// Duh
+			double adjusted		= Math.abs( rawInput ) - thumbstickDeadZone;	// Subtract the deadzone from the magnitude
+			adjusted = adjusted < 0 ? 0 : adjusted;	// if the new input is negative, make it zero
+			adjusted = adjusted / ( 1 - thumbstickDeadZone );	// Adjust the adjustment so it can max at 1
+			
+			if( isNegative ) {
+				return -1 * adjusted;
+			} else {
+				return adjusted;
+			}
 		}
 	}
 	
@@ -192,7 +220,7 @@ public class XboxController {
 		private final Joystick parent;
 		private final Hand hand;
 		
-		private final double sensitivity	= 0.6;	// If the trigger is beyond this limit, say it has been pressed
+		private final double sensitivity	= triggerSensitivity;	// If the trigger is beyond this limit, say it has been pressed
 		
 		/*
 		 * Constructor
