@@ -35,7 +35,7 @@ public class DriveCommand extends Command {
 		str += xboxController.a.get() ? "A Button" : "";
 		str += xboxController.b.get() ? "B Button" : "";
 		str += xboxController.back.get() ? "Back Button" : "";
-		str += xboxController.dPad.angle() != 0 ? "DPad" : "";
+		str += xboxController.dPad.angle() > 0 ? "DPad" : "";
 		str += xboxController.lb.get() ? "LB Button" : "";
 		str += xboxController.leftStick.y() > .5 ? "Leftstick Y" : "";
 		str += xboxController.lt.get() ? "LT Trigger" : "";
