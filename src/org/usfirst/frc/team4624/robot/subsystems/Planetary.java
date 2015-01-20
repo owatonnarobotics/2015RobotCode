@@ -2,23 +2,22 @@ package org.usfirst.frc.team4624.robot.subsystems;
 
 import org.usfirst.frc.team4624.robot.RobotMap;
 
-//import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Planetary extends Subsystem{
 
 	public Planetary() {
+		this.init();
 	}
 	
-	 Jaguar  planetary;
-	private boolean spinning;
-	 //Encoder encoder;
+	 CANJaguar planetary;
+	 
+	 public boolean spinning;
 	
 	public void init() {
-		planetary = new Jaguar(RobotMap.PORT_ENCODER_JAGUAR);
 		spinning  = false;
-		//encoder   = new Encoder(RobotMap.PORT_ENCODER_A, RobotMap.PORT_ENCODER_B);
+		planetary = new CANJaguar(RobotMap.PORT_ENCODER_JAGUAR);
 	}
 	
 	public void toggle() {
@@ -37,6 +36,10 @@ public class Planetary extends Subsystem{
 	
 	public void stop() {
 		planetary.set(0);
+	}
+	
+	public double getSpeed(){
+		return planetary.getSpeed();
 	}
 		
 	@Override

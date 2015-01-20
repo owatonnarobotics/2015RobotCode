@@ -13,7 +13,7 @@ public class DriveCommand extends Command {
 	
 	public DriveCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires( Robot.powertrain );
+		requires(Robot.powertrain);
 		// this.initialize(); // I don't know if we need this
 	}
 	
@@ -24,8 +24,8 @@ public class DriveCommand extends Command {
 	
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.powertrain.setFromController( Robot.oi.xboxController.getRawAxis( RobotMap.XBOX_AXIS_Y_LEFT ),
-		                                    Robot.oi.xboxController.getRawAxis( RobotMap.XBOX_AXIS_Y_RIGHT ) );
+		Robot.powertrain.setFromController(Robot.oi.xboxController.getRawAxis(RobotMap.XBOX_AXIS_Y_LEFT),
+		                                   Robot.oi.xboxController.getRawAxis(RobotMap.XBOX_AXIS_Y_RIGHT));
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()
