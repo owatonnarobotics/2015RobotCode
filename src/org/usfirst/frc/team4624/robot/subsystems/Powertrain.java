@@ -1,15 +1,15 @@
 
 package org.usfirst.frc.team4624.robot.subsystems;
 
+import org.usfirst.frc.team4624.robot.RobotMap;	// ENUMS for the ports
 import org.usfirst.frc.team4624.robot.commands.DriveCommand;
-import org.usfirst.frc.team4624.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;	// ...ehh?
 
-public class PowertrainSubsystem extends Subsystem {
+public class Powertrain extends Subsystem {
 	
-	public PowertrainSubsystem() {
+	public Powertrain() {
 		this.init();
 	}
 	
@@ -27,7 +27,7 @@ public class PowertrainSubsystem extends Subsystem {
 	
 	
 	public void init() {
-		left  = new Jaguar( RobotMap.PORT_MOTOR_LEFT  );
+		left  = new Jaguar( RobotMap.PORT_MOTOR_LEFT );
 		right = new Jaguar( RobotMap.PORT_MOTOR_RIGHT );
 		this.stop();
 	}

@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-
-public class XboxController {
+// extend joystick?
+public class XboxController{
 	
 	/*
 	 * RETURN VALUES
@@ -92,10 +92,12 @@ public class XboxController {
 	 * Constructor
 	 */
 	public XboxController() {
+		//super( 0 );	// extend joystick?
 		createXboxControllerInstance( 0 );
 	}
 	
 	public XboxController( int port ) {
+		//super( port );	// extend joystick?
 		createXboxControllerInstance( port );
 	}
 	
