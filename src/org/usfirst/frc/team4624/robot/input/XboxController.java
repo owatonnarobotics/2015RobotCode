@@ -1,378 +1,271 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.usfirst.frc.team4624.robot.input;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.GenericHID;
-//import edu.wpi.first.wpilibj.parsing.IInputOutput;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-/**
- * A nearly drop in replacement for Joystick using an XBOX USB Controller
- * @author Sir Gustave Michel XLV
- */
-public class XboxController extends GenericHID {
-//public class XboxController extends GenericHID implements IInputOutput {    
+
+public class XboxController {
 	
-    private DriverStation m_ds;
-    private final int m_port;
-    
-    /**
-     * Represents an analog axis on a joystick.
-     */
-    public static class AxisType {
-        
-        /**
-         * The integer value representing this enumeration
-         */
-        public final int value;
-        private static final int kLeftX_val = 1;
-        private static final int kLeftY_val = 2;
-        private static final int kTrigger_val = 3;
-        private static final int kRightX_val = 4;
-        private static final int kRightY_val = 5;
-        private static final int kDLeftRight_val = 6;
-        
-        private AxisType(int value) {
-            this.value = value;
-        }
-        
-        /**
-         * Axis: Left X
-         */
-        public static final AxisType kLeftX = new AxisType(kLeftX_val);
-        
-        /**
-         * Axis: Left Y
-         */
-        public static final AxisType kLeftY = new AxisType(kLeftY_val);
-        
-        /**
-         * Axis: Triggers
-         */
-        public static final AxisType kTrigger = new AxisType(kTrigger_val);
-        
-        /**
-         * Axis: Right X
-         */
-        public static final AxisType kRightX = new AxisType(kRightX_val);
-        
-        /**
-         * Axis: Right Y
-         */
-        public static final AxisType kRightY = new AxisType(kRightY_val);
-        
-        /**
-         * Axis: D-Pad Left-Right
-         */
-        public static final AxisType kDLeftRight = new AxisType(kDLeftRight_val);
-    }
-    
-    /**
-     * Represents a digital button on a joystick.
-     */
-    public static class ButtonType {
-        
-        /**
-         * The integer value representing this enumeration
-         */
-        public final int value;
-        private static final int kA_val = 1;
-        private static final int kB_val = 2;
-        private static final int kX_val = 3;
-        private static final int kY_val = 4;
-        private static final int kL_val = 5;
-        private static final int kR_val = 6;
-        private static final int kBack_val = 7;
-        private static final int kStart_val = 8;
-        private static final int kLeftStick_val = 9;
-        private static final int kRightStick_val = 10;
-        private static final int kRTrigger_val = 11;
-        private static final int kLTrigger_val = 12;
-        
-        private ButtonType(int value) {
-            this.value = value;
-        }
-        
-        /**
-         * Button: X-Joystick
-         */
-        public static final ButtonType kLeftStick = new ButtonType(kLeftStick_val);
-        
-        /**
-         * Button: Y-Joystick
-         */
-        public static final ButtonType kRightStick = new ButtonType(kRightStick_val);
-        
-        /**
-         * Button: X
-         */
-        public static final ButtonType kX = new ButtonType(kX_val);
-        
-        /**
-         * Button: Y
-         */
-        public static final ButtonType kY = new ButtonType(kY_val);
-        
-        /**
-         * Button: A
-         */
-        public static final ButtonType kA = new ButtonType(kA_val);
-        
-        /**
-         * Button: B
-         */
-        public static final ButtonType kB = new ButtonType(kB_val);
-        
-        /**
-         * Button: R1
-         */
-        public static final ButtonType kR = new ButtonType(kR_val);
-        
-        /**
-         * Button: L1
-         */
-        public static final ButtonType kL = new ButtonType(kL_val);
-        
-        /**
-         * Button: Select
-         */
-        public static final ButtonType kStart = new ButtonType(kStart_val);
-        
-        /**
-         * Button: Right Trigger
-         */
-        public static final ButtonType kRTrigger = new ButtonType(kRTrigger_val);
-        
-        /**
-         * Button: Left Trigger
-         */
-        public static final ButtonType kLTrigger = new ButtonType(kLTrigger_val);
-        
-        /**
-         * Button: Start
-         */
-        public static final ButtonType kBack = new ButtonType(kBack_val);
-    }
-    
-    
-    /**
-     * Constructor
-     * @param port USB Port on DriverStation
-     */
-    public XboxController(int port) {
-        super();
-        m_port = port;
-        m_ds = DriverStation.getInstance();
-    }
-    
-    /**
-     * Get Value from an Axis
-     * @param axis Axis Number
-     * @return Value from Axis (-1 to 1)
-     */
-    public double getRawAxis(int axis) {
-        return m_ds.getStickAxis(m_port, axis);
-    }
-    
-    /**
-     * Get Value from an Axis
-     * @param axis AxisType
-     * @return 
-     */
-    public double getAxis(AxisType axis) {
-        return getRawAxis(axis.value);
-    }
-    
-    /**
-     * Retrieve value for X axis
-     * @param hand Hand associated with the Joystick
-     * @return Value of Axis (-1 to 1)
-     */
-    public double getX(Hand hand) {
-        if(hand.value == Hand.kRight.value) {
-            return getAxis(AxisType.kRightX);
-        } else if(hand.value == Hand.kLeft.value) {
-            return getAxis(AxisType.kLeftX);
-        } else {
-            return 0;
-        }
-    }
-    
-    /**
-     * Retrieve value for Y axis
-     * @param hand Hand associated with the Joystick
-     * @return Value of Axis (-1 to 1)
-     */
-    public double getY(Hand hand) {
-        if(hand.value == Hand.kRight.value) {
-            return getAxis(AxisType.kRightY);
-        } else if(hand.value == Hand.kLeft.value) {
-            return getAxis(AxisType.kLeftY);
-        } else {
-            return 0;
-        }
-    }
-    
-    /**
-     * Unused
-     * @param hand Unused
-     * @return 0
-     */
-    public double getZ(Hand hand) {
-        return 0;
-    }
-    
-    /**
-     * Gets Value from D-Pad Left and Right Axis
-     * @return Axis Value (-1 to 1)
-     */
-    public double getTwist() {
-        return getAxis(AxisType.kDLeftRight);
-    }
-    
-    /**
-     * Gets Value from Back Triggers
-     * @return Axis Value (-1 to 1)
-     */
-    public double getThrottle() {
-        return getAxis(AxisType.kTrigger);
-    }
-    
-    /**
-     * Gets value from a button
-     * @param button number of the button 
-     * @return State of the button
-     */
-    public boolean getRawButton(int button) {
-        if(button == ButtonType.kRTrigger.value) { //Abstracted Buttons from Analog Axis
-            if(getThrottle() <= -.6) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        if(button == ButtonType.kLTrigger.value) { //Abstracted Buttons from Analog Axis
-            if(getThrottle() >= .6) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        return ((0x1 << (button - 1)) & m_ds.getStickButtons(m_port)) != 0;
-    }
-    
-    /**
-     * Get Value from a button
-     * @param button Button Type
-     * @return 
-     */
-    public boolean getButton(ButtonType button) {
-        return getRawButton(button.value);
-    }
-    
-    /**
-     * Get Trigger Value as Button
-     * @param hand Hand associated with button
-     * @return false
-     */
-    public boolean getTrigger(Hand hand) {
-        if(hand == Hand.kLeft) {
-            return getButton(ButtonType.kLTrigger);
-        } else if(hand == Hand.kRight) {
-            return getButton(ButtonType.kRTrigger);
-        } else {
-            return false;
-        }
-    }
-    
-    /**
-     * Get Button from Joystick
-     * @param hand hand associated with the button
-     * @return Button Status (true or false)
-     */
-    public boolean getTop(Hand hand) {
-        if(hand == Hand.kRight) {
-            return getButton(ButtonType.kRightStick);
-        } else if(hand == Hand.kLeft) {
-            return getButton(ButtonType.kLeftStick);
-        } else {
-            return false;
-        }
-    }
-    
-    /**
-     * Get Value from Back buttons
-     * @param hand hand associated with the button
-     * @return state of left or right 
-     */
-    public boolean getBumper(Hand hand) {
-        if(hand == Hand.kRight) {
-            return getButton(ButtonType.kR);
-        } else if(hand == Hand.kLeft) {
-            return getButton(ButtonType.kL);
-        } else {
-            return false;
-        }
-    }
-    
-    /**
-     * Get State of Select Button
-     * @return State of button
-     */
-    public boolean getStart() {
-        return getButton(ButtonType.kStart);
-    }
-    
-    /**
-     * Get State of Back Button
-     * @return State of button
-     */
-    public boolean getBack() {
-        return getButton(ButtonType.kBack);
-    }
-    
-    /**
-     * Get State of A Button
-     * @return State of button
-     */
-    public boolean getAButton() {
-        return getButton(ButtonType.kA);
-    }
-    
-    /**
-     * Get State of B Button
-     * @return State of button
-     */
-    public boolean getBButton() {
-        return getButton(ButtonType.kB);
-    }
-    
-    /**
-     * Get State of X Button
-     * @return State of button
-     */
-    public boolean getXButton() {
-        return getButton(ButtonType.kX);
-    }
-    
-    /**
-     * Get State of Y Button
-     * @return State of button
-     */
-    public boolean getYButton() {
-        return getButton(ButtonType.kY);
-    }
-
-	@Override
-	public int getPOV(int pov) {
-		// TODO Auto-generated method stub
-		return 0;
+	/*
+	 * RETURN VALUES
+	 */
+	
+	/*
+	 * Thumbstick
+	 * double	x()
+	 * double	y()
+	 * Button	pressed
+	 */
+	public Thumbstick leftStick;
+	public Thumbstick rightStick;
+	
+	/*
+	 * Trigger
+	 * double	x()
+	 * double	y()
+	 * boolean	get()
+	 */
+	public Trigger lt;
+	public Trigger rt;
+	
+	/*
+	 * DirectonalPad
+	 * int		angle()
+	 * boolean	get~
+	 */
+	public DirectionalPad dPad;
+	
+	/*
+	 * Button
+	 * I dunno, check the docs
+	 */
+	public Button a;
+	public Button b;
+	public Button x;
+	public Button y;
+	public Button lb;
+	public Button rb;
+	public Button back;
+	public Button start;
+	
+	
+	
+	/*
+	 * CONSTANTS
+	 */
+	// Buttons
+	private static final int aButtonID					= 1;
+	private static final int bButtonID					= 2;
+	private static final int xButtonID					= 3;
+	private static final int yButtonID					= 4;
+	private static final int lbButtonID					= 5;
+	private static final int rbButtonID					= 6;
+	private static final int backButtonID				= 7;
+	private static final int startButtonID				= 8;
+	private static final int leftThumbstickButtonID		= 9;
+	private static final int rightThumbstickButtonID	= 10;
+	
+	// Axis's
+	private static final int leftXThumbstickID	= 1;
+	private static final int leftYThumbstickID	= 2;
+	private static final int triggerAxisID		= 3;
+	private static final int rightXThumbstickID	= 4;
+	private static final int rightYThumbstickID	= 5;
+	
+	// Something dumb
+	private static final int dPadID	= 0;
+	
+	
+	/*
+	 * LOCAL VARIBLES
+	 */
+	private DriverStation driverStation;
+	private int joystickPort;
+	
+	/*
+	 * Default constructor...?
+	 */
+	public XboxController() {
+		new XboxController( 0 );
+	}
+	
+	/*
+	 * Primary constructor (for when you want to specify the port)
+	 */
+	public XboxController( int port ) {
+		
+		driverStation		= DriverStation.getInstance();	// Driver station. Needed to access some buttons (Looking at you DPad)
+		this.joystickPort	= port;
+		
+		
+		Joystick controller	= new Joystick( port );		// Joystick referenced by all buttons and thumbsticks
+		
+		// Thumbsticks
+		this.leftStick	= new Thumbstick( controller, Hand.LEFT );
+		this.rightStick	= new Thumbstick( controller, Hand.RIGHT );
+		
+		// DPads
+		this.dPad	= new DirectionalPad( driverStation );	// Voted this year's "Most likely to fail so don't rely on me"
+		
+		// Triggers (Remember, they're not buttons [but we could emulate them])
+		this.lt		= new Trigger( controller, Hand.LEFT );
+		this.rt		= new Trigger( controller, Hand.RIGHT );
+		
+		// Buttons
+		this.a		= new JoystickButton( controller, aButtonID );
+		this.b		= new JoystickButton( controller, bButtonID );
+		this.x		= new JoystickButton( controller, xButtonID );
+		this.y		= new JoystickButton( controller, yButtonID );
+		this.lb		= new JoystickButton( controller, lbButtonID );
+		this.rb		= new JoystickButton( controller, rbButtonID );
+		this.back	= new JoystickButton( controller, backButtonID );
+		this.start	= new JoystickButton( controller, startButtonID );
+	}
+	
+	/*
+	 * Hand
+	 * Used in some classes because int's are bad mm'k?
+	 */
+	enum Hand {
+		LEFT, RIGHT
+	}
+	
+	/*
+	 * Thumbstick
+	 * Every Xbox Controller has 2
+	 */
+	public class Thumbstick {
+		
+		/*
+		 * RETURN VALUES
+		 */
+		public final Button pressed;
+		
+		/*
+		 * LOCAL VARIABLES
+		 */
+		private final Joystick parent;
+		private final Hand hand;
+		private final int xAxisID;
+		private final int yAxisID;
+		
+		
+		/*
+		 * Constructor
+		 */
+		Thumbstick( Joystick parent, Hand hand ) {
+			
+			this.parent	= parent;
+			this.hand	= hand;
+			
+			if( hand == Hand.LEFT ) {
+				this.xAxisID	= leftXThumbstickID;
+				this.yAxisID	= leftYThumbstickID;
+				this.pressed	= new JoystickButton( parent, leftThumbstickButtonID );
+			} else {
+				this.xAxisID	= rightXThumbstickID;
+				this.yAxisID	= rightYThumbstickID;
+				this.pressed	= new JoystickButton( parent, rightThumbstickButtonID );
+			}
+		}
+		
+		
+		public double x() {
+			return parent.getRawAxis( xAxisID );
+		}
+		public double y() {
+			return parent.getRawAxis( yAxisID );
+		}
+	}
+	
+	/*
+	 * Trigger
+	 * Again, every controller has 2
+	 */
+	public class Trigger{
+		
+		/*
+		 * LOCAL VARIABLES
+		 */
+		private final Joystick parent;
+		private final Hand hand;
+		
+		private final double sensitivity	= 0.6;	// If the trigger is beyond this limit, say it has been pressed
+		
+		/*
+		 * Constructor
+		 */
+		public Trigger( Joystick joystick, Hand hand ) {
+			this.parent = joystick;
+			this.hand = hand;
+		}
+		
+		
+		public boolean get() {
+			if( hand == Hand.LEFT ) {
+				return parent.getRawAxis( triggerAxisID ) > sensitivity;
+			} else {
+				return parent.getRawAxis( triggerAxisID ) < -sensitivity;
+			}
+		}
+		
+		public double x() {
+			if( hand == Hand.LEFT ) {
+				return parent.getRawAxis( triggerAxisID );	// The two triggers share an axis
+			} else
+				return -parent.getRawAxis( triggerAxisID );	// Its almost as dumb as the DPad
+		}
+		public double y() {
+			return this.x();	// One dimensional movement. Use ^ that one instead
+		}
+		
+	}
+	
+	public class DirectionalPad {
+		
+		/*
+		 * LOCAL VARIABLES
+		 */
+		private DriverStation driverStation;
+		
+		/*
+		 * Constructor
+		 */
+		public DirectionalPad( DriverStation driverStationInstance ) {
+			this.driverStation	= driverStationInstance;
+		}
+		
+		
+		public int angle() {
+			return driverStation.getStickPOV( joystickPort, dPadID );	// I have no information about this
+		}
+		
+		// TODO LATER
+		public boolean getUp() {
+			return false;
+		}
+		public boolean getUpRight() {
+			return false;
+		}
+		public boolean getRight() {
+			return false;
+		}
+		public boolean getDownRight() {
+			return false;
+		}
+		public boolean getDown() {
+			return false;
+		}
+		public boolean getDownLeft() {
+			return false;
+		}
+		public boolean getLeft() {
+			return false;
+		}
+		public boolean getUpLeft() {
+			return false;
+		}
 	}
 }
-
-    
-
