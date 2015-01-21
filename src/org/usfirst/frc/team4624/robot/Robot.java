@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team4624.robot.commands.DriveCommand;
 import org.usfirst.frc.team4624.robot.commands.MovePlanetary;
 import org.usfirst.frc.team4624.robot.subsystems.Planetary;
-//import org.usfirst.frc.team4624.robot.commands.ExampleCommand;
-//import org.usfirst.frc.team4624.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team4624.robot.subsystems.Powertrain;
 
 /**
@@ -21,63 +19,62 @@ import org.usfirst.frc.team4624.robot.subsystems.Powertrain;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	
-	public static OI oi;
-	public static final Powertrain powertrain	= new Powertrain();
-	public static Planetary planetary = new Planetary();
-	
-	Command driveCommand;
-	Command movePlanetary;
-	
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
-	public void robotInit() {
-		oi            = new OI();
-		driveCommand  = new DriveCommand();
-		movePlanetary = new MovePlanetary();
-	}
-	
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-	}
-	
-	public void autonomousInit() {
-		
-	}
-	
-	/**
-	 * This function is called periodically during autonomous
-	 */
-	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
-	}
-	
-	public void teleopInit() {
-		driveCommand.start();
-		movePlanetary.start();
-	}
-	
-	/**
-	 * This function is called when the disabled button is hit.
-	 * You can use it to reset subsystems before shutting down.
-	 */
-	public void disabledInit(){
-		
-	}
-	
-	/**
-	 * This function is called periodically during operator control
-	 */
-	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
-	}
-	
-	/**
-	 * This function is called periodically during test mode
-	 */
-	public void testPeriodic() {
-		LiveWindow.run();
-	}
+    
+    public static OI oi;
+    public static final Powertrain powertrain	= new Powertrain();
+    
+    Command driveCommand;
+    Command movePlanetary;
+    
+    /**
+     * This function is run when the robot is first started up and should be
+     * used for any initialization code.
+     */
+    public void robotInit() {
+        oi            = new OI();
+        driveCommand  = new DriveCommand();
+        movePlanetary = new MovePlanetary();
+    }
+    
+    public void disabledPeriodic() {
+        Scheduler.getInstance().run();
+    }
+    
+    public void autonomousInit() {
+        
+    }
+    
+    /**
+     * This function is called periodically during autonomous
+     */
+    public void autonomousPeriodic() {
+        Scheduler.getInstance().run();
+    }
+    
+    public void teleopInit() {
+        driveCommand.start();
+        movePlanetary.start();
+    }
+    
+    /**
+     * This function is called when the disabled button is hit.
+     * You can use it to reset subsystems before shutting down.
+     */
+    public void disabledInit(){
+        
+    }
+    
+    /**
+     * This function is called periodically during operator control
+     */
+    public void teleopPeriodic() {
+        Scheduler.getInstance().run();
+    }
+    
+    /**
+     * This function is called periodically during test mode
+     */
+    public void testPeriodic() {
+        LiveWindow.run();
+    }
 }
