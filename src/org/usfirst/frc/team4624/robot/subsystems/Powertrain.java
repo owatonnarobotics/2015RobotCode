@@ -43,12 +43,12 @@ public class Powertrain extends Subsystem {
     }
     
     public void set( double l, double r ) {
-        this.setRaw( -l, r );	// To go straight, we inverted one of the motors (Clockwise && Counter-Clockwise = Straight)
+        this.setRaw( l, -r );	// To go straight, we inverted one of the motors (Clockwise && Counter-Clockwise = Straight)
     }
     
     public void setFromController( double l, double r ) {
-        double left     = Math.pow( l, 3 );
-        double right    = Math.pow( r, 3 );
+        double left     = Math.pow( l, 5 );
+        double right    = Math.pow( r, 5 );
         this.set( left, right );
     }
     

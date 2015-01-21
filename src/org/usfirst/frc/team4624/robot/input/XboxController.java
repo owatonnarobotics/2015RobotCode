@@ -15,13 +15,13 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * Trigger          rt
  * DirectonalPad    dPad
  * Button           a
- * BUtton           b
+ * Button           b
  * Button           x
  * Button           y
  * Button           lb
  * Button           rb
  * Button           back
- * BUtton           start
+ * Button           start
  */
 public class XboxController extends Joystick {
     
@@ -170,13 +170,13 @@ public class XboxController extends Joystick {
      * into this
      * ------|-1-2-3-4-5-|
      */
-    private double deadZone( double input, double deadZone ) {
+    private double deadZone( double input, double deadZoneSize ) {
         boolean isNegative  = input < 0;    // Duh
-        double adjusted     = Math.abs( input ) - deadZone; // Subtract the deadzone from the magnitude
+        double adjusted     = Math.abs( input ) - deadZoneSize; // Subtract the deadzone from the magnitude
         
         adjusted    = adjusted < 0 ? 0 : adjusted;  // if the new input is negative, make it zero
         
-        adjusted    = adjusted / ( 1 - deadZone );  // Adjust the adjustment so it can max at 1
+        adjusted    = adjusted / ( 1 - deadZoneSize );  // Adjust the adjustment so it can max at 1
         
         if( isNegative ) {
         	return -1 * adjusted;
@@ -205,13 +205,13 @@ public class XboxController extends Joystick {
      */
     enum DPAD {
         UP (0),
-        UP_RIGHT (1),
-        RIGHT (2),
-        DOWN_RIGHT (3),
-        DOWN (4),
-        DOWN_LEFT (5),
-        LEFT (6),
-        UP_LEFT (7);
+        UP_RIGHT (45),
+        RIGHT (90),
+        DOWN_RIGHT (135),
+        DOWN (180),
+        DOWN_LEFT (225),
+        LEFT (270),
+        UP_LEFT (315);
         
         private int value;
         
@@ -236,7 +236,7 @@ public class XboxController extends Joystick {
         /*
          * RETURN VALUES
          */
-        public final Button pressed;
+        //public final Button pressed;
         
         /*
          * LOCAL VARIABLES
@@ -245,6 +245,7 @@ public class XboxController extends Joystick {
         private final HAND hand;
         private final int xAxisID;
         private final int yAxisID;
+        private final int pressedID;
         
         
         /*
@@ -258,11 +259,13 @@ public class XboxController extends Joystick {
             if( hand == HAND.LEFT ) {
                 this.xAxisID    = leftXThumbstickID;
                 this.yAxisID    = leftYThumbstickID;
-                this.pressed    = new JoystickButton( parent, leftThumbstickButtonID );
+                //this.pressed    = new JoystickButton( parent, leftThumbstickButtonID );
+                this.pressedID	= leftThumbstickButtonID;
             } else {
                 this.xAxisID    = rightXThumbstickID;
                 this.yAxisID    = rightYThumbstickID;
-                this.pressed    = new JoystickButton( parent, rightThumbstickButtonID );
+                this.pressedID	= rightThumbstickButtonID;
+                //this.pressed    = new JoystickButton( parent, rightThumbstickButtonID );
             }
         }
         
@@ -277,13 +280,17 @@ public class XboxController extends Joystick {
         }
         public double y() {
             // Don't adjust the sensitivity here
-            return deadZone( parent.getRawAxis( yAxisID ), thumbstickDeadZone );
+            return deadZone( -parent.getRawAxis( yAxisID ), thumbstickDeadZone );
         }
         
+        @Override
         public boolean get() {
-            return  ( this.x() != 0 ) ||
+        	return parent.getRawButton( pressedID );
+            /*
+        	return  ( this.x() != 0 ) ||
                     ( this.y() != 0 ) ||
                     this.pressed.get();
+            */
         }
     }
     
@@ -325,11 +332,12 @@ public class XboxController extends Joystick {
             return this.hand;
         }
         
+        @Override
         public boolean get() {
             if( hand == HAND.LEFT ) {
                 return this.x() > triggerSensitivity;
             } else {
-                return this.x() < -triggerSensitivity;
+                return this.x() > triggerSensitivity;
             }
         }
         
@@ -375,6 +383,8 @@ public class XboxController extends Joystick {
         public int angle() {
             return this.parent.getPOV();
         }
+        
+        @Override
         public boolean get() {
             return this.angle() != -1;
         }
@@ -395,6 +405,7 @@ public class XboxController extends Joystick {
                 this.parent = parent;
             }
             
+            @Override
             public boolean get() {
                 return parent.angle() == this.id.value;
             }

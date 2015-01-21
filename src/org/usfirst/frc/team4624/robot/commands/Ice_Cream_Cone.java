@@ -3,37 +3,35 @@ package org.usfirst.frc.team4624.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-import org.usfirst.frc.team4624.robot.Robot;
-import org.usfirst.frc.team4624.robot.input.XboxController;
-
 /*
  * Drives forwards n' backwards
  */
-public class DriveCommand extends Command {
+public class Ice_Cream_Cone extends Command {
     
-    XboxController xboxController;
+    private String text;
+    private boolean quitThis = false;
     
-    public DriveCommand() {
+    public Ice_Cream_Cone( String text ) {
+    	this.text = text;
         // Use requires() here to declare subsystem dependencies
-        requires( Robot.powertrain );
-        xboxController = Robot.oi.xboxController;
+        //xboxController = Robot.oi.xboxController;
         // this.initialize(); // I don't know if we need this
     }
     
     // Called just before this Command runs the first time
     protected void initialize() {
-        Robot.powertrain.stop();
+    	
     }
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.powertrain.setFromController( xboxController.leftStick.y(),
-                                            xboxController.rightStick.y() );
+        System.out.println( this.text );
+        quitThis = true;
     }
     
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return quitThis;
     }
     
     // Called once after isFinished returns true
