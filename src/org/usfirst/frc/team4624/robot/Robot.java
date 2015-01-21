@@ -22,6 +22,7 @@ public class Robot extends IterativeRobot {
     
     public static OI oi;
     public static final Powertrain powertrain   = new Powertrain();
+    public static final Planetary planetary     = new Planetary();
     
     Command driveCommand;
     Command movePlanetary;

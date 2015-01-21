@@ -53,6 +53,11 @@ public class DriveCommand extends Command {
         str += xboxController.x.get()               ? "X Button   "         : "";
         str += xboxController.y.get()               ? "Y Button   "         : "";
         
+        str += xboxController.leftStick.pressed.get()   ? "Leftstick PRESSED   "    : "";
+        str += xboxController.rightStick.pressed.get()  ? "Rightstick PRESSED   "   : "";
+        
+        
+        
         if( str.length() > 0 ) {
             System.out.println( str );
         }

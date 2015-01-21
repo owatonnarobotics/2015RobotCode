@@ -4,16 +4,39 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
     
-
-// extend joystick?
-public class XboxController {
+/*
+ * [CLASS]
+ * XboxController
+ * A wrapper class for XboxControllers in the 2015 FRC competition
+ * 
+ * Thumbstick       leftStick
+ * Thumbstick       rightSTick
+ * Trigger          lt
+ * Trigger          rt
+ * DirectonalPad    dPad
+ * Button           a
+ * BUtton           b
+ * Button           x
+ * Button           y
+ * Button           lb
+ * Button           rb
+ * Button           back
+ * BUtton           start
+ */
+public class XboxController extends Joystick {
+    
+    // Modifiers
+    private static final double thumbstickDeadZone  = 0.1;  // Jiggle room for the thumbsticks
+    private static final double triggerDeadZone     = 0.0;  // Jiggle room for the triggers
+    private static final double triggerSensitivity  = 0.6;  // If the trigger is beyond this limit, say it has been pressed
     
     /*
-     * RETURN VALUES
+     * ====RETURN VALUES====
      */
     
     /*
      * Thumbstick
+     * 
      * double	x()
      * double	y()
      * Button	pressed
@@ -23,6 +46,7 @@ public class XboxController {
     
     /*
      * Trigger
+     * 
      * double	x()
      * double	y()
      * boolean	get()
@@ -32,13 +56,22 @@ public class XboxController {
     
     /*
      * DirectonalPad
-     * int		angle()
-     * boolean	get~
+     * 
+     * int		    angle()
+     * DPadButton   up
+     * DPadButton   upRight
+     * DPadButton   right
+     * DPadButton   downRight
+     * DPadButton   down
+     * DPadButton   downLeft
+     * DPadButton   left
+     * DPadButton   upLeft
      */
     public DirectionalPad dPad;
     
     /*
      * Button
+     * 
      * I dunno, check the docs
      */
     public Button a;
@@ -53,8 +86,10 @@ public class XboxController {
     
     
     /*
-     * CONSTANTS
+     * ====CONSTANTS====
      */
+    // These are the mappings for the 2015 WPILib
+    
     // Buttons
     private static final int aButtonID                  = 1;
     private static final int bButtonID                  = 2;
@@ -75,29 +110,25 @@ public class XboxController {
     private static final int rightXThumbstickID = 4;    // Correct
     private static final int rightYThumbstickID = 5;    // Correct
     
-    // Modifiers
-    private static final double thumbstickDeadZone  = 0.1;  // Jiggle room for the thumbsticks
-    private static final double triggerDeadZone     = 0.0;  // Jiggle room for the triggers
-    private static final double triggerSensitivity  = 0.6;  // If the trigger is beyond this limit, say it has been pressed
     
     
     /*
      * Constructor
      */
     public XboxController() {
-        //super( 0 );   // extend joystick?
+        super( 0 );
         createXboxControllerInstance( 0 );
     }
     
     public XboxController( int port ) {
-        //super( port );    // extend joystick?
+        super( port );
         createXboxControllerInstance( port );
     }
     
     /*
-     * Primary constructor (for when you want to specify the port)
+     * Constructor function
      */
-    private final void createXboxControllerInstance( int port ) {
+    protected final void createXboxControllerInstance( int port ) {
         
         Joystick controller = new Joystick( port );		// Joystick referenced by everything
         
@@ -109,15 +140,15 @@ public class XboxController {
         System.out.println( "====END OF INFORMATION=====" );
         
         // Thumbsticks
-        this.leftStick  = new Thumbstick( controller, Hand.LEFT );
-        this.rightStick = new Thumbstick( controller, Hand.RIGHT );
+        this.leftStick  = new Thumbstick( controller, HAND.LEFT );
+        this.rightStick = new Thumbstick( controller, HAND.RIGHT );
         
         // DPads
         this.dPad       = new DirectionalPad( controller );	// Voted this year's "Most likely to fail so don't rely on me"
         
         // Triggers (Remember, they're not buttons [but we could emulate them])
-        this.lt         = new Trigger( controller, Hand.LEFT );
-        this.rt         = new Trigger( controller, Hand.RIGHT );
+        this.lt         = new Trigger( controller, HAND.LEFT );
+        this.rt         = new Trigger( controller, HAND.RIGHT );
         
         // Buttons
         this.a          = new JoystickButton( controller, aButtonID );
@@ -130,6 +161,8 @@ public class XboxController {
         this.start      = new JoystickButton( controller, startButtonID );
     }
     
+    
+    
     /*
      * deadZone( double, double )
      * turns this
@@ -137,13 +170,13 @@ public class XboxController {
      * into this
      * ------|-1-2-3-4-5-|
      */
-    private double deadZone( double input, double deadZone) {
-        boolean isNegative  = input < 0;	// Duh
-        double adjusted     = Math.abs( input ) - deadZone;	// Subtract the deadzone from the magnitude
+    private double deadZone( double input, double deadZone ) {
+        boolean isNegative  = input < 0;    // Duh
+        double adjusted     = Math.abs( input ) - deadZone; // Subtract the deadzone from the magnitude
         
-        adjusted    = adjusted < 0 ? 0 : adjusted;	// if the new input is negative, make it zero
+        adjusted    = adjusted < 0 ? 0 : adjusted;  // if the new input is negative, make it zero
         
-        adjusted    = adjusted / ( 1 - deadZone );	// Adjust the adjustment so it can max at 1
+        adjusted    = adjusted / ( 1 - deadZone );  // Adjust the adjustment so it can max at 1
         
         if( isNegative ) {
         	return -1 * adjusted;
@@ -152,19 +185,53 @@ public class XboxController {
         }
     }
     
+    
+    
     /*
-     * Hand
+     * [ENUM]
+     * HAND
      * Used in some classes because int's are bad mm'k?
      */
-    enum Hand {
+    enum HAND {
         LEFT, RIGHT
     }
     
     /*
+     * [ENUM]
+     * DPAD
+     * Mappings for the directonal pad
+     * 
+     * int  value()
+     */
+    enum DPAD {
+        UP (0),
+        UP_RIGHT (1),
+        RIGHT (2),
+        DOWN_RIGHT (3),
+        DOWN (4),
+        DOWN_LEFT (5),
+        LEFT (6),
+        UP_LEFT (7);
+        
+        private int value;
+        
+        DPAD( int id ) {
+            this.value = id;
+        }
+        
+        int value( DPAD dPad ) {
+            return this.value;
+        }
+    }
+    
+    
+    
+    /*
+     * [CLASS]
      * Thumbstick
      * Every Xbox Controller has 2
      */
-    public class Thumbstick {
+    public class Thumbstick extends Button {
         
         /*
          * RETURN VALUES
@@ -175,7 +242,7 @@ public class XboxController {
          * LOCAL VARIABLES
          */
         private final Joystick parent;
-        private final Hand hand;
+        private final HAND hand;
         private final int xAxisID;
         private final int yAxisID;
         
@@ -183,12 +250,12 @@ public class XboxController {
         /*
          * Constructor
          */
-        Thumbstick( Joystick parent, Hand hand ) {
+        Thumbstick( Joystick parent, HAND hand ) {
             
             this.parent = parent;
             this.hand   = hand;
             
-            if( hand == Hand.LEFT ) {
+            if( hand == HAND.LEFT ) {
                 this.xAxisID    = leftXThumbstickID;
                 this.yAxisID    = leftYThumbstickID;
                 this.pressed    = new JoystickButton( parent, leftThumbstickButtonID );
@@ -199,7 +266,7 @@ public class XboxController {
             }
         }
         
-        public Hand getHand() {
+        public HAND getHand() {
             return this.hand;
         }
         
@@ -213,35 +280,38 @@ public class XboxController {
             return deadZone( parent.getRawAxis( yAxisID ), thumbstickDeadZone );
         }
         
-        // TODO
-        // Make this a button somehow...
         public boolean get() {
-            return ( this.x() != 0 ) || ( this.y() != 0 );
+            return  ( this.x() != 0 ) ||
+                    ( this.y() != 0 ) ||
+                    this.pressed.get();
         }
     }
     
+    
+    
     /*
+     * [CLASS]
      * Trigger
      * Again, every controller has 2
      */
-    public class Trigger {
+    public class Trigger extends Button {
         
         /*
          * LOCAL VARIABLES
          */
         private final Joystick parent;
-        private final Hand hand;
+        private final HAND hand;
         
         /*
          * Constructor
          */
-        public Trigger( Joystick joystick, Hand hand ) {
+        public Trigger( Joystick joystick, HAND hand ) {
             this.parent = joystick;
             this.hand = hand;
         }
         
         public double x() {
-            if( hand == Hand.LEFT ) {
+            if( hand == HAND.LEFT ) {
                 return deadZone( parent.getRawAxis( leftTriggerAxisID ), triggerDeadZone );
             } else {
                 return deadZone( parent.getRawAxis( rightTriggerAxisID ), triggerDeadZone );
@@ -251,14 +321,12 @@ public class XboxController {
             return this.x();	// One dimensional movement. Use x() instead
         }
         
-        public Hand getHand() {
+        public HAND getHand() {
             return this.hand;
         }
         
-        // TODO
-        // Make this a button somehow...
         public boolean get() {
-            if( hand == Hand.LEFT ) {
+            if( hand == HAND.LEFT ) {
                 return this.x() > triggerSensitivity;
             } else {
                 return this.x() < -triggerSensitivity;
@@ -267,7 +335,21 @@ public class XboxController {
         
     }
     
-    public class DirectionalPad {
+    
+    
+    public class DirectionalPad extends Button {
+        
+        /*
+         * RETURN VALUES
+         */
+        public Button up;
+        public Button upRight;
+        public Button right;
+        public Button downRight;
+        public Button down;
+        public Button downLeft;
+        public Button left;
+        public Button upLeft;
         
         /*
          * LOCAL VARIABLES
@@ -279,41 +361,43 @@ public class XboxController {
          */
         public DirectionalPad( Joystick parent ) {
             this.parent	= parent;
+            this.up         = new DPadButton( this, DPAD.UP );
+            this.upRight    = new DPadButton( this, DPAD.UP_RIGHT );
+            this.right      = new DPadButton( this, DPAD.RIGHT );
+            this.downRight  = new DPadButton( this, DPAD.DOWN_RIGHT );
+            this.down       = new DPadButton( this, DPAD.DOWN );
+            this.downLeft   = new DPadButton( this, DPAD.DOWN_LEFT );
+            this.left       = new DPadButton( this, DPAD.LEFT );
+            this.upLeft     = new DPadButton( this, DPAD.UP_LEFT );
         }
         
         
         public int angle() {
-            return parent.getPOV();
+            return this.parent.getPOV();
+        }
+        public boolean get() {
+            return this.angle() != -1;
         }
         
-        // TODO
-        // Make these buttons somehow...
-        public boolean get() {
-            return this.angle() != 0;
-        }
-        public boolean getUp() {
-            return this.angle() == 0;
-        }
-        public boolean getUpRight() {
-            return this.angle() == 1;
-        }
-        public boolean getRight() {
-            return this.angle() == 2;
-        }
-        public boolean getDownRight() {
-            return this.angle() == 3;
-        }
-        public boolean getDown() {
-            return this.angle() == 4;
-        }
-        public boolean getDownLeft() {
-            return this.angle() == 5;
-        }
-        public boolean getLeft() {
-            return this.angle() == 6;
-        }
-        public boolean getUpLeft() {
-            return this.angle() == 7;
+        
+        /*
+         * [CLASS]
+         * DPadButton
+         * Make each directon on the DPad a button
+         */
+        public class DPadButton extends Button {
+            
+            private final DPAD id;
+            private final DirectionalPad parent;
+            
+            public DPadButton( DirectionalPad parent, DPAD dPad ) {
+                this.id     = dPad;
+                this.parent = parent;
+            }
+            
+            public boolean get() {
+                return parent.angle() == this.id.value;
+            }
         }
     }
 }
