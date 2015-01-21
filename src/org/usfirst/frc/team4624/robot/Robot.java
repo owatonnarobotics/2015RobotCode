@@ -21,7 +21,7 @@ import org.usfirst.frc.team4624.robot.subsystems.Powertrain;
 public class Robot extends IterativeRobot {
     
     public static OI oi;
-    public static final Powertrain powertrain	= new Powertrain();
+    public static final Powertrain powertrain   = new Powertrain();
     
     Command driveCommand;
     Command movePlanetary;

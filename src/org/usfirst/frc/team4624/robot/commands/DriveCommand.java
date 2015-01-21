@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team4624.robot.Robot;
 import org.usfirst.frc.team4624.robot.input.XboxController;
 
-/**
- *
+/*
+ * Drives forwards n' backwards
  */
 public class DriveCommand extends Command {
     
@@ -28,7 +28,7 @@ public class DriveCommand extends Command {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.powertrain.setFromController(	xboxController.leftStick.y(),
+        Robot.powertrain.setFromController( xboxController.leftStick.y(),
                                             xboxController.rightStick.y() );
         
         // ==DEBUGGING==

@@ -85,12 +85,12 @@ public class XboxController {
      * Constructor
      */
     public XboxController() {
-        //super( 0 );	// extend joystick?
+        //super( 0 );   // extend joystick?
         createXboxControllerInstance( 0 );
     }
     
     public XboxController( int port ) {
-        //super( port );	// extend joystick?
+        //super( port );    // extend joystick?
         createXboxControllerInstance( port );
     }
     
@@ -99,7 +99,7 @@ public class XboxController {
      */
     private final void createXboxControllerInstance( int port ) {
         
-        Joystick controller	= new Joystick( port );		// Joystick referenced by everything
+        Joystick controller = new Joystick( port );		// Joystick referenced by everything
         
         // ==DEBUGGING==
         System.out.println( "==XboxController instance==");
@@ -135,7 +135,7 @@ public class XboxController {
      * turns this
      * |--1--2--3--4--5--|
      * into this
-     *       |-1-2-3-4-5-|
+     * ------|-1-2-3-4-5-|
      */
     private double deadZone( double input, double deadZone) {
         boolean isNegative  = input < 0;	// Duh
