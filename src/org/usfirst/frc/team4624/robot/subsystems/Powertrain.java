@@ -9,16 +9,41 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Powertrain extends Subsystem {
     
-    public Powertrain() {
-        this.init();
-    }
-    
+    /* Instance Values */
     Jaguar left;
     Jaguar right;
     
     
+    
+    /**
+     * Constructor
+     * 
+     * This initializes the powertrain
+     */
+    public Powertrain() {
+        
+        /* Initialize */
+        this.init();
+    }
+    
+    
+    
+    double inputFunction( double input ) {
+        double x        = Math.abs( input );
+        double thing    = -Math.sqrt( 1 - Math.pow( x, 2 ) ) + 1;
+        if ( input > 0 ) {
+            return thing;
+        } else {
+            return -thing;
+        }
+    }
+    
+    
+    
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+    
+    
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -37,7 +62,7 @@ public class Powertrain extends Subsystem {
         this.stop();
     }
     
-    public void setRaw( double l, double r ) {
+    public void setRaw( double l, double r ) {  // Avoid using
         left.set( l );
         right.set( r );
     }
@@ -47,8 +72,9 @@ public class Powertrain extends Subsystem {
     }
     
     public void setFromController( double l, double r ) {
-        double left     = Math.pow( l, 5 );
-        double right    = Math.pow( r, 5 );
+        double left = inputFunction( l );
+        double right = inputFunction( r );
+        
         this.set( left, right );
     }
     

@@ -6,18 +6,26 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team4624.robot.Robot;
 import org.usfirst.frc.team4624.robot.input.XboxController;
 
-/*
- * Drives forwards n' backwards
+/**
+ * DriveCommand
+ * 
+ * This command is used for teleoperated controlling
  */
 public class DriveCommand extends Command {
     
+    /* Instance values */
     XboxController xboxController;
     
+    
+    
+    /**
+     * Constructor 
+     * 
+     * This initializes the DriveCommand
+     */
     public DriveCommand() {
-        // Use requires() here to declare subsystem dependencies
-        requires( Robot.powertrain );
+        requires( Robot.powertrain );   // Use requires() here to declare subsystem dependencies
         xboxController = Robot.oi.xboxController;
-        // this.initialize(); // I don't know if we need this
     }
     
     // Called just before this Command runs the first time
