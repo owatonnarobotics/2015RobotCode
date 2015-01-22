@@ -1,18 +1,13 @@
 package org.usfirst.frc.team4624.robot;
 
-import org.usfirst.frc.team4624.robot.commands.MovePlanetary;
-
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.usfirst.frc.team4624.robot.input.XboxController;
 
 public class OI {
-    public XboxController xboxController = new XboxController(RobotMap.XBOX_CONTROLLER_PORT);
+    public XboxController xboxController    = new XboxController();
     
-    private Button planetaryToggle;
+    
     
     public OI() {
-    	planetaryToggle = new JoystickButton(xboxController, RobotMap.XBOX_BUTTON_PLANETARY_TOGGLE);
-    	
-    	planetaryToggle.whenPressed(new MovePlanetary());
+        
     }
 }
