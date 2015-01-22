@@ -193,6 +193,7 @@ public class XboxController extends Joystick {
          */
         Thumbstick( Joystick parent, HAND hand ) {
             
+            /* Initialize */
             this.parent     = parent;
             this.hand       = hand;
             this.deadZone   = DEFAULT_THUMBSTICK_DEADZONE;
@@ -265,6 +266,8 @@ public class XboxController extends Joystick {
          * @param hand
          */
         public Trigger( Joystick joystick, HAND hand ) {
+            
+            /* Initialize */
             this.parent         = joystick;
             this.hand           = hand;
             this.deadZone       = DEFAULT_TRIGGER_DEADZONE;
@@ -341,6 +344,8 @@ public class XboxController extends Joystick {
          * @param parent
          */
         public DirectionalPad( Joystick parent ) {
+            
+            /* Initialize */
             this.parent	    = parent;
             this.up         = new DPadButton( this, DPAD.UP );
             this.upRight    = new DPadButton( this, DPAD.UP_RIGHT );
@@ -374,6 +379,8 @@ public class XboxController extends Joystick {
              * @param dPad
              */
             public DPadButton( DirectionalPad parent, DPAD dPadDirection ) {
+                
+                /* Initialize */
                 this.direction  = dPadDirection;
                 this.parent     = parent;
             }
