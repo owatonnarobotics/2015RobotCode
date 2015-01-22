@@ -3,6 +3,7 @@ package org.usfirst.frc.team4624.robot.subsystems;
 
 import org.usfirst.frc.team4624.robot.RobotMap;	// ENUMS for the ports
 import org.usfirst.frc.team4624.robot.commands.DriveCommand;
+import org.usfirst.frc.team4624.robot.input.XboxController.Thumbstick;
 
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -71,9 +72,20 @@ public class Powertrain extends Subsystem {
         this.setRaw( l, -r );	// To go straight, we inverted one of the motors (Clockwise && Counter-Clockwise = Straight)
     }
     
-    public void setFromController( double l, double r ) {
-        double left = inputFunction( l );
-        double right = inputFunction( r );
+    public void setFromController( Thumbstick stick ) {
+        double x = stick.getX();
+        double y = stick.getY();
+        
+        double left		= x + y;
+        double right	= -x + y;
+        
+        left = left > 1 ? 1 : left;
+        left = left < -1 ? -1 : left;
+        right = right > 1 ? 1 : right;
+        right = right < -1 ? -1 : right;
+        
+        left = inputFunction( left );
+        right = inputFunction( right );
         
         this.set( left, right );
     }

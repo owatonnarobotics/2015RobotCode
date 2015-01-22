@@ -35,8 +35,7 @@ public class DriveCommand extends Command {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.powertrain.setFromController( xboxController.leftStick.getY(),
-                                            xboxController.rightStick.getY() );
+        Robot.powertrain.setFromController( xboxController.leftStick );
     }
     
     // Make this return true when this Command no longer needs to run execute()

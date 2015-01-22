@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  *     working with Xbox360 controllers less of a pain.
  * 
  * The values from this class can be used in two ways. One could
- *     either check each Button every cycle with .get(), or they 
+ *     either check each Button every cycle with .get(), or they
  *     could call commands directly from the Buttons with .whenPressed()
  */
 public class XboxController extends Joystick {
@@ -279,11 +279,7 @@ public class XboxController extends Joystick {
         /* Extended Methods */
         @Override
         public boolean get() {
-            if ( hand == HAND.LEFT ) {
-                return this.getX() > this.sensitivity;
-            } else {                                    // If right hand...
-                return this.getX() > this.sensitivity;
-            }
+            return this.getX() > this.sensitivity;
         }
         
         
@@ -408,8 +404,6 @@ public class XboxController extends Joystick {
         public int getAngle() {
             return this.parent.getPOV();
         }
-        
-        
     }
     
     
