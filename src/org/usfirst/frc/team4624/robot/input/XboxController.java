@@ -40,7 +40,7 @@ public class XboxController extends Joystick {
     
     /* Default Values */
     private static final double DEFAULT_THUMBSTICK_DEADZONE = 0.1;  // Jiggle room for the thumbsticks
-    private static final double DEFAULT_TRIGGER_DEADZONE    = 0.0;  // Jiggle room for the triggers
+    private static final double DEFAULT_TRIGGER_DEADZONE    = 0.01; // Jiggle room for the triggers
     private static final double DEFAULT_TRIGGER_SENSITIVITY = 0.6;  // If the trigger is beyond this limit, say it has been pressed
     
     /* Instance Values */
@@ -226,12 +226,12 @@ public class XboxController extends Joystick {
         
         public double getX() {
             // Don't adjust the sensitivity here
-            return deadZone( parent.getRawAxis( xAxisID ), this.deadZone );     // Positive = Right
+            return createDeadZone( parent.getRawAxis( xAxisID ), this.deadZone );     // Positive = Right
         }
         
         public double getY() {
             // Don't adjust the sensitivity here
-            return deadZone( -parent.getRawAxis( yAxisID ), this.deadZone );    // Positive = Up
+            return createDeadZone( -parent.getRawAxis( yAxisID ), this.deadZone );    // Positive = Up
         }
         
         
@@ -295,9 +295,9 @@ public class XboxController extends Joystick {
         
         public double getX() {
             if ( hand == HAND.LEFT ) {
-                return deadZone( parent.getRawAxis( LEFT_TRIGGER_AXIS_ID ), this.deadZone );
+                return createDeadZone( parent.getRawAxis( LEFT_TRIGGER_AXIS_ID ), this.deadZone );
             } else {
-                return deadZone( parent.getRawAxis( RIGHT_TRIGGER_AXIS_ID ), this.deadZone );
+                return createDeadZone( parent.getRawAxis( RIGHT_TRIGGER_AXIS_ID ), this.deadZone );
             }
         }
         
@@ -425,13 +425,21 @@ public class XboxController extends Joystick {
      * into this
      * ------|-1-2-3-4-5-|
      */
-    private double deadZone( double input, double deadZoneSize ) {
-        boolean isNegative  = input < 0;    // Duh
-        double adjusted     = Math.abs( input ) - deadZoneSize; // Subtract the deadzone from the magnitude
+    private double createDeadZone( double input, double deadZoneSize ) {
+        double deadZoneSizeClamp = deadZoneSize;
+        boolean isNegative;
+        double adjusted;
+        
+        if ( deadZoneSizeClamp < 0 || deadZoneSizeClamp >= 1 ) {
+            deadZoneSizeClamp = 0;  // Prevent any weird errors
+        }
+        
+        isNegative  = input < 0;    // Duh
+        adjusted    = Math.abs( input ) - deadZoneSizeClamp; // Subtract the deadzone from the magnitude
         
         adjusted    = adjusted < 0 ? 0 : adjusted;  // if the new input is negative, make it zero
         
-        adjusted    = adjusted / ( 1 - deadZoneSize );  // Adjust the adjustment so it can max at 1
+        adjusted    = adjusted / ( 1 - deadZoneSizeClamp );  // Adjust the adjustment so it can max at 1
         
         if( isNegative ) {
             return -1 * adjusted;
