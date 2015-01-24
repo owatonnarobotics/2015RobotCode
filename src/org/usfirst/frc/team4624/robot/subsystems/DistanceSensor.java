@@ -1,4 +1,6 @@
 //Not even sure if this class is useful. It may just be in CAN jaguar
+
+/*
 package org.usfirst.frc.team4624.robot.subsystems;
 
 import org.usfirst.frc.team4624.robot.RobotMap;
@@ -27,3 +29,5 @@ public class DistanceSensor extends Subsystem {
 	}
 
 }
+
+*/

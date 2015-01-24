@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutonomusDrive extends Command {
     
     public AutonomusDrive() {
-        requires(Robot.planetary);
+        //requires(Robot.planetary);
     }
     @Override
     protected void initialize() {
-        Robot.planetary.stop();
+        //Robot.planetary.stop();
     }
     
     @Override

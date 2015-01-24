@@ -7,29 +7,34 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Planetary extends Subsystem {
     
-    public Planetary() {
-        this.init();
-    }
-    
      CANJaguar planetary;
      
-     public boolean spinning;
-    
+     private boolean spinning;
+     
+     public Planetary() {
+         this.init();
+     }
+     
      public void init() {
          spinning  = false;
          planetary = new CANJaguar( RobotMap.PORT_ENCODER_JAGUAR );
+         //this.planetary.
      }
     
     public void toggle() {
         spinning = !spinning;
-        setMotor(spinning);
+        setMotor(spinning );
+    }
+    
+    public void setRaw( double number ) {
+        planetary.set( number );
     }
     
     public void setMotor( boolean spinning ) {
         if (spinning ) {
-            planetary.set(.5);
+            setRaw(.5);
         } else {
-            planetary.set(0);
+            setRaw(0);
         }
     }
     
@@ -40,7 +45,10 @@ public class Planetary extends Subsystem {
     public double getSpeed(){
         return planetary.getSpeed();
     }
-    	
+    public boolean getSpinning() {
+        return spinning;
+    }
+    
     @Override
     protected void initDefaultCommand() {
         
