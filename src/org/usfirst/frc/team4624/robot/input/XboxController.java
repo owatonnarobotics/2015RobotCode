@@ -1,9 +1,9 @@
-package org.usfirst.frc.team4624.robot.input;
+package org.usfirst.frc.team4624.robot.input;   // Change to whatever package you would like
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-    
+
 /**
  * [class] XboxController
  * @author AJ Granowski & 4624 Owatonna Robotics
@@ -15,8 +15,24 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * The values from this class can be used in two ways. One could
  *     either check each Button every cycle with .get(), or they
  *     could call commands directly from the Buttons with .whenPressed()
+ * 
+ * USAGE:
+ *     // Initialization
+ *     myXboxController = new XboxController( <port the controller is on> );
+ *     myXboxController.leftStick.setThumbstickDeadZone( .2 );  // Optional. See code below for defaults.
+ *     
+ *     // Using buttons
+ *     myXboxController.a.whenPressed( new MyCommand() );
+ *     myXboxController.lb.toggleWhenPressed( new MyCommand() );
+ *     myXboxController.rightStick.whenPressed( new MyCommand() );
+ *     
+ *     // Getting values directly
+ *     if( myXboxController.leftStick.getY() > .4 ) ...
+ *     
+ *     // Support of legacy methods (NOTE: These values are straight from the Joystick class. No deadzone stuff or anything)
+ *     if( xboxController.getX() > .4 ) ...
  */
-public class XboxController extends Joystick {
+public final class XboxController extends Joystick {    // Cannot extend this class.
     
     /* Button Mappings */
     private static final int    A_BUTTON_ID                = 1;
@@ -63,7 +79,7 @@ public class XboxController extends Joystick {
     
     
     /**
-     * Constructor
+     * Constructor #1
      * @param port
      * 
      * There are two ways to make an XboxController. With this constructor,
@@ -93,7 +109,7 @@ public class XboxController extends Joystick {
     
     
     /**
-     * Constructor
+     * Constructor #2
      * 
      * This is the other constructor. I would recommend using this one instead
      *     as it is unlikely that anything else but the XboxController will be
@@ -164,6 +180,17 @@ public class XboxController extends Joystick {
         DPAD( int value ) {
             this.value = value;
         }
+        
+        public static DPAD getEnum( int value ) {
+            DPAD[] all = DPAD.values();
+            
+            for( int i = 0; i < all.length; i++ ) {
+                if ( all[i].value == value ) {
+                    return all[i] ;
+                }
+            }
+            throw new UnsupportedOperationException( "Integer supplied (" + value + ") is not a possible value of this enum." );
+        }
     }
     
     
@@ -220,16 +247,16 @@ public class XboxController extends Joystick {
         
         
         /* Get */
-        public HAND getHand() {
+        public final HAND getHand() {
             return hand;
         }
         
-        public double getX() {
+        public final double getX() {
             // Don't adjust the sensitivity here
             return createDeadZone( parent.getRawAxis( xAxisID ), deadZone );     // Positive = Right
         }
         
-        public double getY() {
+        public final double getY() {
             // Don't adjust the sensitivity here
             return createDeadZone( -parent.getRawAxis( yAxisID ), deadZone );    // Positive = Up
         }
@@ -237,7 +264,7 @@ public class XboxController extends Joystick {
         
         
         /* Set */
-        public void setThumbstickDeadZone( double number ) {
+        public final void setThumbstickDeadZone( double number ) {
             this.deadZone = number;
         }
     }
@@ -285,11 +312,11 @@ public class XboxController extends Joystick {
         
         
         /* Get */
-        public HAND getHand() {
+        public final HAND getHand() {
             return this.hand;
         }
         
-        public double getX() {
+        public final double getX() {
             if ( hand == HAND.LEFT ) {
                 return createDeadZone( parent.getRawAxis( LEFT_TRIGGER_AXIS_ID ), deadZone );
             } else {
@@ -297,18 +324,18 @@ public class XboxController extends Joystick {
             }
         }
         
-        public double getY() {
+        public final double getY() {
             return getX();	// Triggers have one dimensional movement. Use getX() instead
         }
         
         
         
         /* Set */
-        public void setTriggerDeadZone( double number ) {
+        public final void setTriggerDeadZone( double number ) {
             this.deadZone = number;
         }
         
-        public void setTriggerSensitivity( double number ) {
+        public final void setTriggerSensitivity( double number ) {
             this.sensitivity = number;
         }
     }
@@ -401,15 +428,19 @@ public class XboxController extends Joystick {
         
         
         /* Get */
-        public int getAngle() {
+        public final int getAngle() {
             return parent.getPOV();
+        }
+        
+        public final DPAD getDirection() {
+            return DPAD.getEnum( getAngle() );
         }
     }
     
     
     
     /**
-     * deadZone
+     * createDeadZone
      * @param input
      * @param deadZoneSize
      * @return adjusted_input
@@ -421,25 +452,20 @@ public class XboxController extends Joystick {
      */
     private final static double createDeadZone( double input, double deadZoneSize ) {
         double deadZoneSizeClamp = deadZoneSize;
-        boolean isNegative;
+        double negative;
         double adjusted;
         
         if ( deadZoneSizeClamp < 0 || deadZoneSizeClamp >= 1 ) {
             deadZoneSizeClamp = 0;  // Prevent any weird errors
         }
         
-        isNegative  = input < 0;    // Duh
+        negative    = input < 0 ? -1 : 1;
+        
         adjusted    = Math.abs( input ) - deadZoneSizeClamp; // Subtract the deadzone from the magnitude
-        
         adjusted    = adjusted < 0 ? 0 : adjusted;  // if the new input is negative, make it zero
-        
         adjusted    = adjusted / ( 1 - deadZoneSizeClamp );  // Adjust the adjustment so it can max at 1
         
-        if( isNegative ) {
-            return -1 * adjusted;
-        } else {
-            return adjusted;
-        }
+        return negative * adjusted;
     }
     
     
