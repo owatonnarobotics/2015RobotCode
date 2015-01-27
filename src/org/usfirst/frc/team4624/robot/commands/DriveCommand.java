@@ -4,43 +4,53 @@ package org.usfirst.frc.team4624.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team4624.robot.Robot;
-import org.usfirst.frc.team4624.robot.RobotMap;
+import org.usfirst.frc.team4624.robot.input.XboxController;
 
 /**
- *
+ * DriveCommand
+ * 
+ * This command is used for teleoperated controlling
  */
 public class DriveCommand extends Command {
-	
-	public DriveCommand() {
-		// Use requires() here to declare subsystem dependencies
-		requires( Robot.powertrain );
-		// this.initialize(); // I don't know if we need this
-	}
-	
-	// Called just before this Command runs the first time
-	protected void initialize() {
-		Robot.powertrain.stop();
-	}
-	
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-		Robot.powertrain.setFromController( Robot.oi.xboxController.getRawAxis( RobotMap.XBOX_AXIS_Y_LEFT ),
-		                                    Robot.oi.xboxController.getRawAxis( RobotMap.XBOX_AXIS_Y_RIGHT ) );
-	}
-	
-	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		return false;
-	}
-	
-	// Called once after isFinished returns true
-	protected void end() {
-		
-	}
-	
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-		
-	}
+    
+    /* Instance values */
+    XboxController xboxController;
+    
+    
+    
+    /**
+     * Constructor 
+     * 
+     * This initializes the DriveCommand
+     */
+    public DriveCommand() {
+        requires( Robot.powertrain );   // Use requires() here to declare subsystem dependencies
+        xboxController = Robot.oi.xboxController;
+    }
+    
+    // Called just before this Command runs the first time
+    protected void initialize() {
+        Robot.powertrain.stop();
+    }
+    
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
+        Robot.powertrain.setFromController( xboxController.leftStick );
+    }
+    
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+        return false;
+    }
+    
+    // Called once after isFinished returns true
+    protected void end() {
+        
+    }
+    
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted() {
+        
+    }
 }
