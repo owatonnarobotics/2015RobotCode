@@ -11,19 +11,78 @@ public class Planetary extends Subsystem {
      
      private boolean spinning;
      
+     private long startTime;
+     
      public Planetary() {
          this.init();
      }
      
      public void init() {
          spinning  = false;
-         planetary = new CANJaguar( RobotMap.PORT_ENCODER_JAGUAR );
-         //this.planetary.
+         planetary = new CANJaguar(RobotMap.PORT_ENCODER_JAGUAR);
+         planetary.setPositionMode(CANJaguar.kQuadEncoder, 511, 0.1, 0, 0); // P, I, D
      }
     
     public void toggle() {
         spinning = !spinning;
         setMotor(spinning );
+    }
+    
+    public void togglePositionMode(){
+        spinning = !spinning;
+        if (spinning){
+            System.out.println("Test");
+            planetary.enableControl();
+            //planetary.set(1);
+        }
+        else{
+            stopPositionMode();
+        }
+    }
+    
+    public void startPositionMode(){
+        startTime = System.currentTimeMillis();
+        spinning = true;
+        planetary.disableControl();
+        planetary.enableControl();
+        planetary.set(5);
+    }
+    
+    public void stopPositionMode(){
+        if (spinning){
+            planetary.disableControl();
+            spinning = false;
+        }
+    }
+    
+    public double getPosition(){
+        return planetary.getPosition();
+    }
+    
+    public double getP(){
+        return planetary.getP();
+    }
+    
+    public double getD(){
+        return planetary.getD();
+    }
+    
+    public double getTime(){
+        return startTime;
+    }
+    
+    public double getSet(){
+        return planetary.get();
+    }
+    
+    public void updateSet(){
+        planetary.set(planetary.get() + 5);
+        startTime = System.currentTimeMillis();
+    }
+    
+    public void update(){
+        //planetary.setP(10 + (planetary.getPosition() * 0.01));
+        //planetary.setD(0.5 - (planetary.getPosition() * 0.01));
     }
     
     public void setRaw( double number ) {
