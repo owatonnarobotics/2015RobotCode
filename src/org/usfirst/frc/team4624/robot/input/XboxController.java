@@ -1,12 +1,12 @@
-package org.usfirst.frc.team4624.robot.input;
+package org.usfirst.frc.team4624.robot.input;   // Change to whatever package you would like
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-    
+
 /**
  * [class] XboxController
- * @author AJ Granowski
+ * @author AJ Granowski & 4624 Owatonna Robotics
  * @version 2015
  * 
  * This class wraps around the Joystick class in order to make
@@ -15,8 +15,24 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * The values from this class can be used in two ways. One could
  *     either check each Button every cycle with .get(), or they
  *     could call commands directly from the Buttons with .whenPressed()
+ * 
+ * USAGE:
+ *     // Initialization
+ *     myXboxController = new XboxController( <port the controller is on> );
+ *     myXboxController.leftStick.setThumbstickDeadZone( .2 );  // Optional. See code below for defaults.
+ *     
+ *     // Using buttons
+ *     myXboxController.a.whenPressed( new MyCommand() );
+ *     myXboxController.lb.toggleWhenPressed( new MyCommand() );
+ *     myXboxController.rightStick.whenPressed( new MyCommand() );
+ *     
+ *     // Getting values directly
+ *     if( myXboxController.leftStick.getY() > .4 ) ...
+ *     
+ *     // Support of legacy methods (NOTE: These values are straight from the Joystick class. No deadzone stuff or anything)
+ *     if( xboxController.getX() > .4 ) ...
  */
-public class XboxController extends Joystick {
+public final class XboxController extends Joystick {    // Because this class is final, it cannot be extended.
     
     /* Button Mappings */
     private static final int    A_BUTTON_ID                = 1;
@@ -63,18 +79,19 @@ public class XboxController extends Joystick {
     
     
     /**
-     * Constructor
+     * Constructor #1
      * @param port
      * 
      * There are two ways to make an XboxController. With this constructor,
      *     you can specify which port you expect the controller to be on.
      */
-    public XboxController( int port ) {
+    public XboxController( final int port ) {
         super( port );  // Extends Joystick...
         
         /* Initialize */
         this.port       = port;
         this.controller = new Joystick( this.port );    // Joystick referenced by everything
+        
         this.leftStick  = new Thumbstick( this.controller, HAND.LEFT );
         this.rightStick = new Thumbstick( this.controller, HAND.RIGHT );
         this.dPad       = new DirectionalPad( this.controller );
@@ -93,7 +110,7 @@ public class XboxController extends Joystick {
     
     
     /**
-     * Constructor
+     * Constructor #2
      * 
      * This is the other constructor. I would recommend using this one instead
      *     as it is unlikely that anything else but the XboxController will be
@@ -105,6 +122,7 @@ public class XboxController extends Joystick {
         /* Initialize */
         this.port       = 0;
         this.controller = new Joystick( this.port );    // Joystick referenced by everything
+        
         this.leftStick  = new Thumbstick( this.controller, HAND.LEFT );
         this.rightStick = new Thumbstick( this.controller, HAND.RIGHT );
         this.dPad       = new DirectionalPad( this.controller );
@@ -161,8 +179,19 @@ public class XboxController extends Joystick {
          * Constructor
          * @param value
          */
-        DPAD( int value ) {
+        DPAD( final int value ) {
             this.value = value;
+        }
+        
+        public static DPAD getEnum( int value ) {
+            DPAD[] all = DPAD.values();
+            
+            for( int i = 0; i < all.length; i++ ) {
+                if ( all[i].value == value ) {
+                    return all[i] ;
+                }
+            }
+            throw new UnsupportedOperationException( "Integer supplied (" + value + ") is not a possible value of this enum." );
         }
     }
     
@@ -174,7 +203,7 @@ public class XboxController extends Joystick {
      * This class is used to represent the thumbsticks on the
      *     Xbox360 controller.
      */
-    public final class Thumbstick extends Button {
+    public static class Thumbstick extends Button {
         
         /* Instance Values */
         private final Joystick  parent;
@@ -191,7 +220,7 @@ public class XboxController extends Joystick {
          * @param parent
          * @param hand
          */
-        Thumbstick( Joystick parent, HAND hand ) {
+        Thumbstick( final Joystick parent, final HAND hand ) {
             
             /* Initialize */
             this.parent     = parent;
@@ -220,18 +249,18 @@ public class XboxController extends Joystick {
         
         
         /* Get */
-        public final HAND getHand() {
-            return this.hand;
+        public HAND getHand() {
+            return hand;
         }
         
         public double getX() {
             // Don't adjust the sensitivity here
-            return createDeadZone( parent.getRawAxis( xAxisID ), this.deadZone );     // Positive = Right
+            return createDeadZone( parent.getRawAxis( xAxisID ), deadZone );     // Positive = Right
         }
         
         public double getY() {
             // Don't adjust the sensitivity here
-            return createDeadZone( -parent.getRawAxis( yAxisID ), this.deadZone );    // Positive = Up
+            return createDeadZone( -parent.getRawAxis( yAxisID ), deadZone );    // Positive = Up
         }
         
         
@@ -250,7 +279,7 @@ public class XboxController extends Joystick {
      * This class is used to represent one of the two
      *     Triggers on an Xbox360 controller.
      */
-    public final class Trigger extends Button {
+    public static class Trigger extends Button {
         
         /* Instance Values */
         private final Joystick  parent;
@@ -265,7 +294,7 @@ public class XboxController extends Joystick {
          * @param joystick
          * @param hand
          */
-        public Trigger( Joystick joystick, HAND hand ) {
+        Trigger( final Joystick joystick, final HAND hand ) {
             
             /* Initialize */
             this.parent         = joystick;
@@ -279,7 +308,7 @@ public class XboxController extends Joystick {
         /* Extended Methods */
         @Override
         public boolean get() {
-            return this.getX() > this.sensitivity;
+            return getX() > sensitivity;
         }
         
         
@@ -291,14 +320,14 @@ public class XboxController extends Joystick {
         
         public double getX() {
             if ( hand == HAND.LEFT ) {
-                return createDeadZone( parent.getRawAxis( LEFT_TRIGGER_AXIS_ID ), this.deadZone );
+                return createDeadZone( parent.getRawAxis( LEFT_TRIGGER_AXIS_ID ), deadZone );
             } else {
-                return createDeadZone( parent.getRawAxis( RIGHT_TRIGGER_AXIS_ID ), this.deadZone );
+                return createDeadZone( parent.getRawAxis( RIGHT_TRIGGER_AXIS_ID ), deadZone );
             }
         }
         
         public double getY() {
-            return this.getX();	// Triggers have one dimensional movement. Use getX() instead
+            return getX();	// Triggers have one dimensional movement. Use getX() instead
         }
         
         
@@ -320,7 +349,7 @@ public class XboxController extends Joystick {
      * 
      * This is a weird object which is essentially just 8 buttons.
      */
-    public final class DirectionalPad extends Button {
+    public static class DirectionalPad extends Button {
         
         /* Instance Values */
         private Joystick    parent;
@@ -339,7 +368,7 @@ public class XboxController extends Joystick {
          * Constructor
          * @param parent
          */
-        public DirectionalPad( Joystick parent ) {
+        DirectionalPad( final Joystick parent ) {
             
             /* Initialize */
             this.parent	    = parent;
@@ -361,7 +390,7 @@ public class XboxController extends Joystick {
          * This class is used to represent each of the 8 values a
          *     dPad has as a button.
          */
-        public class DPadButton extends Button {
+        public static class DPadButton extends Button {
             
             /* Instance Values */
             private final DPAD              direction;
@@ -374,7 +403,7 @@ public class XboxController extends Joystick {
              * @param parent
              * @param dPad
              */
-            public DPadButton( DirectionalPad parent, DPAD dPadDirection ) {
+            DPadButton( final DirectionalPad parent, final DPAD dPadDirection ) {
                 
                 /* Initialize */
                 this.direction  = dPadDirection;
@@ -386,7 +415,7 @@ public class XboxController extends Joystick {
             /* Extended Methods */
             @Override
             public boolean get() {
-                return parent.getAngle() == this.direction.value;
+                return parent.getAngle() == direction.value;
             }
         }
         
@@ -395,21 +424,25 @@ public class XboxController extends Joystick {
         /* Extended Methods */
         @Override
         public boolean get() {
-            return this.getAngle() != -1;
+            return getAngle() != -1;
         }
         
         
         
         /* Get */
         public int getAngle() {
-            return this.parent.getPOV();
+            return parent.getPOV();
+        }
+        
+        public DPAD getDirection() {
+            return DPAD.getEnum( getAngle() );
         }
     }
     
     
     
     /**
-     * deadZone
+     * createDeadZone
      * @param input
      * @param deadZoneSize
      * @return adjusted_input
@@ -419,37 +452,32 @@ public class XboxController extends Joystick {
      * into this
      * ------|-1-2-3-4-5-|
      */
-    private double createDeadZone( double input, double deadZoneSize ) {
+    private static double createDeadZone( double input, double deadZoneSize ) {
         double deadZoneSizeClamp = deadZoneSize;
-        boolean isNegative;
+        double negative;
         double adjusted;
         
         if ( deadZoneSizeClamp < 0 || deadZoneSizeClamp >= 1 ) {
             deadZoneSizeClamp = 0;  // Prevent any weird errors
         }
         
-        isNegative  = input < 0;    // Duh
+        negative    = input < 0 ? -1 : 1;
+        
         adjusted    = Math.abs( input ) - deadZoneSizeClamp; // Subtract the deadzone from the magnitude
-        
         adjusted    = adjusted < 0 ? 0 : adjusted;  // if the new input is negative, make it zero
-        
         adjusted    = adjusted / ( 1 - deadZoneSizeClamp );  // Adjust the adjustment so it can max at 1
         
-        if( isNegative ) {
-            return -1 * adjusted;
-        } else {
-            return adjusted;
-        }
+        return negative * adjusted;
     }
     
     
     
     /* Get */
-    public final int getPort() {
-        return this.port;
+    public int getPort() {
+        return port;
     }
     
-    public final Joystick getJoystick() {
-        return this.controller;
+    public Joystick getJoystick() {
+        return controller;
     }
 }
