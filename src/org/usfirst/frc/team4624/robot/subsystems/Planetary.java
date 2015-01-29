@@ -17,7 +17,8 @@ public class Planetary extends Subsystem {
      
      public void init() {
          spinning  = false;
-         planetary = new CANJaguar( RobotMap.PORT_ENCODER_JAGUAR );
+         //planetary = new CANJaguar( RobotMap.PORT_ENCODER_JAGUAR );
+         planetary = new CANJaguar( 16 );
          //this.planetary.
      }
     

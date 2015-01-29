@@ -10,12 +10,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 
 import org.usfirst.frc.team4624.robot.commands.AutonomusDrive;
-//import org.usfirst.frc.team4624.robot.commands.AutonomusDrive;
 import org.usfirst.frc.team4624.robot.commands.DriveCommand;
 import org.usfirst.frc.team4624.robot.commands.MovePlanetary;
 import org.usfirst.frc.team4624.robot.subsystems.Planetary;
-//import org.usfirst.frc.team4624.robot.commands.MovePlanetary;
-//import org.usfirst.frc.team4624.robot.subsystems.Planetary;
 import org.usfirst.frc.team4624.robot.subsystems.Powertrain;
 
 /**

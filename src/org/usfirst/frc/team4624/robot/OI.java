@@ -9,6 +9,6 @@ public class OI {
     
     
     public OI() {
-        //xboxController.a.toggleWhenPressed( new MovePlanetary() );
+        //xboxController.a.whenPressed( new MovePlanetary() );
     }
 }
