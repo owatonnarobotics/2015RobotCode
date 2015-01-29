@@ -332,6 +332,41 @@ public final class XboxController extends Joystick {    // Because this class is
         
         
         
+        
+        
+        public int getAngle(int rawX, int rawY) {
+            return (int) Math.toDegrees(Math.atan2(rawY, rawX));
+        }
+        
+        public int getScaleFactor(int angle) { // requires value between 0 and 90
+            if(angle < 0) {
+                Math.abs(angle) = angle; // May want to do a while loop that keeps multiplying by 360
+            }
+            if(angle > 90) {
+                angle % 90 = angle;
+            }
+            return (int) Math.ToDegrees(Math.cos(angle)); //This works for any values <= 45
+        }
+        
+        public int getScaleFactorX(int angle, int scaleFactor) {
+            return scaleFactor * Math.toDegrees(Math.cos(angle));
+        }
+        public int getScaleFactorY(int angle, int scaleFactor) {
+            return scalefactor * Math.toDegrees(Math.sin(angle));
+        }
+        
+        public int getTrueX(int scaleFactorX, int rawX) {
+            return rawX * scaleFactorX;
+        }
+        
+        public int getTrueY(int scaleFactorY, int rawY) {
+            return rawY * scaleFactorY;
+        }
+        
+        
+        
+        
+        
         /* Set */
         public void setTriggerDeadZone( double number ) {
             this.deadZone = number;
