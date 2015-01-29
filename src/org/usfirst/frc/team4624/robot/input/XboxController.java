@@ -331,9 +331,7 @@ public final class XboxController extends Joystick {    // Because this class is
         }
         
         
-        
-        
-        
+        /* Magnitude */
         public double getAngle(double rawX, double rawY) {
             return  Math.toDegrees(Math.atan2(rawY, rawX));
         }
@@ -366,8 +364,6 @@ public final class XboxController extends Joystick {    // Because this class is
         public double getMagnitude(double trueX, double trueY) {
             return Math.sqrt(Math.pow(trueX, 2) + Math.pow(trueY, 2));
         }
-        
-        
         
         
         
