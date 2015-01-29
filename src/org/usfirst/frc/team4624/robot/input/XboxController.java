@@ -334,33 +334,37 @@ public final class XboxController extends Joystick {    // Because this class is
         
         
         
-        public int getAngle(int rawX, int rawY) {
-            return (int) Math.toDegrees(Math.atan2(rawY, rawX));
+        public double getAngle(double rawX, double rawY) {
+            return  Math.toDegrees(Math.atan2(rawY, rawX));
         }
         
-        public int getScaleFactor(int angle) { // requires value between 0 and 90
+        public double getScaleFactor(double angle) { // requires value between 0 and 90
             if(angle < 0) {
-                Math.abs(angle) = angle; // May want to do a while loop that keeps multiplying by 360
+                angle = Math.abs(angle); // May want to do a while loop that keeps multiplying by 360
             }
             if(angle > 90) {
-                angle % 90 = angle;
+                angle = angle % 90;
             }
-            return (int) Math.ToDegrees(Math.cos(angle)); //This works for any values <= 45
+            return Math.toDegrees(Math.cos(angle)); //This works for any values <= 45
         }
         
-        public int getScaleFactorX(int angle, int scaleFactor) {
-            return scaleFactor * Math.toDegrees(Math.cos(angle));
+        public double getScaleFactorX(double angle, double scaleFactor) {
+            return  scaleFactor * Math.toDegrees(Math.cos(angle));
         }
-        public int getScaleFactorY(int angle, int scaleFactor) {
-            return scalefactor * Math.toDegrees(Math.sin(angle));
+        public double getScaleFactorY(double angle, double scaleFactor) {
+            return scaleFactor * Math.toDegrees(Math.sin(angle));
         }
         
-        public int getTrueX(int scaleFactorX, int rawX) {
+        public double getTrueX(double scaleFactorX, double rawX) {
             return rawX * scaleFactorX;
         }
         
-        public int getTrueY(int scaleFactorY, int rawY) {
+        public double getTrueY(double scaleFactorY, double rawY) {
             return rawY * scaleFactorY;
+        }
+        
+        public double getMagnitude(double trueX, double trueY) {
+            return Math.sqrt(Math.pow(trueX, 2) + Math.pow(trueY, 2));
         }
         
         
