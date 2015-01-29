@@ -20,7 +20,7 @@ public class Planetary extends Subsystem {
      public void init() {
          spinning  = false;
          planetary = new CANJaguar(RobotMap.PORT_ENCODER_JAGUAR);
-         planetary.setPositionMode(CANJaguar.kQuadEncoder, 511, 0.1, 0, 0); // P, I, D
+         planetary.setPositionMode(CANJaguar.kQuadEncoder, 511, 10000, 0, 0); // P, I, D
      }
     
     public void toggle() {
@@ -43,7 +43,6 @@ public class Planetary extends Subsystem {
     public void startPositionMode(){
         startTime = System.currentTimeMillis();
         spinning = true;
-        planetary.disableControl();
         planetary.enableControl();
         planetary.set(5);
     }

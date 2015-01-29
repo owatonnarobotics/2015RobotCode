@@ -78,7 +78,7 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         System.out.println("Position: " + Robot.planetary.getPosition());
         System.out.println("Goal: " + Robot.planetary.getSet());
-        Robot.planetary.update();
+        //Robot.planetary.update();
         //if (Robot.planetary.getPosition() < -1){
           //  Robot.planetary.stopPositionMode();
         //}
