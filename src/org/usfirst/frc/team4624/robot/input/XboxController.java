@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4624.robot.input;   // Change to whatever package you would like
 
+/* Imports */
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -18,7 +19,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * 
  * USAGE:
  *     // Initialization
- *     myXboxController = new XboxController( <port the controller is on> );
+ *     myXboxController = new XboxController( <port the controller is on (starts at 0)> );
  *     myXboxController.leftStick.setThumbstickDeadZone( .2 );  // Optional. See code below for defaults.
  *     
  *     // Using buttons
@@ -31,8 +32,14 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  *     
  *     // Support of legacy methods (NOTE: These values are straight from the Joystick class. No deadzone stuff or anything)
  *     if( xboxController.getX() > .4 ) ...
+ * 
+ * NOTES:
+ *     Although I have confidence that this will work, not everything has been tested.
+ *     The class is final because I didn't make it with extending in mind.
+ *     This should work for the 2015 WPILib. The mappings of axis's and buttons may change in later years.
+ *     I am not a good Java programmer.
  */
-public final class XboxController extends Joystick {    // Because this class is final, it cannot be extended.
+public class XboxController extends Joystick {
     
     /* Button Mappings */
     private static final int    A_BUTTON_ID                = 1;
@@ -92,11 +99,11 @@ public final class XboxController extends Joystick {    // Because this class is
         this.port       = port;
         this.controller = new Joystick( this.port );    // Joystick referenced by everything
         
-        this.leftStick  = new Thumbstick( this.controller, HAND.LEFT );
-        this.rightStick = new Thumbstick( this.controller, HAND.RIGHT );
+        this.leftStick  = new Thumbstick    ( this.controller, HAND.LEFT );
+        this.rightStick = new Thumbstick    ( this.controller, HAND.RIGHT );
         this.dPad       = new DirectionalPad( this.controller );
-        this.lt         = new Trigger( this.controller, HAND.LEFT );
-        this.rt         = new Trigger( this.controller, HAND.RIGHT );
+        this.lt         = new Trigger       ( this.controller, HAND.LEFT );
+        this.rt         = new Trigger       ( this.controller, HAND.RIGHT );
         this.a          = new JoystickButton( this.controller, A_BUTTON_ID );
         this.b          = new JoystickButton( this.controller, B_BUTTON_ID );
         this.x          = new JoystickButton( this.controller, X_BUTTON_ID );
@@ -123,11 +130,11 @@ public final class XboxController extends Joystick {    // Because this class is
         this.port       = 0;
         this.controller = new Joystick( this.port );    // Joystick referenced by everything
         
-        this.leftStick  = new Thumbstick( this.controller, HAND.LEFT );
-        this.rightStick = new Thumbstick( this.controller, HAND.RIGHT );
+        this.leftStick  = new Thumbstick    ( this.controller, HAND.LEFT );
+        this.rightStick = new Thumbstick    ( this.controller, HAND.RIGHT );
         this.dPad       = new DirectionalPad( this.controller );
-        this.lt         = new Trigger( this.controller, HAND.LEFT );
-        this.rt         = new Trigger( this.controller, HAND.RIGHT );
+        this.lt         = new Trigger       ( this.controller, HAND.LEFT );
+        this.rt         = new Trigger       ( this.controller, HAND.RIGHT );
         this.a          = new JoystickButton( this.controller, A_BUTTON_ID );
         this.b          = new JoystickButton( this.controller, B_BUTTON_ID );
         this.x          = new JoystickButton( this.controller, X_BUTTON_ID );
@@ -146,7 +153,7 @@ public final class XboxController extends Joystick {    // Because this class is
      * Rather than use an integer (which might not be what we expect)
      *    we use an enum which has a set amount of possibilities.
      */
-    static enum HAND {
+    public static enum HAND {
         LEFT, RIGHT
     }
     
@@ -158,7 +165,7 @@ public final class XboxController extends Joystick {    // Because this class is
      * This is the relation of direction and number for .getPOV() used
      *     in the DirectionalPad class.
      */
-    static enum DPAD {
+    public static enum DPAD {
         UP          (0),
         UP_RIGHT    (45),
         RIGHT       (90),
