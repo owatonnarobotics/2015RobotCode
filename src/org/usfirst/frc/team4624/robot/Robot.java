@@ -38,9 +38,9 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
         oi              = new OI();
-        driveCommand    = new DriveCommand();
-        movePlanetary   = new MovePlanetary();
-        autonomusDrive  = new AutonomusDrive();
+        //driveCommand    = new DriveCommand();
+        //movePlanetary   = new MovePlanetary();
+        //autonomusDrive  = new AutonomusDrive();
     }
     
     public void disabledPeriodic() {
@@ -59,8 +59,8 @@ public class Robot extends IterativeRobot {
     }
     
     public void teleopInit() {
-        driveCommand.start();
-        movePlanetary.start();
+        //driveCommand.start();
+        //movePlanetary.start();
     }
     
     /**
@@ -76,6 +76,15 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        System.out.println("Position: " + Robot.planetary.getPosition());
+        System.out.println("Goal: " + Robot.planetary.getSet());
+        Robot.planetary.update();
+        //if (Robot.planetary.getPosition() < -1){
+          //  Robot.planetary.stopPositionMode();
+        //}
+        if (System.currentTimeMillis() - Robot.planetary.getTime() >= 1000 * 10){
+            Robot.planetary.updateSet();
+        }
     }
     
     /**

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4624.robot.commands;
 
+import org.usfirst.frc.team4624.robot.OI;
 import org.usfirst.frc.team4624.robot.Robot;
 import org.usfirst.frc.team4624.robot.input.XboxController;
 import org.usfirst.frc.team4624.robot.subsystems.Planetary;
@@ -8,33 +9,35 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class MovePlanetary extends Command {
     
-    Planetary planetary;
     XboxController xboxController;
     
     public MovePlanetary() {
         requires( Robot.planetary );
-        xboxController = Robot.oi.xboxController;
+        xboxController = OI.xboxController;
     }
     
     @Override
     protected void initialize() {
-        Robot.planetary.stop();
+        //Robot.planetary.stop();
+
+        System.out.println("Hello");
     }
     
     @Override
     protected void execute() {
         //Robot.planetary.toggle();
-        Robot.planetary.setRaw( xboxController.rt.getX() );
+        //Robot.planetary.setRaw( xboxController.rt.getX() );
+        Robot.planetary.startPositionMode();
     }
     
     @Override
     protected boolean isFinished() {
-        return false;
+        return true;
     }
     
     @Override
     protected void end() {
-        Robot.planetary.stop();
+        //Robot.planetary.stop();
     }
     
     @Override
