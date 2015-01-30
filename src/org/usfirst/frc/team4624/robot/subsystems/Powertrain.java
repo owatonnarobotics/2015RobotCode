@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Powertrain extends Subsystem {
     
     /* Instance Values */
-    Jaguar left;
-    Jaguar right;
+    Jaguar leftMotor;
+    Jaguar rightMotor;
     
     
     
@@ -53,27 +53,31 @@ public class Powertrain extends Subsystem {
     
     
     public void init() {
-        left    = new Jaguar( RobotMap.PORT_MOTOR_LEFT );
-        right   = new Jaguar( RobotMap.PORT_MOTOR_RIGHT );
+        leftMotor   = new Jaguar( RobotMap.PORT_MOTOR_LEFT );
+        rightMotor  = new Jaguar( RobotMap.PORT_MOTOR_RIGHT );
         
-        left.setSafetyEnabled( true );
-        right.setSafetyEnabled( true );
-        left.setExpiration( 0.5 );
-        right.setExpiration( 0.5 );
-        this.stop();
+        leftMotor.setSafetyEnabled( true );
+        rightMotor.setSafetyEnabled( true );
+        leftMotor.setExpiration( 0.5 );
+        rightMotor.setExpiration( 0.5 );
+        stop();
     }
     
-    public void setRaw( double l, double r ) {  // Avoid using
-        left.set( l );
-        right.set( r );
+    public void setRaw( double l, double r ) {  // Avoid using this. Use set instead
+        double left = Math.max(-1, Math.min(1, l));     // Clamp
+        double right = Math.max(-1, Math.min(1, r));    // Clamp
+        
+        leftMotor.set( left );
+        rightMotor.set( right );
     }
     
     public void set( double l, double r ) {
-        this.setRaw( l, -r );	// To go straight, we inverted one of the motors (Clockwise && Counter-Clockwise = Straight)
+        setRaw( l, -r );	// To go straight, we inverted one of the motors (Clockwise && Counter-Clockwise = Straight)
     }
     
     public void setFromThumbstick( XboxController.Thumbstick stick ) {
         
+        /* Old method
         double x = stick.getX();
         double y = stick.getY();
         
@@ -89,10 +93,26 @@ public class Powertrain extends Subsystem {
         right = inputFunction( right );
         
         this.set( left, right );
+        */
+        
+        // Formula taken from here: http://home.kendra.com/mauser/Joystick.html
+        final double x      = -stick.getRawX();
+        final double y      = stick.getRawY();
+        
+        final double v      = (1 - Math.abs(x)) * y + y;
+        final double w      = (1 - Math.abs(y)) * x + x;
+        
+        final double left   = (v-w) / 2;
+        final double right  = (v+w) / 2;
+        
+        set(left, right);
+        
+        System.out.println("DEBUG: X = " + stick.getX());
+        System.out.println("DEBUG: Y = " + stick.getY());
     }
     
     public void stop() {
-        left.set( 0 );
-        right.set( 0 );
+        leftMotor.set( 0 );
+        rightMotor.set( 0 );
     }
 }

@@ -38,9 +38,9 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
         oi              = new OI();
-        //driveCommand    = new DriveCommand();
-        //movePlanetary   = new MovePlanetary();
-        //autonomusDrive  = new AutonomusDrive();
+        driveCommand    = new DriveCommand();
+        movePlanetary   = new MovePlanetary();
+        autonomusDrive  = new AutonomusDrive();
     }
     
     public void disabledPeriodic() {
@@ -59,7 +59,7 @@ public class Robot extends IterativeRobot {
     }
     
     public void teleopInit() {
-        //driveCommand.start();
+        driveCommand.start();
         //movePlanetary.start();
     }
     
