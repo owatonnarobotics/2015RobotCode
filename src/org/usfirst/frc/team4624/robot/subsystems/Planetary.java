@@ -13,11 +13,14 @@ public class Planetary extends Subsystem {
      
      private long startTime;
      
-     private double u;
+     private int codesPerRev = 497;
      
-     private double p = .5 * u;
-     private double i = 0;
-     private double d = 0;
+     // http://en.wikipedia.org/wiki/PID_controller#Ziegler.E2.80.93Nichols_method
+     private double u = 1100;
+     
+     private double p = .6 * u;
+     private double i = 2 * p / u;
+     private double d = p * u / 8;
      
      public Planetary() {
          this.init();
@@ -26,7 +29,7 @@ public class Planetary extends Subsystem {
      public void init() {
          spinning  = false;
          planetary = new CANJaguar(RobotMap.PORT_ENCODER_JAGUAR);
-         planetary.setPositionMode(CANJaguar.kQuadEncoder, p, i, d);
+         planetary.setPositionMode(CANJaguar.kQuadEncoder, codesPerRev, p, i, d);
      }
     
     public void toggle() {

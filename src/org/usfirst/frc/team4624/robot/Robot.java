@@ -82,7 +82,7 @@ public class Robot extends IterativeRobot {
         //if (Robot.planetary.getPosition() < -1){
           //  Robot.planetary.stopPositionMode();
         //}
-        if (System.currentTimeMillis() - Robot.planetary.getTime() >= 1000 * 10){
+        if (System.currentTimeMillis() - Robot.planetary.getTime() >= 1000 * 20){
             Robot.planetary.updateSet();
         }
     }
