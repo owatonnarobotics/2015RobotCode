@@ -106,6 +106,9 @@ public class Powertrain extends Subsystem {
         final double right  = (v+w) / 2;
         
         set(left, right);
+        
+        System.out.println("DEBUG: X = " + stick.getX());
+        System.out.println("DEBUG: Y = " + stick.getY());
     }
     
     public void stop() {
