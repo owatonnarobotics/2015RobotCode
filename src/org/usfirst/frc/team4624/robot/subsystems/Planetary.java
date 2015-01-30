@@ -13,6 +13,12 @@ public class Planetary extends Subsystem {
      
      private long startTime;
      
+     private double u;
+     
+     private double p = .5 * u;
+     private double i = 0;
+     private double d = 0;
+     
      public Planetary() {
          this.init();
      }
@@ -20,7 +26,7 @@ public class Planetary extends Subsystem {
      public void init() {
          spinning  = false;
          planetary = new CANJaguar(RobotMap.PORT_ENCODER_JAGUAR);
-         planetary.setPositionMode(CANJaguar.kQuadEncoder, 511, 10000, 0, 0); // P, I, D
+         planetary.setPositionMode(CANJaguar.kQuadEncoder, p, i, d);
      }
     
     public void toggle() {

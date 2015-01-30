@@ -482,9 +482,9 @@ public final class XboxController extends Joystick {    // Because this class is
     }
 }
 
+/*
 
-
-/* Magnitude */
+Magnitude
 private double getAngle(double rawX, double rawY) {
     return  Math.toDegrees(Math.atan2(rawY, rawX));
 }
@@ -533,3 +533,5 @@ public (something) getVector(double rawX, double rawY) {
     double magnitude    = getMagnitude(trueX, trueY);
     return (something);
 }
+
+*/
