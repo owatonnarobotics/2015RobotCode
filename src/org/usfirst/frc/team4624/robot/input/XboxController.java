@@ -380,7 +380,7 @@ public class XboxController extends Joystick {
             double magnitude = scaleMagnitude( rawX(), rawY() );
             
             if ( magnitude > 1 ) {
-                magnitude = 1;
+                magnitude = 1;  // Prevent any errors that might arise
             }
             
             return magnitude;
@@ -395,7 +395,7 @@ public class XboxController extends Joystick {
             final double y      = rawY();
             final double angle  = Math.atan2( x, y );
             
-            return scaleMagnitude( x, y ) * Math.cos( angle );
+            return scaleMagnitude( x, y ) * Math.sin( angle );
         }
         
         /**
@@ -407,7 +407,7 @@ public class XboxController extends Joystick {
             final double y      = rawY();
             final double angle  = Math.atan2( x, y );
             
-            return scaleMagnitude( x, y ) * Math.sin( angle );
+            return scaleMagnitude( x, y ) * Math.cos( angle );
         }
         
         
