@@ -331,42 +331,7 @@ public final class XboxController extends Joystick {    // Because this class is
         }
         
         
-        /* Magnitude */
-        public double getAngle(double rawX, double rawY) {
-            return  Math.toDegrees(Math.atan2(rawY, rawX));
-        }
-        
-        public double getScaleFactor(double angle) { // requires value between 0 and 90
-            if(angle < 0) {
-                angle = Math.abs(angle); // May want to do a while loop that keeps multiplying by 360
-            }
-            if(angle > 90) {
-                angle = angle % 90;
-            }
-            return Math.toDegrees(Math.cos(angle)); //This works for any values <= 45
-        }
-        
-        public double getScaleFactorX(double angle, double scaleFactor) {
-            return  scaleFactor * Math.toDegrees(Math.cos(angle));
-        }
-        public double getScaleFactorY(double angle, double scaleFactor) {
-            return scaleFactor * Math.toDegrees(Math.sin(angle));
-        }
-        
-        public double getTrueX(double scaleFactorX, double rawX) {
-            return rawX * scaleFactorX;
-        }
-        
-        public double getTrueY(double scaleFactorY, double rawY) {
-            return rawY * scaleFactorY;
-        }
-        
-        public double getMagnitude(double trueX, double trueY) {
-            return Math.sqrt(Math.pow(trueX, 2) + Math.pow(trueY, 2));
-        }
-        
-        
-        
+
         /* Set */
         public void setTriggerDeadZone( double number ) {
             this.deadZone = number;
@@ -515,4 +480,56 @@ public final class XboxController extends Joystick {    // Because this class is
     public Joystick getJoystick() {
         return controller;
     }
+}
+
+
+
+/* Magnitude */
+private double getAngle(double rawX, double rawY) {
+    return  Math.toDegrees(Math.atan2(rawY, rawX));
+}
+
+private double compressAngle(double angle) { // Maybe make this a part of getScaleFactor
+    
+}
+
+private double getScaleFactor(double angle) {
+    while(angle < 0) {
+        angle += 360;
+    }
+    if(angle > 90) {
+        angle = angle % 90;
+    }
+    return Math.toDegrees(Math.cos(angle)); //This works for any values <= 45
+}
+
+private double getScaleFactorX(double angle, double scaleFactor) {
+    return  scaleFactor * Math.toDegrees(Math.cos(angle));
+}
+private double getScaleFactorY(double angle, double scaleFactor) {
+    return scaleFactor * Math.toDegrees(Math.sin(angle));
+}
+
+private double getTrueX(double scaleFactorX, double rawX) {
+    return rawX * scaleFactorX;
+}
+
+private double getTrueY(double scaleFactorY, double rawY) {
+    return rawY * scaleFactorY;
+}
+
+private double getMagnitude(double trueX, double trueY) {
+    return Math.sqrt(Math.pow(trueX, 2) + Math.pow(trueY, 2));
+}
+
+public (something) getVector(double rawX, double rawY) {
+    double angle        = getAngle(rawX, rawY);
+    double smallAngle   = compressAngle(angle);
+    double scaleFactor  = getScaleFactor(smallAngle);
+    double scaleFactorX = getScaleFactorX(angle, scaleFactor);
+    double scaleFactorY = getScaleFactorY(angle, scaleFactor);
+    double trueX        = getTrueX(scaleFactorX, rawX);
+    double trueY        = getTrueY(scaleFactorY, rawY);
+    double magnitude    = getMagnitude(trueX, trueY);
+    return (something);
 }
