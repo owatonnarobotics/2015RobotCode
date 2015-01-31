@@ -49,6 +49,7 @@ public class Planetary extends Subsystem {
         planetary = new CANJaguar(RobotMap.PORT_ENCODER_JAGUAR);
         planetary.setPositionMode(CANJaguar.kQuadEncoder, codesPerRev,
                 RobotMap.p, RobotMap.i, RobotMap.d);
+        planetary.set(100);
     }
 
     public void reinit() {
@@ -115,9 +116,7 @@ public class Planetary extends Subsystem {
     }
 
     public void update() {
-        // planetary.setP(10 + (planetary.getPosition() * 0.01));
-        // planetary.setD(0.5 - (planetary.getPosition() * 0.01));
-        planetary.set(planetary.getPosition() + .1);
+        planetary.set(planetary.getPosition() + 5);
     }
     
     public double getCurrent() {
@@ -155,6 +154,11 @@ public class Planetary extends Subsystem {
     @Override
     protected void initDefaultCommand() {
 
+    }
+
+    public void setGoal(double goal) {
+        planetary.set(goal);
+        
     }
 
 }

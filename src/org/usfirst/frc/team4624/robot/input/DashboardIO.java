@@ -1,13 +1,22 @@
 package org.usfirst.frc.team4624.robot.input;
 
 import org.usfirst.frc.team4624.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DashboardIO {
 
     public DashboardIO() {
+    }
+    
+    public void dashboardIOInit() {
+        SmartDashboard.putString("Arm Status: ", "Unactivated");
+        SmartDashboard.putNumber("U", 0);
+        SmartDashboard.putNumber("P", 0);
+        SmartDashboard.putNumber("I", 0);
+        SmartDashboard.putNumber("D", 0);
+        SmartDashboard.putNumber("Goal", 0);
+        SmartDashboard.putNumber("Position", 0);
     }
     
     public boolean getBoolean(String key) {
@@ -25,6 +34,14 @@ public class DashboardIO {
     public void updateCurrentAndGoal(double current, double goal) {
         SmartDashboard.putNumber("Position", current);
         SmartDashboard.putNumber("Goal", goal);
+    }
+    
+    public boolean newGoal(double goal) {
+        return goal != getNumber("Goal");
+    }
+    
+    public double getGoal() {
+        return getNumber("Goal");
     }
     
     public void updatePID() {

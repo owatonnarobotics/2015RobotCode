@@ -44,6 +44,7 @@ public class Robot extends IterativeRobot {
         oi = new OI();
         driveCommand = new DriveCommand();
         autonomusDrive = new AutonomusDrive();
+        dashboardio.dashboardIOInit();
     }
 
     public void disabledPeriodic() {
@@ -79,9 +80,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        if (!planetary.isStopped()) {
-            planetary.update();
-        }
         if(dashboardio.newPID()) {
             dashboardio.setPID();
             planetary.reinit();
@@ -90,7 +88,12 @@ public class Robot extends IterativeRobot {
             dashboardio.setU();
             planetary.reinit();
         }
+        if(dashboardio.newGoal(planetary.getGoal())) {
+            planetary.setGoal(dashboardio.getGoal());
+            System.out.println("New Goal Set");
+        }
         dashboardio.updateCurrentAndGoal(planetary.getCurrent(), planetary.getGoal());
+        planetary.update();
     }
 
     /**
