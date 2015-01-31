@@ -27,7 +27,7 @@ public class MovePlanetary extends Command {
     protected void execute() {
         //Robot.planetary.toggle();
         //Robot.planetary.setRaw( xboxController.rt.getX() );
-        Robot.planetary.startPositionMode();
+        //Robot.planetary.startPositionMode();
     }
     
     @Override

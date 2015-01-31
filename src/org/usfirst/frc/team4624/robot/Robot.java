@@ -9,10 +9,12 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 
 
+
 import org.usfirst.frc.team4624.robot.commands.AutonomusDrive;
 import org.usfirst.frc.team4624.robot.commands.DriveCommand;
 import org.usfirst.frc.team4624.robot.commands.MovePlanetary;
 import org.usfirst.frc.team4624.robot.subsystems.Planetary;
+import org.usfirst.frc.team4624.robot.subsystems.PneumaticArms;
 import org.usfirst.frc.team4624.robot.subsystems.Powertrain;
 
 /**
@@ -25,12 +27,14 @@ import org.usfirst.frc.team4624.robot.subsystems.Powertrain;
 public class Robot extends IterativeRobot {
     
     public static OI oi;
-    public static final Powertrain powertrain   = new Powertrain();
-    public static final Planetary planetary     = new Planetary();
+    public static final Powertrain      powertrain      = new Powertrain();
+    public static final Planetary       planetary       = new Planetary();
+    public static final PneumaticArms   pneumaticArms   = new PneumaticArms();
     
     Command driveCommand;
     Command movePlanetary;
     Command autonomusDrive;
+    Command releaseArms;
     
     /**
      * This function is run when the robot is first started up and should be
@@ -39,7 +43,6 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         oi              = new OI();
         driveCommand    = new DriveCommand();
-        movePlanetary   = new MovePlanetary();
         autonomusDrive  = new AutonomusDrive();
     }
     
@@ -60,7 +63,6 @@ public class Robot extends IterativeRobot {
     
     public void teleopInit() {
         driveCommand.start();
-        //movePlanetary.start();
     }
     
     /**
@@ -76,15 +78,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        System.out.println("Position: " + Robot.planetary.getPosition());
-        System.out.println("Goal: " + Robot.planetary.getSet());
-        //Robot.planetary.update();
-        //if (Robot.planetary.getPosition() < -1){
-          //  Robot.planetary.stopPositionMode();
-        //}
-        if (System.currentTimeMillis() - Robot.planetary.getTime() >= 1000 * 20){
-            Robot.planetary.updateSet();
-        }
+        
     }
     
     /**
