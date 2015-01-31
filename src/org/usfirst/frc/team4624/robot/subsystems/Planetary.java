@@ -118,8 +118,14 @@ public class Planetary extends Subsystem {
         // planetary.setP(10 + (planetary.getPosition() * 0.01));
         // planetary.setD(0.5 - (planetary.getPosition() * 0.01));
         planetary.set(planetary.getPosition() + .1);
-        System.out.println("Goal:     " + planetary.get());
-        System.out.println("Position: " + planetary.getPosition());
+    }
+    
+    public double getCurrent() {
+        return planetary.getPosition();
+    }
+    
+    public double getGoal() {
+        return planetary.get();
     }
 
     public void setRaw(double number) {

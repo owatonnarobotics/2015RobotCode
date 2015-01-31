@@ -84,7 +84,13 @@ public class Robot extends IterativeRobot {
         }
         if(dashboardio.newPID()) {
             dashboardio.setPID();
+            planetary.reinit();
         }
+        if(dashboardio.newU()) {
+            dashboardio.setU();
+            planetary.reinit();
+        }
+        dashboardio.updateCurrentAndGoal(planetary.getCurrent(), planetary.getGoal());
     }
 
     /**
