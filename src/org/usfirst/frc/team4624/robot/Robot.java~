@@ -24,11 +24,11 @@ import org.usfirst.frc.team4624.robot.subsystems.Powertrain;
 public class Robot extends IterativeRobot {
 
     public static OI oi;
-    public static final Powertrain     powertrain    = new Powertrain();
-    public static final Planetary      planetary     = new Planetary();
-    public static final PneumaticArms  pneumaticArms = new PneumaticArms();
-    public static final CAN_Compressor compressor    = new CAN_Compressor();
-    public static final DashboardIO    dashboardio   = new DashboardIO();
+    public static final Powertrain powertrain = new Powertrain();
+    public static final Planetary planetary = new Planetary();
+    public static final PneumaticArms pneumaticArms = new PneumaticArms();
+    public static final CAN_Compressor compressor = new CAN_Compressor();
+    public static final DashboardIO dashboardio = new DashboardIO();
 
     Command driveCommand;
     Command movePlanetary;
@@ -41,8 +41,8 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-        oi             = new OI();
-        driveCommand   = new DriveCommand();
+        oi = new OI();
+        driveCommand = new DriveCommand();
         autonomusDrive = new AutonomusDrive();
         dashboardio.dashboardIOInit();
     }
@@ -90,7 +90,7 @@ public class Robot extends IterativeRobot {
         }
         if(dashboardio.newGoal(planetary.getGoal())) {
             planetary.setGoal(dashboardio.getGoal());
-            System.out.println("New Goal Set"); // TODO Remove as soon as working
+            System.out.println("New Goal Set");
         }
         dashboardio.updateCurrentAndGoal(planetary.getCurrent(), planetary.getGoal());
         planetary.update();

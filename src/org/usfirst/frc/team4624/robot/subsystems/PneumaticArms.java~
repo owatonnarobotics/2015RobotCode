@@ -20,7 +20,7 @@ public class PneumaticArms extends Subsystem {
     }
     
     public void release() {
-        arms.set(DoubleSolenoid.Value.kOff);
+        arms.set(DoubleSolenoid.Value.kOff); // It's Ethan's fault if this is screwed up :)
     }
 
     @Override

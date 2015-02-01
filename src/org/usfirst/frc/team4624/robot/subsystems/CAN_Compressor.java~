@@ -17,7 +17,6 @@ public class CAN_Compressor extends Subsystem {
         compressor = new Compressor(RobotMap.PORT_COMPRESSOR);
         compressor.start();
     }
-
     @Override
     protected void initDefaultCommand() {
     }
