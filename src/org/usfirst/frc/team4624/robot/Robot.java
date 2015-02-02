@@ -88,11 +88,7 @@ public class Robot extends IterativeRobot {
             dashboardio.setU();
             planetary.reinit();
         }
-        if(dashboardio.newGoal(planetary.getGoal())) {
-            planetary.setGoal(dashboardio.getGoal());
-            System.out.println("New Goal Set"); // TODO Remove as soon as working
-        }
-        dashboardio.updateCurrentAndGoal(planetary.getCurrent(), planetary.getGoal());
+        dashboardio.updateCurrentAndGoal(planetary.getCurrent(), planetary.getTarget());
         planetary.update();
     }
 

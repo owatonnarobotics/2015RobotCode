@@ -10,7 +10,7 @@ public class BetterCANJaguar {
     boolean     spinning;
     double      globalPosition;
     
-    BetterCANJaguar( int ID, int codesPerREvolution, double p, double i, double d ) {
+    public BetterCANJaguar( int ID, int codesPerRevolution, double p, double i, double d ) {
         this.jaguar = new CANJaguar( ID );
         
         this.targetRotation = 0;
@@ -19,7 +19,7 @@ public class BetterCANJaguar {
         this.spinning       = false;
         this.globalPosition = 0;
         
-        jaguar.setSpeedMode( CANJaguar.kQuadEncoder, codesPerREvolution, p, i, d );
+        jaguar.setSpeedMode( CANJaguar.kQuadEncoder, codesPerRevolution, p, i, d );
         jaguar.enableControl( 0 );
     }
     
@@ -88,5 +88,13 @@ public class BetterCANJaguar {
     
     public double getGlobalPosition() {
         return globalPosition + jaguar.getPosition();
+    }
+    
+    public void setPID( double p, double i, double d ) {
+        jaguar.setPID(p, i, d);
+    }
+    
+    public double getSpeed() {
+        return jaguar.getSpeed();
     }
 }

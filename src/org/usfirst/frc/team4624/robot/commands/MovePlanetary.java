@@ -20,23 +20,23 @@ public class MovePlanetary extends Command {
     protected void initialize() {
         //Robot.planetary.stop();
         System.out.println("MovePlanetary Initialized");
+        Robot.planetary.setTarget( 4 );
+        System.out.println("Rotating 4 times...");
     }
     
     @Override
     protected void execute() {
-        //Robot.planetary.toggle();
-        //Robot.planetary.setRaw(xboxController.rt.getX());
-        Robot.planetary.startPositionMode();
+        Robot.planetary.update();
     }
     
     @Override
     protected boolean isFinished() {
-        return true;
+        return Robot.planetary.isFinished();
     }
     
     @Override
     protected void end() {
-        //Robot.planetary.stop();
+        
     }
     
     @Override

@@ -27,7 +27,7 @@ public class Powertrain extends Subsystem {
     double inputFunction(double input) {
         double x        =  Math.abs(input);
         double thing    = -Math.sqrt(1 - Math.pow(x, 2)) + 1;
-        if (input > 0  {
+        if (input > 0) {
             return thing;
         }
         else {
