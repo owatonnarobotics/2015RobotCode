@@ -1,26 +1,29 @@
 package org.usfirst.frc.team4624.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import org.usfirst.frc.team4624.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PneumaticArms extends Subsystem {
 
     /* Instance Values */
-    DoubleSolenoid arms;
+    Solenoid arms;
     
     public PneumaticArms() {
-        arms = new DoubleSolenoid(0, 1); //TODO Place these in RobotMap
+        arms = new Solenoid(RobotMap.PCM_CAN_ID, RobotMap.PCM_SOLENOID_PORT); //TODO Place these in RobotMap
+        arms.clearAllPCMStickyFaults();
         grab();
     }
     
     public void grab() {
-        arms.set(DoubleSolenoid.Value.kForward);
+        arms.set(true);
+        System.out.println("Grabbed");
     }
     
     public void release() {
-        arms.set(DoubleSolenoid.Value.kOff); // It's Ethan's fault if this is screwed up :)
+        arms.set(false);
+        System.out.println("Released");
     }
 
     @Override

@@ -105,7 +105,7 @@ public class Powertrain extends Subsystem {
         final double left   = (v-w) / 2;
         final double right  = (v+w) / 2;
         
-        set(left, right);
+        set(inputFunction(left), inputFunction(right));
     }
     
     public void stop() {

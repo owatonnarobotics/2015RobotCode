@@ -10,6 +10,7 @@ public class OI {
     public static XboxController xboxController = new XboxController();
     public OI() {
         xboxController.b.whenPressed(new MovePlanetary());
+        
         xboxController.rt.whenPressed(new ReleaseArms());
         xboxController.rt.whenReleased(new GrabArms());
     }
