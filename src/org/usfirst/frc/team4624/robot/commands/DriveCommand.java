@@ -25,7 +25,7 @@ public class DriveCommand extends Command {
      * This initializes the DriveCommand
      */
     public DriveCommand() {
-        requires( Robot.powertrain );   // Use requires() here to declare subsystem dependencies
+        requires(Robot.powertrain);   // Use requires() here to declare subsystem dependencies
         xboxController = OI.xboxController;
     }
     
@@ -37,7 +37,7 @@ public class DriveCommand extends Command {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.powertrain.setFromThumbstick( xboxController.leftStick );
+        Robot.powertrain.setFromThumbstick(xboxController.leftStick);
     }
     
     // Make this return true when this Command no longer needs to run execute()
@@ -47,12 +47,10 @@ public class DriveCommand extends Command {
     
     // Called once after isFinished returns true
     protected void end() {
-        
     }
     
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
-    protected void interrupted() {
-        
+    protected void interrupted() {   
     }
 }

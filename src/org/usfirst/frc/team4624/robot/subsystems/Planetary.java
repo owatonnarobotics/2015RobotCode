@@ -5,112 +5,156 @@ import org.usfirst.frc.team4624.robot.RobotMap;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Planetary extends Subsystem {
-    
-     CANJaguar planetary;
-     
-     private boolean spinning;
-     
-     private long startTime;
-     
-     public Planetary() {
-         this.init();
-     }
-     
-     public void init() {
-         spinning  = false;
-         planetary = new CANJaguar(RobotMap.PORT_ENCODER_JAGUAR);
-         planetary.setPositionMode(CANJaguar.kQuadEncoder, 511, 0.1, 0, 0); // P, I, D
-     }
-    
+public class Planetary extends Subsystem { // TODO Clean this code a lot. Get rid of useless methods, organize the rest.
+
+    private double[] levels;
+
+    private void goToPosition() { // Should move current position of motor from something to something else
+        // goToRotation();
+    }
+
+    private void goToRotation() { // Corrects for inaccuracy in lifting mechanism (and ramps speed)
+
+    }
+
+    public void changePosition() {
+        // goToPosition(Something);
+    }
+
+    public void setPosition() {
+        // goToPosition(Something);
+    }
+
+    public void changeLevel() {
+        // goToPosition(levels);
+    }
+
+    public void setLevel() {
+        // goToPosition(levels);
+    }
+
+    CANJaguar planetary;
+    private boolean spinning;
+    private long    startTime;
+    private int     codesPerRev = 497;
+
+    public Planetary() {
+        this.init();
+    }
+
+    public void init() {
+        spinning = false;
+        planetary = new CANJaguar(RobotMap.PORT_ENCODER_JAGUAR);
+        planetary.setPositionMode(CANJaguar.kQuadEncoder, codesPerRev,
+                RobotMap.p, RobotMap.i, RobotMap.d);
+        planetary.set(100);
+    }
+
+    public void reinit() {
+        planetary.setPositionMode(CANJaguar.kQuadEncoder, codesPerRev,
+                RobotMap.p, RobotMap.i, RobotMap.d);
+    }
+
     public void toggle() {
         spinning = !spinning;
-        setMotor(spinning );
+        setMotor(spinning);
     }
-    
-    public void togglePositionMode(){
+
+    public void togglePositionMode() {
         spinning = !spinning;
-        if (spinning){
+        if (spinning) {
             System.out.println("Test");
             planetary.enableControl();
-            //planetary.set(1);
-        }
-        else{
+        } else {
             stopPositionMode();
         }
     }
-    
-    public void startPositionMode(){
+
+    public void startPositionMode() {
         startTime = System.currentTimeMillis();
         spinning = true;
-        planetary.disableControl();
         planetary.enableControl();
         planetary.set(5);
     }
-    
-    public void stopPositionMode(){
-        if (spinning){
+
+    public void stopPositionMode() {
+        if (spinning) {
             planetary.disableControl();
             spinning = false;
         }
     }
-    
-    public double getPosition(){
+
+    public double getPosition() {
         return planetary.getPosition();
     }
-    
-    public double getP(){
+
+    public double getP() {
         return planetary.getP();
     }
-    
-    public double getD(){
+
+    public double getD() {
         return planetary.getD();
     }
-    
-    public double getTime(){
+
+    public double getTime() {
         return startTime;
     }
-    
-    public double getSet(){
+
+    public double getSet() {
         return planetary.get();
     }
-    
-    public void updateSet(){
+
+    public boolean isStopped() {
+        return planetary.get() == 0;
+    }
+
+    public void updateSet() {
         planetary.set(planetary.get() + 5);
         startTime = System.currentTimeMillis();
     }
-    
-    public void update(){
-        //planetary.setP(10 + (planetary.getPosition() * 0.01));
-        //planetary.setD(0.5 - (planetary.getPosition() * 0.01));
+
+    public void update() {
+        planetary.set(planetary.getPosition() + 5);
     }
     
-    public void setRaw( double number ) {
-        planetary.set( number );
+    public double getCurrent() {
+        return planetary.getPosition();
     }
     
-    public void setMotor( boolean spinning ) {
-        if (spinning ) {
+    public double getGoal() {
+        return planetary.get();
+    }
+
+    public void setRaw(double number) {
+        planetary.set(number);
+    }
+
+    public void setMotor(boolean spinning) {
+        if (spinning) {
             setRaw(.5);
         } else {
             setRaw(0);
         }
     }
-    
+
     public void stop() {
         planetary.set(0);
     }
-    
-    public double getSpeed(){
+
+    public double getSpeed() {
         return planetary.getSpeed();
     }
+
     public boolean getSpinning() {
         return spinning;
     }
-    
-    @Override
-    protected void initDefaultCommand() {
-        
+
+    public void setGoal(double goal) {
+        planetary.set(goal);
     }
 
+    @Override
+    protected void initDefaultCommand() {
+
+    }
 }
