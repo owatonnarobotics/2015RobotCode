@@ -75,6 +75,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+        /*
         Scheduler.getInstance().run();
         if(dashboardio.newPID()) {
             dashboardio.setPID();
@@ -89,6 +90,7 @@ public class Robot extends IterativeRobot {
         }
         dashboardio.updateCurrentAndGoal(forklift.getCurrent(), forklift.getGoal());
         forklift.update();
+        */
     }
 
     /**

@@ -19,4 +19,9 @@ public class Forklift extends Subsystem {
     @Override
     protected void initDefaultCommand() {
     }
+
+    public void changeHeight(int changeHeight) {
+        // TODO Auto-generated method stub
+        
+    }
 }

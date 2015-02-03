@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4624.robot.commands;
 
+import org.usfirst.frc.team4624.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class LiftManual extends Command {

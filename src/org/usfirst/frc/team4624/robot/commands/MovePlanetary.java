@@ -26,7 +26,7 @@ public class MovePlanetary extends Command { // We should probably remove this c
     protected void execute() {
         //Robot.planetary.toggle();
         //Robot.planetary.setRaw(xboxController.rt.getX());
-        Robot.forklift.startPositionMode();
+        //Robot.forklift.startPositionMode();
     }
     
     @Override

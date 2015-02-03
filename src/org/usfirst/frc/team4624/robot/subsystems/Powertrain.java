@@ -46,6 +46,9 @@ public class Powertrain extends Subsystem {
         double left  = Math.max(-1, Math.min(1, l)); // Clamp
         double right = Math.max(-1, Math.min(1, r)); // Clamp
         motors.tankDrive(left, right);
+        System.out.println("Motors have been set");
+        System.out.println("Left: " + left);
+        System.out.println("Right: " + right);
     }
     
     public void set(double l, double r) {
@@ -54,8 +57,8 @@ public class Powertrain extends Subsystem {
     
     public void setAsTankdrive(XboxController.Thumbstick stick) {
         // Formula taken from here: http://home.kendra.com/mauser/Joystick.html
-        final double x     = -stick.getRawX();
-        final double y     =  stick.getRawY();
+        final double x     = stick.getRawX();
+        final double y     = stick.getRawY();
         
         final double v     = (1 - Math.abs(x)) * y + y;
         final double w     = (1 - Math.abs(y)) * x + x;
