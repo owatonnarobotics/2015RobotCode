@@ -28,6 +28,7 @@ public class OI {
          * rb = release arms
          * rt = go up
          * lt = go down
+         * lb = stop moving
          * 
          * thumbsticks = ruin everything
          */

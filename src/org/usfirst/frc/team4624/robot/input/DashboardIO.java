@@ -7,9 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DashboardIO {
 
     public DashboardIO() {
-    }
-    
-    public void dashboardIOInit() {
         SmartDashboard.putString("Arm Status: ", "Unactivated");
         SmartDashboard.putNumber("U", 0);
         SmartDashboard.putNumber("P", 0);

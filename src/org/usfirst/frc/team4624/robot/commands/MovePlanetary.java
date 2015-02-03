@@ -12,7 +12,7 @@ public class MovePlanetary extends Command {
     XboxController xboxController;
     
     public MovePlanetary() {
-        requires( Robot.forklift );
+        requires(Robot.forklift);
         xboxController = OI.xboxController;
     }
     
@@ -25,7 +25,7 @@ public class MovePlanetary extends Command {
     @Override
     protected void execute() {
         //Robot.planetary.toggle();
-        //Robot.planetary.setRaw( xboxController.rt.getX() );
+        //Robot.planetary.setRaw(xboxController.rt.getX());
         Robot.forklift.startPositionMode();
     }
     
@@ -41,6 +41,5 @@ public class MovePlanetary extends Command {
     
     @Override
     protected void interrupted() {
-        
     }
 }

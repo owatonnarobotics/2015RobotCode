@@ -7,9 +7,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GrabArms extends Command {
 
-
     public GrabArms() {
-        requires( Robot.pneumaticArms );
+        requires(Robot.pneumaticArms);
     }
     
     @Override
@@ -33,8 +32,6 @@ public class GrabArms extends Command {
 
     @Override
     protected void interrupted() {
-        // TODO Auto-generated method stub
-        
     }
 
 }

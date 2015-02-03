@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class PneumaticArms extends Subsystem {
 
-    /* Instance Values */
     Solenoid arms;
     
     public PneumaticArms() {

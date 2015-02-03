@@ -7,9 +7,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ReleaseArms extends Command {
 
-
     public ReleaseArms() {
-        requires( Robot.pneumaticArms );
+        requires( obot.pneumaticArms);
     }
     
     @Override
@@ -33,8 +32,6 @@ public class ReleaseArms extends Command {
 
     @Override
     protected void interrupted() {
-        // TODO Auto-generated method stub
-        
     }
 
 }

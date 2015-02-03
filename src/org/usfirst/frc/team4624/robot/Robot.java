@@ -22,6 +22,7 @@ import org.usfirst.frc.team4624.robot.subsystems.Powertrain;
 public class Robot extends IterativeRobot {
 
     public static       OI              oi;
+
     public static final Powertrain      powertrain      = new Powertrain();
     public static final Forklift        forklift        = new Forklift();
     public static final PneumaticArms   pneumaticArms   = new PneumaticArms();
@@ -33,14 +34,13 @@ public class Robot extends IterativeRobot {
     Command autonomusDrive;
     Command releaseArms;
     
-
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
         oi              = new OI();
-        //compressor      = new CAN_Compressor();
+      //compressor      = new CAN_Compressor();
         driveCommand    = new DriveCommand();
         autonomusDrive  = new AutonomusDrive();
         dashboardio.dashboardIOInit();
@@ -71,7 +71,6 @@ public class Robot extends IterativeRobot {
      * to reset subsystems before shutting down.
      */
     public void disabledInit() {
-
     }
 
     /**
