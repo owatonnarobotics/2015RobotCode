@@ -7,7 +7,7 @@ import org.usfirst.frc.team4624.robot.subsystems.Forklift;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class MovePlanetary extends Command {
+public class MovePlanetary extends Command { // We should probably remove this class...
     
     XboxController xboxController;
     

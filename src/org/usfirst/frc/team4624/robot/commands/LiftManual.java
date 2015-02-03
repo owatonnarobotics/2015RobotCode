@@ -4,6 +4,11 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class LiftManual extends Command {
 
+    public LiftManual(int changeHeight) { // May want to rename paramater
+        requires(Robot.forklift);
+        Robot.forklift.changeHeight(changeHeight);
+    }
+
     @Override
     protected void initialize() {
     }

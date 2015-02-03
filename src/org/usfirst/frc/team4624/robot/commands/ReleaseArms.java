@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ReleaseArms extends Command {
 
     public ReleaseArms() {
-        requires( obot.pneumaticArms);
+        requires(Robot.pneumaticArms);
     }
     
     @Override

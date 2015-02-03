@@ -9,7 +9,7 @@ public class LiftLevel extends Command {
     public int level;
     
     public LiftLevel(int changeLevel) {
-        requires(Robot.forklift)
+        requires(Robot.forklift);
         if(changeLevel == 0) {
             Robot.forklift.stop();
         } else {
@@ -27,7 +27,7 @@ public class LiftLevel extends Command {
 
     @Override
     protected boolean isFinished() {
-        return true;    // Move levels can be cumulative
+        return true; // Move levels can be cumulative
     }
 
     @Override

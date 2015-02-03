@@ -8,7 +8,6 @@ import org.usfirst.frc.team4624.robot.input.XboxController;
 
 /**
  * DriveCommand
- * 
  * This command is used for teleoperated controlling
  */
 public class DriveCommand extends Command {
@@ -18,11 +17,10 @@ public class DriveCommand extends Command {
     
     /**
      * Constructor 
-     * 
      * This initializes the DriveCommand
      */
     public DriveCommand() {
-        requires(Robot.powertrain);   // Use requires() here to declare subsystem dependencies
+        requires(Robot.powertrain); // Use requires() here to declare subsystem dependencies
         xboxController = OI.xboxController;
     }
     

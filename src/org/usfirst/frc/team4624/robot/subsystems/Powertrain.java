@@ -16,7 +16,6 @@ public class Powertrain extends Subsystem {
     
     /**
      * Constructor
-     * 
      * This initializes the powertrain
      */
     public Powertrain() {
@@ -44,7 +43,7 @@ public class Powertrain extends Subsystem {
     }
     
     public void setRaw(double l, double r) {  // Avoid using this. Use set instead
-        double left  = Math.max(-1, Math.min(1, l));  // Clamp
+        double left  = Math.max(-1, Math.min(1, l)); // Clamp
         double right = Math.max(-1, Math.min(1, r)); // Clamp
         motors.tankDrive(left, right);
     }

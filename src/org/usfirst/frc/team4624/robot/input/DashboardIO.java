@@ -8,11 +8,11 @@ public class DashboardIO {
 
     public DashboardIO() {
         SmartDashboard.putString("Arm Status: ", "Unactivated");
-        SmartDashboard.putNumber("U", 0);
-        SmartDashboard.putNumber("P", 0);
-        SmartDashboard.putNumber("I", 0);
-        SmartDashboard.putNumber("D", 0);
-        SmartDashboard.putNumber("Goal", 0);
+        SmartDashboard.putNumber("U"       , 0);
+        SmartDashboard.putNumber("P"       , 0);
+        SmartDashboard.putNumber("I"       , 0);
+        SmartDashboard.putNumber("D"       , 0);
+        SmartDashboard.putNumber("Goal"    , 0);
         SmartDashboard.putNumber("Position", 0);
     }
     
@@ -30,7 +30,7 @@ public class DashboardIO {
     
     public void updateCurrentAndGoal(double current, double goal) {
         SmartDashboard.putNumber("Position", current);
-        SmartDashboard.putNumber("Goal", goal);
+        SmartDashboard.putNumber("Goal"    , goal);
     }
     
     public boolean newGoal(double goal) {
@@ -63,17 +63,17 @@ public class DashboardIO {
         RobotMap.i = getNumber("I");
         RobotMap.d = getNumber("D");
         updatePID();
-        System.out.println("Updated PID Values");
-        System.out.println(RobotMap.p + " " + RobotMap.i + " " + RobotMap.d);
+      //System.out.println("Updated PID Values");
+      //System.out.println(RobotMap.p + " " + RobotMap.i + " " + RobotMap.d);
     }
     
     public void setU() {
         RobotMap.u = (int) getNumber("U");
-        RobotMap.p = .6 * getNumber("U");
-        RobotMap.i = 2 * getNumber("P") / getNumber("U");
-        RobotMap.d = getNumber("P") * getNumber("U") / 8;
+        RobotMap.p =  .6 * getNumber("U");
+        RobotMap.i =   2 * getNumber("P") / getNumber("U");
+        RobotMap.d =       getNumber("P") * getNumber("U") / 8;
         updatePID();
-        System.out.println("Updated U and PID Values");
-        System.out.println(RobotMap.p + " " + RobotMap.i + " " + RobotMap.d);
+      //System.out.println("Updated U and PID Values");
+      //System.out.println(RobotMap.p + " " + RobotMap.i + " " + RobotMap.d);
     }
 }

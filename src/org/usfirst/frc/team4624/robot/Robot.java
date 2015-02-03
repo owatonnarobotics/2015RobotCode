@@ -43,7 +43,6 @@ public class Robot extends IterativeRobot {
       //compressor      = new CAN_Compressor();
         driveCommand    = new DriveCommand();
         autonomusDrive  = new AutonomusDrive();
-        dashboardio.dashboardIOInit();
     }
 
     public void disabledPeriodic() {
@@ -51,7 +50,6 @@ public class Robot extends IterativeRobot {
     }
 
     public void autonomousInit() {
-
     }
 
     /**
