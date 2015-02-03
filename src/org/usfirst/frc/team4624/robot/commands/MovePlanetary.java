@@ -3,7 +3,7 @@ package org.usfirst.frc.team4624.robot.commands;
 import org.usfirst.frc.team4624.robot.OI;
 import org.usfirst.frc.team4624.robot.Robot;
 import org.usfirst.frc.team4624.robot.input.XboxController;
-import org.usfirst.frc.team4624.robot.subsystems.Planetary;
+import org.usfirst.frc.team4624.robot.subsystems.Forklift;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -12,7 +12,7 @@ public class MovePlanetary extends Command {
     XboxController xboxController;
     
     public MovePlanetary() {
-        requires( Robot.planetary );
+        requires( Robot.forklift );
         xboxController = OI.xboxController;
     }
     
@@ -26,12 +26,12 @@ public class MovePlanetary extends Command {
     protected void execute() {
         //Robot.planetary.toggle();
         //Robot.planetary.setRaw( xboxController.rt.getX() );
-        Robot.planetary.startPositionMode();
+        Robot.forklift.startPositionMode();
     }
     
     @Override
     protected boolean isFinished() {
-        return true;
+        return false;
     }
     
     @Override

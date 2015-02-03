@@ -1,40 +1,49 @@
 package org.usfirst.frc.team4624.robot.commands;
 
 import org.usfirst.frc.team4624.robot.Robot;
-import org.usfirst.frc.team4624.robot.subsystems.Forklift;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class AutonomusDrive extends Command {
+public class LiftLevel extends Command {
     
-    public AutonomusDrive() {
-        //requires(Robot.planetary);
+    public int level;
+    
+    public LiftLevel(int changeLevel) {
+        requires(Robot.forklift)
+        if(changeLevel == 0) {
+            Robot.forklift.stop();
+        } else {
+            Robot.forklift.changeLevel(changeLevel);
+        }
     }
+    
     @Override
     protected void initialize() {
-        //Robot.planetary.stop();
-    }
-    
-    @Override
-    protected void execute() {
+        // TODO Auto-generated method stub
         
     }
-    
+
+    @Override
+    protected void execute() {
+        // TODO Auto-generated method stub
+        
+    }
+
     @Override
     protected boolean isFinished() {
-        // TODO Auto-generated method stub
-        return false;
+        return true;    // Move levels can be cumulative
     }
-    
+
     @Override
     protected void end() {
         // TODO Auto-generated method stub
         
     }
-    
+
     @Override
     protected void interrupted() {
         // TODO Auto-generated method stub
         
     }
+
 }

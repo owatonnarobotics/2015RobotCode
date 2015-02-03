@@ -11,7 +11,7 @@ public class PneumaticArms extends Subsystem {
     Solenoid arms;
     
     public PneumaticArms() {
-        arms = new Solenoid(RobotMap.PCM_CAN_ID, RobotMap.PCM_SOLENOID_PORT); //TODO Place these in RobotMap
+        arms = new Solenoid(RobotMap.PCM_CAN_ID, RobotMap.PCM_SOLENOID_PORT);
         arms.clearAllPCMStickyFaults();
         grab();
     }

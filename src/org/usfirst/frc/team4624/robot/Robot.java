@@ -8,7 +8,7 @@ import org.usfirst.frc.team4624.robot.commands.AutonomusDrive;
 import org.usfirst.frc.team4624.robot.commands.DriveCommand;
 import org.usfirst.frc.team4624.robot.input.DashboardIO;
 import org.usfirst.frc.team4624.robot.subsystems.CAN_Compressor;
-import org.usfirst.frc.team4624.robot.subsystems.Planetary;
+import org.usfirst.frc.team4624.robot.subsystems.Forklift;
 import org.usfirst.frc.team4624.robot.subsystems.PneumaticArms;
 import org.usfirst.frc.team4624.robot.subsystems.Powertrain;
 
@@ -23,7 +23,7 @@ public class Robot extends IterativeRobot {
 
     public static       OI              oi;
     public static final Powertrain      powertrain      = new Powertrain();
-    public static final Planetary       planetary       = new Planetary();
+    public static final Forklift        forklift        = new Forklift();
     public static final PneumaticArms   pneumaticArms   = new PneumaticArms();
     public static final CAN_Compressor  compressor      = new CAN_Compressor();
     public static final DashboardIO     dashboardio     = new DashboardIO();
@@ -81,18 +81,17 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         if(dashboardio.newPID()) {
             dashboardio.setPID();
-            planetary.reinit();
+            forklift.reinit();
         }
         if(dashboardio.newU()) {
             dashboardio.setU();
-            planetary.reinit();
+            forklift.reinit();
         }
-        if(dashboardio.newGoal(planetary.getGoal())) {
-            planetary.setGoal(dashboardio.getGoal());
-            //System.out.println("New Goal Set");
+        if(dashboardio.newGoal(forklift.getGoal())) {
+            forklift.setGoal(dashboardio.getGoal());
         }
-        dashboardio.updateCurrentAndGoal(planetary.getCurrent(), planetary.getGoal());
-        planetary.update();
+        dashboardio.updateCurrentAndGoal(forklift.getCurrent(), forklift.getGoal());
+        forklift.update();
     }
 
     /**
