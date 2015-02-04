@@ -20,17 +20,23 @@ public class Powertrain extends Subsystem {
      */
     public Powertrain() {
         /* Initialize */
-        motors = new RobotDrive(RobotMap.PORT_MOTOR_LEFT, RobotMap.PORT_MOTOR_RIGHT);
+        Jaguar leftMotor = new Jaguar(RobotMap.PORT_MOTOR_LEFT);
+        Jaguar rightMotor = new Jaguar(RobotMap.PORT_MOTOR_RIGHT);
+        
+        motors = new RobotDrive(leftMotor, rightMotor);
+        //motors.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
+        motors.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+        
         stop();
     }
     
-    double inputFunction(double input) { //TODO Rename this function and paramaters
-        double x =  Math.abs(input);
-        double y = -Math.sqrt(1 - Math.pow(x, 2)) + 1;
+    double inputFunction(final double input) { //TODO Rename this function and paramaters
+        final double abs    =  Math.abs(input);
+        final double output = -Math.sqrt(1 - Math.pow(abs, 2)) + 1;
         if (input > 0) {
-            return y;
+            return output;
         } else {
-            return -y;
+            return -output;
         }
     }
     
@@ -42,34 +48,21 @@ public class Powertrain extends Subsystem {
         setDefaultCommand(new DriveCommand());
     }
     
-    public void setRaw(double l, double r) {  // Avoid using this. Use set instead
-        double left  = Math.max(-1, Math.min(1, l)); // Clamp
-        double right = Math.max(-1, Math.min(1, r)); // Clamp
-        motors.tankDrive(left, right);
-        System.out.println("Motors have been set");
-        System.out.println("Left: " + left);
-        System.out.println("Right: " + right);
-    }
-    
-    public void set(double l, double r) {
-        setRaw(l, -r); // To go straight, we inverted one of the motors (Clockwise && Counter-Clockwise = Straight)
-    }
-    
     public void setAsTankdrive(XboxController.Thumbstick stick) {
-        // Formula taken from here: http://home.kendra.com/mauser/Joystick.html
-        final double x     = stick.getRawX();
-        final double y     = stick.getRawY();
+        final double boostScale = .5;   // Smaller makes non boost slower. Boost is always full speed.
         
-        final double v     = (1 - Math.abs(x)) * y + y;
-        final double w     = (1 - Math.abs(y)) * x + x;
+        double x = inputFunction(stick.getRawX()) * (stick.get() ? 1 : boostScale);
+        double y = inputFunction(stick.getRawY()) * (stick.get() ? 1 : boostScale);
         
-        final double left  = (v-w) / 2;
-        final double right = (v+w) / 2;
         
-        set(inputFunction(left), inputFunction(right));
+        motors.arcadeDrive(x, y);
     }
     
     public void stop() {
         motors.stopMotor();
+    }
+    
+    public boolean isFinished() {
+        return false;
     }
 }
