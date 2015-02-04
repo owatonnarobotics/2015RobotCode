@@ -20,11 +20,10 @@ public class Powertrain extends Subsystem {
      */
     public Powertrain() {
         /* Initialize */
-        Jaguar leftMotor = new Jaguar(RobotMap.PORT_MOTOR_LEFT);
+        Jaguar leftMotor  = new Jaguar(RobotMap.PORT_MOTOR_LEFT);
         Jaguar rightMotor = new Jaguar(RobotMap.PORT_MOTOR_RIGHT);
         
         motors = new RobotDrive(leftMotor, rightMotor);
-        //motors.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
         motors.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
         
         stop();
@@ -53,7 +52,6 @@ public class Powertrain extends Subsystem {
         
         double x = inputFunction(stick.getRawX()) * (stick.get() ? 1 : boostScale);
         double y = inputFunction(stick.getRawY()) * (stick.get() ? 1 : boostScale);
-        
         
         motors.arcadeDrive(x, y);
     }

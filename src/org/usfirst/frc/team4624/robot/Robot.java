@@ -4,8 +4,13 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
+import org.usfirst.frc.team4624.robot.commands.AutonomusDrive;
 import org.usfirst.frc.team4624.robot.commands.DriveCommand;
 import org.usfirst.frc.team4624.robot.input.DashboardIO;
+import org.usfirst.frc.team4624.robot.subsystems.CAN_Compressor;
+import org.usfirst.frc.team4624.robot.subsystems.Forklift;
+import org.usfirst.frc.team4624.robot.subsystems.PneumaticArms;
 import org.usfirst.frc.team4624.robot.subsystems.Powertrain;
 
 /**
@@ -19,18 +24,26 @@ public class Robot extends IterativeRobot {
 
     public static       OI              oi;
 
-    public static final Powertrain      powertrain      = new Powertrain();
-    //public static final DashboardIO     dashboardio     = new DashboardIO();
+    public static final Powertrain     powertrain    = new Powertrain();
+    public static final Forklift       forklift      = new Forklift();;
+    public static final PneumaticArms  pneumaticArms = new PneumaticArms();
+    public static final CAN_Compressor compressor    = new CAN_Compressor();
+    public static final DashboardIO    dashboardio   = new DashboardIO();
 
     Command driveCommand;
+    Command movePlanetary;
+    Command autonomusDrive;
+    Command releaseArms;
     
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-        oi              = new OI();
-        driveCommand    = new DriveCommand();
+        oi             = new OI();
+      //compressor     = new CAN_Compressor();
+        driveCommand   = new DriveCommand();
+        autonomusDrive = new AutonomusDrive();
     }
 
     public void disabledPeriodic() {
@@ -49,7 +62,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         driveCommand.start();
-        //dashboardio.updatePID();
+        dashboardio.updatePID();
     }
 
     /**
