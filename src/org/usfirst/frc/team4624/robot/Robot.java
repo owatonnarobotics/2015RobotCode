@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.usfirst.frc.team4624.robot.commands.AutonomusDrive;
 import org.usfirst.frc.team4624.robot.commands.DriveCommand;
+import org.usfirst.frc.team4624.robot.commands.LiftManual;
 import org.usfirst.frc.team4624.robot.input.DashboardIO;
 import org.usfirst.frc.team4624.robot.subsystems.CAN_Compressor;
 import org.usfirst.frc.team4624.robot.subsystems.Forklift;
@@ -25,15 +25,15 @@ public class Robot extends IterativeRobot {
     public static       OI              oi;
 
     public static final Powertrain     powertrain    = new Powertrain();
-    public static final Forklift       forklift      = new Forklift();;
+    public static final Forklift       forklift      = new Forklift();
     public static final PneumaticArms  pneumaticArms = new PneumaticArms();
     public static final CAN_Compressor compressor    = new CAN_Compressor();
     public static final DashboardIO    dashboardio   = new DashboardIO();
 
     Command driveCommand;
     Command movePlanetary;
-    Command autonomusDrive;
     Command releaseArms;
+    Command liftManual;
     
     /**
      * This function is run when the robot is first started up and should be
@@ -43,7 +43,7 @@ public class Robot extends IterativeRobot {
         oi             = new OI();
       //compressor     = new CAN_Compressor();
         driveCommand   = new DriveCommand();
-        autonomusDrive = new AutonomusDrive();
+        liftManual     = new LiftManual();
     }
 
     public void disabledPeriodic() {
@@ -62,6 +62,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         driveCommand.start();
+        liftManual.start();
         dashboardio.updatePID();
     }
 
@@ -77,8 +78,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        /*
-        Scheduler.getInstance().run();
+        
         if(dashboardio.newPID()) {
             dashboardio.setPID();
             forklift.reinit();
@@ -87,12 +87,10 @@ public class Robot extends IterativeRobot {
             dashboardio.setU();
             forklift.reinit();
         }
-        if(dashboardio.newGoal(forklift.getGoal())) {
+        if(dashboardio.newGoal(forklift.getPosition())) {
             forklift.setGoal(dashboardio.getGoal());
         }
-        dashboardio.updateCurrentAndGoal(forklift.getCurrent(), forklift.getGoal());
-        forklift.update();
-        */
+        dashboardio.updateCurrentAndGoal(forklift.getPosition(), forklift.getGoal());
     }
 
     /**
