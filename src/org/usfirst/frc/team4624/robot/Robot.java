@@ -2,9 +2,11 @@ package org.usfirst.frc.team4624.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import org.usfirst.frc.team4624.autonomous.*;
 import org.usfirst.frc.team4624.robot.commands.*;
 import org.usfirst.frc.team4624.robot.input.*;
 import org.usfirst.frc.team4624.robot.subsystems.*;
@@ -39,6 +41,8 @@ public class Robot extends IterativeRobot {
     Command driveCommand;
     Command liftManual;
     
+    CommandGroup currentAutoPreset;
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -60,6 +64,8 @@ public class Robot extends IterativeRobot {
         /* Initialize 'always on' commands */
         driveCommand    = new DriveCommand();
         liftManual      = new LiftManual();
+        
+        currentAutoPreset = new ExampleAutonomusCommand();
     }
 
     public void disabledPeriodic() {
@@ -67,6 +73,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void autonomousInit() {
+        currentAutoPreset.start();
     }
 
     /**
