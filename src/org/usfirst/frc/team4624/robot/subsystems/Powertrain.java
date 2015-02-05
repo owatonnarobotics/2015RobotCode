@@ -15,8 +15,7 @@ public class Powertrain extends Subsystem {
     RobotDrive motors;
     
     /**
-     * Constructor
-     * This initializes the powertrain
+     * Initializes Powertrain subsystem. Should only be called once.
      */
     public Powertrain() {
         /* Initialize */
@@ -50,8 +49,8 @@ public class Powertrain extends Subsystem {
     public void setAsTankdrive(XboxController.Thumbstick stick) {
         final double boostScale = .5;   // Smaller makes non boost slower. Boost is always full speed.
         
-        double x = inputFunction(stick.getRawX()) * (stick.get() ? 1 : boostScale);
-        double y = inputFunction(stick.getRawY()) * (stick.get() ? 1 : boostScale);
+        double x = inputFunction(stick.getX()) * (stick.get() ? 1 : boostScale);
+        double y = inputFunction(stick.getY()) * (stick.get() ? 1 : boostScale);
         
         motors.arcadeDrive(x, y);
     }

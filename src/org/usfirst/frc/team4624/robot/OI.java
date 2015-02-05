@@ -7,7 +7,8 @@ import org.usfirst.frc.team4624.robot.commands.ReleaseArms;
 import org.usfirst.frc.team4624.robot.input.XboxController;
 
 public class OI {
-
+    
+/** The Xbox360 controller that we use to control the robot */
     public static XboxController xboxController = new XboxController();
 
     public OI() {
