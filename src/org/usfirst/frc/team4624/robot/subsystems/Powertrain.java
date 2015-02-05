@@ -20,10 +20,10 @@ public class Powertrain extends Subsystem {
      */
     public Powertrain() {
         /* Initialize */
-        Jaguar rearleftMotor    = new Jaguar(RobotMap.PORT_MOTOR_LEFT);
-        Jaguar rearRightMotor   = new Jaguar(RobotMap.PORT_MOTOR_RIGHT);
-        Jaguar frontLeftMotor   = new Jaguar(RobotMap.PORT_MOTOR_RIGHT);
-        Jaguar frontRightMotor  = new Jaguar(RobotMap.PORT_MOTOR_RIGHT);
+        Jaguar rearleftMotor    = new Jaguar(RobotMap.PORT_MOTOR_REAR_LEFT);
+        Jaguar rearRightMotor   = new Jaguar(RobotMap.PORT_MOTOR_REAR_RIGHT);
+        Jaguar frontLeftMotor   = new Jaguar(RobotMap.PORT_MOTOR_FRONT_LEFT);
+        Jaguar frontRightMotor  = new Jaguar(RobotMap.PORT_MOTOR_FRONT_RIGHT);
         
         motors = new RobotDrive(frontLeftMotor, rearleftMotor, frontRightMotor, rearRightMotor);
         
