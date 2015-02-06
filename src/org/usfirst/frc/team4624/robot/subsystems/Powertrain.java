@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team4624.robot.subsystems;
 
+import org.usfirst.frc.team4624.robot.OI;
 import org.usfirst.frc.team4624.robot.RobotMap;	// ENUMS for the ports
 import org.usfirst.frc.team4624.robot.commands.DriveCommand;
 import org.usfirst.frc.team4624.robot.input.XboxController;
@@ -19,11 +20,12 @@ public class Powertrain extends Subsystem {
      */
     public Powertrain() {
         /* Initialize */
-        Jaguar leftMotor  = new Jaguar(RobotMap.PORT_MOTOR_LEFT);
-        Jaguar rightMotor = new Jaguar(RobotMap.PORT_MOTOR_RIGHT);
+        Jaguar rearleftMotor    = new Jaguar(RobotMap.PORT_MOTOR_REAR_LEFT);
+        Jaguar rearRightMotor   = new Jaguar(RobotMap.PORT_MOTOR_REAR_RIGHT);
+        Jaguar frontLeftMotor   = new Jaguar(RobotMap.PORT_MOTOR_FRONT_LEFT);
+        Jaguar frontRightMotor  = new Jaguar(RobotMap.PORT_MOTOR_FRONT_RIGHT);
         
-        motors = new RobotDrive(leftMotor, rightMotor);
-        motors.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+        motors = new RobotDrive(frontLeftMotor, rearleftMotor, frontRightMotor, rearRightMotor);
         
         stop();
     }
@@ -52,7 +54,10 @@ public class Powertrain extends Subsystem {
         double x = inputFunction(stick.getX()) * (stick.get() ? 1 : boostScale);
         double y = inputFunction(stick.getY()) * (stick.get() ? 1 : boostScale);
         
-        motors.arcadeDrive(x, y);
+        motors.mecanumDrive_Cartesian(  OI.xboxController.leftStick.getX(),
+                                        -OI.xboxController.leftStick.getY(),    // We already corrected for the mistake that this method also corrects
+                                        OI.xboxController.rightStick.getX(),
+                                        0);
     }
     
     public void stop() {

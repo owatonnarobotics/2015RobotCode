@@ -44,6 +44,11 @@ public class RobotMap {
     
 /** The speed at which the position changes for manual control */
     public static final double MANUAL_LIFT_SPEED        = .01; // Value between 0 and 1
+
+    public static final int PORT_MOTOR_REAR_LEFT   = 1;
+    public static final int PORT_MOTOR_REAR_RIGHT  = 2; //TODO fix
+    public static final int PORT_MOTOR_FRONT_LEFT  = 3;
+    public static final int PORT_MOTOR_FRONT_RIGHT = 4;
     
     
     
