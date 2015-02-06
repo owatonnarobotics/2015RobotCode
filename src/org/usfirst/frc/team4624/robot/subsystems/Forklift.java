@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4624.robot.subsystems;
 
+import org.usfirst.frc.team4624.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -9,7 +11,10 @@ public class Forklift extends Subsystem {
     CANJaguar liftChild;
     
     public Forklift() {
-        //liftParent = new CANJaguar()
+        this.liftParent = new CANJaguar( RobotMap.CAN_ADDRESS_LIFT_PARENT );
+        this.liftChild  = new CANJaguar( RobotMap.CAN_ADDRESS_LIFT_CHILD );
+        
+        this.liftChild.setVoltageMode();
     }
     
     public void stop() {
@@ -35,5 +40,19 @@ public class Forklift extends Subsystem {
     
     public double distanceToRevolutions(double distance) {
         return distance / 2.5;
+    }
+    
+    /**
+     * Set the voltage of the child motor to the parent motor
+     */
+    private void parentChild() {
+        liftChild.set(liftParent.getOutputVoltage());
+    }
+    
+    /**
+     * Update the system. Call this from a default command.
+     */
+    public void execute() {
+        parentChild();
     }
 }

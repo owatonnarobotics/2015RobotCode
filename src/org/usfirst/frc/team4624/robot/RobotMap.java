@@ -2,6 +2,9 @@ package org.usfirst.frc.team4624.robot;
 
 public class RobotMap {
     
+    public static final int CAN_ADDRESS_LIFT_PARENT = 14;   // TODO Assign to correct CAN address
+    public static final int CAN_ADDRESS_LIFT_CHILD  = 13;   // TODO Assign to correct CAN address
+    
     /* PWM Ports */
     public static final int PORT_MOTOR_LEFT     = 1;
     public static final int PORT_MOTOR_RIGHT    = 0;

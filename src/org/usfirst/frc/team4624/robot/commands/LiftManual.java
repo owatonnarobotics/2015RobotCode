@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class LiftManual extends Command {
 
-    public LiftManual(int changeHeight) { // May want to rename paramater
+    public LiftManual(int changeHeight) { // May want to rename parameter
         requires(Robot.forklift);
         Robot.forklift.changeHeight(changeHeight);
     }
