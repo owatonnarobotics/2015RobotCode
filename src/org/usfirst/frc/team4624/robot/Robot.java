@@ -94,6 +94,7 @@ public class Robot extends IterativeRobot {
      * to reset subsystems before shutting down.
      */
     public void disabledInit() {
+        System.out.printf("Hey! Did you guys %s?\n", "win");
     }
 
     /**

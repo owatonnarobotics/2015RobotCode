@@ -67,4 +67,8 @@ public class Powertrain extends Subsystem {
     public boolean isFinished() {
         return false;
     }
+
+    public void move(int x, int y, int rotation) {
+        motors.mecanumDrive_Cartesian(x, y, rotation, 0);
+    }
 }
