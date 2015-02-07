@@ -13,14 +13,19 @@ public class Forklift extends Subsystem {
     
     Jaguar lift;
     
-    Encoder encoder;;
+    Encoder encoder;
     
     private final int codesPerRev = 497;
     private double goal; // In Rotations
+    private double lastDistance;
+    private double lastTime;
     
     public Forklift() {
         lift = new Jaguar(RobotMap.PWM_LIFT_PORT);
         encoder = new Encoder(RobotMap.LIFT_ENCODER_A, RobotMap.LIFT_ENCODER_B);
+        
+        lastDistance = 0.0;
+        lastTime = 0.0;
     }
     
     /**
@@ -31,8 +36,23 @@ public class Forklift extends Subsystem {
     }
     
     public void setRaw(double raw){
-        System.out.println("Setting value: " + raw);
+        SmartDashboard.putNumber("Encoder Position", encoder.getDistance() / 250);
+        SmartDashboard.putNumber("Rate of Change", (encoder.getDistance() - lastDistance) / (System.currentTimeMillis() - lastTime));
+        lastDistance = encoder.getDistance();
+        lastTime = System.currentTimeMillis();
         lift.set(raw);
+    }
+    
+    public void setRate(double rate){
+        
+    }
+    
+    private double getRateOfChange(){
+        return (encoder.getDistance() - lastDistance) / (System.currentTimeMillis() - lastTime);
+    }
+    
+    public double getRotations(){
+        return encoder.getDistance() / 250;
     }
     
     /**
@@ -122,7 +142,8 @@ public class Forklift extends Subsystem {
      * Update the system. Call this from a default command.
      */
     public void execute() {
-        printStatus();
+        
+        //printStatus();
     }
     
     /* Smart Dashboard */

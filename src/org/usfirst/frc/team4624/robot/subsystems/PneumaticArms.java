@@ -20,7 +20,7 @@ public class PneumaticArms extends Subsystem {
      * When run, causes the arms of the robot to close.
      */
     public void grab() {
-        arms.set(true);
+        arms.set(false);
         System.out.println("Grabbed");
     }
     
@@ -28,7 +28,7 @@ public class PneumaticArms extends Subsystem {
      * When run, causes the arms of the robot to open.
      */
     public void release() {
-        arms.set(false);
+        arms.set(true);
         System.out.println("Released");
     }
 
