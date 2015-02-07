@@ -48,15 +48,15 @@ public class Powertrain extends Subsystem {
         setDefaultCommand(new DriveCommand());
     }
     
-    public void setAsTankdrive(XboxController.Thumbstick stick) {
+    public void setAsTankdrive(XboxController controller) {
         final double boostScale = .5;   // Smaller makes non boost slower. Boost is always full speed.
         
-        double x = inputFunction(stick.getX()) * (stick.get() ? 1 : boostScale);
-        double y = inputFunction(stick.getY()) * (stick.get() ? 1 : boostScale);
+        double x = inputFunction(controller.leftStick.getX()) * (controller.leftStick.get() ? 1 : boostScale); //TODO Michael is gonna look this up
+        double y = inputFunction(controller.leftStick.getY()) * (controller.leftStick.get() ? 1 : boostScale);
         
-        motors.mecanumDrive_Cartesian(  OI.xboxController.leftStick.getX(),
-                                        -OI.xboxController.leftStick.getY(),    // We already corrected for the mistake that this method also corrects
-                                        OI.xboxController.rightStick.getX(),
+        motors.mecanumDrive_Cartesian(  x,
+                                        -y,    // We already corrected for the mistake that this method also corrects
+                                        controller.rightStick.getX(),
                                         0);
     }
     

@@ -14,8 +14,8 @@ public class Forklift extends Subsystem {
     private double goal; // In Rotations
     
     public Forklift() {
-        liftParent = new CANJaguar( RobotMap.CAN_ADDRESS_LIFT_PARENT );
-        liftChild  = new CANJaguar( RobotMap.CAN_ADDRESS_LIFT_CHILD );
+        liftParent = new CANJaguar(RobotMap.CAN_ADDRESS_LIFT_PARENT);
+        liftChild  = new CANJaguar(RobotMap.CAN_ADDRESS_LIFT_CHILD);
         
         liftParent.setPositionMode(CANJaguar.kQuadEncoder, codesPerRev,
                 RobotMap.p, RobotMap.i, RobotMap.d);
@@ -143,7 +143,7 @@ public class Forklift extends Subsystem {
     
     /**
      * For use with the Smart Dashboard.
-     * Sets the P I and D values of the Forklift motor
+     * Resets the P I and D values of the Forklift motor
      */
     public void reinit() {
         liftParent.setPositionMode(CANJaguar.kQuadEncoder, codesPerRev,
