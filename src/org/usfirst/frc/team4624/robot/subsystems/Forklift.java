@@ -2,8 +2,10 @@ package org.usfirst.frc.team4624.robot.subsystems;
 
 import org.usfirst.frc.team4624.robot.RobotMap;
 import org.usfirst.frc.team4624.robot.commands.LiftManual;
+
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Forklift extends Subsystem {
     
@@ -93,11 +95,26 @@ public class Forklift extends Subsystem {
     }
     
     public double getHeight(double curveDistance) {
-        return (27.7 - 38 * Math.toDegrees(Math.cos(43.2 + (360 * curveDistance) / (76 * Math.PI))));
+        return (27.7 - RobotMap.ARM_LENGTH * getAngle(curveDistance));
+        //Is 27.7 actually cornerToPivot???
+    }
+    /**
+     * 
+     * @param curveDistance
+     * @return
+     */
+    public double getAngle(double curveDistance) {
+        return Math.toDegrees(Math.cos(43.2 + (360 * curveDistance) / (76 * Math.PI)));
+        //TODO Get 43.2 and 76 into robotmap
+    }
+    
+    public double getStrapLength(double angle) {
+        return Math.sqrt(Math.pow(RobotMap.CORNER_TO_PIVOT, 2) + Math.pow(RobotMap.ARM_LENGTH, 2) - (2 * RobotMap.CORNER_TO_PIVOT
+                * RobotMap.ARM_LENGTH * Math.cos(angle)));
     }
     
     public double distanceToRevolutions(double distance) {
-        return distance / 2.5;
+        return distance / 2.5; //TODO Adjust for strap wrapping around
     }
     
     /**
@@ -112,6 +129,7 @@ public class Forklift extends Subsystem {
      */
     public void execute() {
         parentChild();
+        printStatus();
     }
     
     /* Smart Dashboard */
@@ -148,5 +166,10 @@ public class Forklift extends Subsystem {
     public void reinit() {
         liftParent.setPositionMode(CANJaguar.kQuadEncoder, codesPerRev,
                 RobotMap.p, RobotMap.i, RobotMap.d);
+    }
+    
+    public void printStatus() {
+        SmartDashboard.putNumber("Forklift Height", liftParent.get());
+        SmartDashboard.putNumber("Forklift Goal  ", goal);
     }
 }

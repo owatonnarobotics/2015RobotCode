@@ -22,23 +22,23 @@ public class DriveCommand extends Command {
     
     // Called just before this Command runs the first time
     protected void initialize() {
-        Robot.powertrain.stop();
+        powertrain.stop();
     }
     
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.powertrain.setAsTankdrive(OI.xboxController);
+        powertrain.setAsTankdrive(OI.xboxController);
     }
     
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.powertrain.isFinished();
+        return powertrain.isFinished();
     }
     
     // Called once after isFinished returns true
     protected void end() {
-        Robot.powertrain.stop();
+        powertrain.stop();
     }
     
     // Called when another command which requires one or more of the same

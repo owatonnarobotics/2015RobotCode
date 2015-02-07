@@ -22,26 +22,26 @@ public class Robot extends IterativeRobot {
     
     /* Subsystems */
 /** A reference to the Powertrain subsystem */
-    public static Powertrain     powertrain;
+    public Powertrain     powertrain;
     
 /** A reference to the Forkliftsubsystem */
-    public static Forklift       forklift;
+    public Forklift       forklift;
     
 /** A reference to the PneumaticArms subsystem */
-    public static PneumaticArms  pneumaticArms;
+    public PneumaticArms  pneumaticArms;
     
 /** A reference to the CAN_Compressor subsystem */
-    public static CAN_Compressor compressor;
+    public CAN_Compressor compressor;
     
     
     // TODO make static
-    public static final DashboardIO dashboardio = new DashboardIO();
+    public final DashboardIO dashboardio = new DashboardIO();
     
     /* Commands */
     Command driveCommand;
     Command liftManual;
     
-    CommandGroup currentAutoPreset;
+    //CommandGroup currentAutoPreset;
     
     /**
      * This function is run when the robot is first started up and should be
@@ -65,7 +65,7 @@ public class Robot extends IterativeRobot {
         driveCommand    = new DriveCommand();
         liftManual      = new LiftManual();
         
-        currentAutoPreset = new ExampleAutonomusCommand();
+        //currentAutoPreset = new ExampleAutonomusCommand();
     }
 
     public void disabledPeriodic() {
@@ -73,7 +73,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void autonomousInit() {
-        currentAutoPreset.start();
+        //currentAutoPreset.start();
     }
 
     /**
