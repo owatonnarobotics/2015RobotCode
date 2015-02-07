@@ -2,8 +2,10 @@ package org.usfirst.frc.team4624.robot;
 
 public class RobotMap {
     
-    public static final int CAN_ADDRESS_LIFT_PARENT = 16;
-    public static final int CAN_ADDRESS_LIFT_CHILD  = 15;
+    public static final int PWM_LIFT_PORT = 0;
+    
+    public static final int LIFT_ENCODER_A = 0;
+    public static final int LIFT_ENCODER_B = 1;
     
     /* PWM Ports */
 /** The PWM port for the left motor in tankdrive mode. */

@@ -1,8 +1,6 @@
 package org.usfirst.frc.team4624.robot.commands;
 
-import org.usfirst.frc.team4624.robot.OI;
 import org.usfirst.frc.team4624.robot.Robot;
-import org.usfirst.frc.team4624.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -18,9 +16,9 @@ public class LiftManual extends Command {
 
     @Override
     protected void execute() {
-        Robot.forklift.changeHeight((OI.xboxController.rt.getX() -
-                                     OI.xboxController.lt.getX()) * RobotMap.MANUAL_LIFT_SPEED);
-        Robot.forklift.execute();
+        //Robot.forklift.setRaw((OI.xboxController.rt.getX() -
+        //                             OI.xboxController.lt.getX()) * RobotMap.MANUAL_LIFT_SPEED);
+        Robot.forklift.setRaw(.5);
     }
 
     @Override

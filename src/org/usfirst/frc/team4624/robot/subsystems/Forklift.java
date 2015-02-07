@@ -4,35 +4,35 @@ import org.usfirst.frc.team4624.robot.RobotMap;
 import org.usfirst.frc.team4624.robot.commands.LiftManual;
 
 import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Forklift extends Subsystem {
     
-    CANJaguar liftParent;
-    CANJaguar liftChild;
+    Jaguar lift;
+    
+    Encoder encoder;;
     
     private final int codesPerRev = 497;
     private double goal; // In Rotations
     
     public Forklift() {
-        liftParent = new CANJaguar(RobotMap.CAN_ADDRESS_LIFT_PARENT);
-        liftChild  = new CANJaguar(RobotMap.CAN_ADDRESS_LIFT_CHILD);
-        
-        liftParent.setPositionMode(CANJaguar.kQuadEncoder, codesPerRev,
-                RobotMap.p, RobotMap.i, RobotMap.d);
-        liftParent.enableControl(0);
-        goal = liftParent.getPosition();
-        
-        liftChild.setVoltageMode();
+        lift = new Jaguar(RobotMap.PWM_LIFT_PORT);
+        encoder = new Encoder(RobotMap.LIFT_ENCODER_A, RobotMap.LIFT_ENCODER_B);
     }
     
     /**
      * Sets the target of the Forklift to its current position. Effectively stopping it.
      */
     public void stop() {
-        goal = liftParent.getPosition();
-        liftParent.set(goal);
+        lift.set(0.0);
+    }
+    
+    public void setRaw(double raw){
+        System.out.println("Setting value: " + raw);
+        lift.set(raw);
     }
     
     /**
@@ -58,7 +58,7 @@ public class Forklift extends Subsystem {
     private void changeGoal(double changeGoal) { // Takes in Rotations
         goal += changeGoal;
         goal = clamp(goal, 0, RobotMap.FORKLIFT_MAX_ROTATIONS);
-        liftParent.set(goal);
+        //liftParent.set(goal);
     }
     
     /**
@@ -86,7 +86,8 @@ public class Forklift extends Subsystem {
      * @return Returns true if the Forklift has reached its goal
      */
     public boolean isFinished() {
-        return (Math.abs(liftParent.getPosition() - goal) < RobotMap.MOTOR_ACCURACY);
+        //return (Math.abs(liftParent.getPosition() - goal) < RobotMap.MOTOR_ACCURACY);
+        return false;
     }
     
     @Override
@@ -118,17 +119,9 @@ public class Forklift extends Subsystem {
     }
     
     /**
-     * Set the voltage of the child motor to the parent motor
-     */
-    private void parentChild() {
-        liftChild.set(liftParent.getOutputVoltage());
-    }
-    
-    /**
      * Update the system. Call this from a default command.
      */
     public void execute() {
-        parentChild();
         printStatus();
     }
     
@@ -138,7 +131,8 @@ public class Forklift extends Subsystem {
      * @return The current rotation count of the motor
      */
     public double getPosition() {
-        return liftParent.getPosition();
+        //return liftParent.getPosition();
+        return 0.0;
     }
     
     /**
@@ -156,7 +150,7 @@ public class Forklift extends Subsystem {
      */
     public void setGoal(double newGoal) {
         goal = newGoal;
-        liftParent.set(goal);
+        //liftParent.set(goal);
     }
     
     /**
@@ -164,12 +158,12 @@ public class Forklift extends Subsystem {
      * Resets the P I and D values of the Forklift motor
      */
     public void reinit() {
-        liftParent.setPositionMode(CANJaguar.kQuadEncoder, codesPerRev,
-                RobotMap.p, RobotMap.i, RobotMap.d);
+        //liftParent.setPositionMode(CANJaguar.kQuadEncoder, codesPerRev,
+        //        RobotMap.p, RobotMap.i, RobotMap.d);
     }
     
     public void printStatus() {
-        SmartDashboard.putNumber("Forklift Height", liftParent.get());
+        //SmartDashboard.putNumber("Forklift Height", liftParent.get());
         SmartDashboard.putNumber("Forklift Goal  ", goal);
     }
 }

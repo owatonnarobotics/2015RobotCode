@@ -2,7 +2,6 @@ package org.usfirst.frc.team4624.robot;
 
 import org.usfirst.frc.team4624.robot.commands.GrabArms;
 import org.usfirst.frc.team4624.robot.commands.LiftLevel;
-import org.usfirst.frc.team4624.robot.commands.LiftManual;
 import org.usfirst.frc.team4624.robot.commands.ReleaseArms;
 import org.usfirst.frc.team4624.robot.input.XboxController;
 
