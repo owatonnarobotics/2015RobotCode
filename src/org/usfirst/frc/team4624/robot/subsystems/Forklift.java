@@ -48,7 +48,7 @@ public class Forklift extends Subsystem {
      * @param changeHeight
      */
     public void changeHeight(double changeHeight) { // Convert to rotations here (changeHeight is in distance)
-        // TODO Auto-generated method stub
+        changeGoal(changeHeight);
     }
     
     /**
