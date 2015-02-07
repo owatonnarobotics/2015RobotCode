@@ -22,16 +22,16 @@ public class Robot extends IterativeRobot {
     
     /* Subsystems */
 /** A reference to the Powertrain subsystem */
-    public Powertrain     powertrain;
+    public static Powertrain     powertrain;
     
 /** A reference to the Forkliftsubsystem */
-    public Forklift       forklift;
+    public static Forklift       forklift;
     
 /** A reference to the PneumaticArms subsystem */
-    public PneumaticArms  pneumaticArms;
+    public static PneumaticArms  pneumaticArms;
     
 /** A reference to the CAN_Compressor subsystem */
-    public CAN_Compressor compressor;
+    public static CAN_Compressor compressor;
     
     
     // TODO make static
