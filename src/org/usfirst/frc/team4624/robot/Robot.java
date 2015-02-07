@@ -22,16 +22,16 @@ public class Robot extends IterativeRobot {
     
     /* Subsystems */
 /** A reference to the Powertrain subsystem */
-    public static Powertrain     powertrain;
+    public static Powertrain     powertrain = new Powertrain();
     
 /** A reference to the Forkliftsubsystem */
-    public static Forklift       forklift;
+    public static Forklift       forklift = new Forklift();
     
 /** A reference to the PneumaticArms subsystem */
-    public static PneumaticArms  pneumaticArms;
+    public static PneumaticArms  pneumaticArms = new PneumaticArms();
     
 /** A reference to the CAN_Compressor subsystem */
-    public static CAN_Compressor compressor;
+    public static CAN_Compressor compressor = new CAN_Compressor();
     
     
     // TODO make static
@@ -41,6 +41,7 @@ public class Robot extends IterativeRobot {
     Command driveCommand;
     Command liftManual;
     
+
     //CommandGroup currentAutoPreset;
     
     /**
@@ -53,11 +54,7 @@ public class Robot extends IterativeRobot {
         
         
         
-        /* Initialize subsystems */
-        powertrain      = new Powertrain();
-        forklift        = new Forklift();
-        pneumaticArms   = new PneumaticArms();
-        compressor      = new CAN_Compressor();
+
         
         
         
