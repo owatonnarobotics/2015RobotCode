@@ -1,27 +1,14 @@
 package org.usfirst.frc.team4624.robot;
-/**
- * Write a description of class UnitTest here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
+
 public class UnitTest
 {
     public double getHeight(double angle) {
-        //return Math.sin(angle);
         return (38 * Math.toDegrees(Math.sin(Math.toRadians(angle))) / Math.toDegrees(Math.sin(Math.toRadians(136.8 - angle))));
-        //Is 27.7 actually cornerToPivot???
     }
 
-    /**
-     * 
-     * @param curveDistance
-     * @return
-     */
     public double getAngle(double curveDistance) {
         return 43.2 + Math.toDegrees(curveDistance / RobotMap.ARM_LENGTH);
-        //return 43.2 + Math.toDegrees(Math.sin((76 * curveDistance) / (360 * Math.PI)));
-        //TODO Get 43.2 and 76 into robotmap
+        //TODO Get 43.2 into robotmap
     }
 
     public double getStrapLength(double angle) { //Starting from 43.2 degreees

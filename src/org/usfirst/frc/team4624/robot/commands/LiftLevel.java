@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class LiftLevel extends Command {
     
-	private Level direction;
+    private Level direction;
     
     public enum Level{
     	UP, DOWN

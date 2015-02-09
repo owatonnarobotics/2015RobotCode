@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Forklift extends Subsystem {
 	
-	public enum Mode{
-		MANUAL, LEVEL
-	}
+    public enum Mode{
+        MANUAL, LEVEL
+    }
     
     Jaguar lift;
     
@@ -119,7 +119,6 @@ public class Forklift extends Subsystem {
         lastTime = System.currentTimeMillis();
         
         if (mode == Mode.LEVEL) {
-        	
         	// If the height is close enough to the goal, disable the rate of the motor
         	if (Math.abs(RobotMap.LIFT_HEIGHTS[levelGoal] - getRotations()) < RobotMap.LIFT_MARGIN_OF_ERROR){
         		setRate(0);

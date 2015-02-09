@@ -26,7 +26,7 @@ public class RobotMap {
     
     /* PWM Ports */
 /** The PWM port for the left motor in tankdrive mode. */
-    public static final int PORT_MOTOR_LEFT             = 1; //TODO Switch these ports?
+    public static final int PORT_MOTOR_LEFT             = 1;
     
 /** The PWM port for the right motor in tankdrive mode. */
     public static final int PORT_MOTOR_RIGHT            = 0;
