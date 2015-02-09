@@ -19,7 +19,7 @@ public class LiftManual extends Command {
 
     @Override
     protected void execute() {
-        Robot.forklift.setRaw((OI.xboxController.lt.getX() -
+        Robot.forklift.setRate((OI.xboxController.lt.getX() -
                                      OI.xboxController.rt.getX()) * RobotMap.MANUAL_LIFT_SPEED);
     }
 

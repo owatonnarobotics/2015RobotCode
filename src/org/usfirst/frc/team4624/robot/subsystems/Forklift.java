@@ -51,7 +51,6 @@ public class Forklift extends Subsystem {
     
     public void setManualMode(){
     	mode = Mode.MANUAL;
-    	rateGoal = 0.0;
     }
     
     /** 
@@ -64,11 +63,11 @@ public class Forklift extends Subsystem {
     }
     
     public void increaseLevel(){
-    	
+    	levelGoal += 1;
     }
     
     public void decreaseLevel(){
-    	
+    	levelGoal -= 1;
     }
     
     /** 
@@ -76,8 +75,12 @@ public class Forklift extends Subsystem {
     **/
     
     // Sets the raw value of the Jaguar motor
-    public void setRaw(double raw){
+    private void setRaw(double raw){
         lift.set(raw);
+    }
+    
+    private double getRaw(){
+    	return lift.get();
     }
     
     // Sets the rate at which the Jaguar should be running
@@ -85,12 +88,27 @@ public class Forklift extends Subsystem {
         rateGoal = rate;
     }
     
-    private double getRateOfChange(){
-        return rateOfChange;
-    }
-    
     private double getRotations(){
         return encoder.getDistance() / 250;
+    }
+    
+    // Increases or decreases the PWM based on the rate goal
+    private void updateRate(){
+    	if (rateGoal == 0.0){
+    		setRaw(0.0);
+    	}
+    	// If the rate is not within the wanted rate
+    	else if (! (Math.abs(rateOfChange - rateGoal) < RobotMap.RATE_MARGIN_OF_ERROR)){
+    		// If the rate is not large enough, increase the raw value
+    		if (rateOfChange < rateGoal){
+    			setRaw(getRaw() + RobotMap.RATE_CHANGE);
+    		}
+    		// If the rate is too large, decrease the raw value
+    		if (rateOfChange > rateGoal){
+    			setRaw(getRaw() - RobotMap.RATE_CHANGE);
+    		}
+    	}
+    	
     }
     
     // Updates the system with the new rate of change
@@ -101,8 +119,22 @@ public class Forklift extends Subsystem {
         lastTime = System.currentTimeMillis();
         
         if (mode == Mode.LEVEL) {
-        	// Update level info
+        	
+        	// If the height is close enough to the goal, disable the rate of the motor
+        	if (Math.abs(RobotMap.LIFT_HEIGHTS[levelGoal] - getRotations()) < RobotMap.LIFT_MARGIN_OF_ERROR){
+        		setRate(0);
+        	}
+        	// If the height is below the goal, set the rate to be negative
+        	else if (RobotMap.LIFT_HEIGHTS[levelGoal] < getRotations()) {
+        		setRate(-1 * RobotMap.LEVEL_RATE);
+        	}
+        	// If the height is above the goal, set the rate to be positive
+        	else {
+        		setRate(RobotMap.LEVEL_RATE);
+        	}
         }
+        
+        updateRate();
         
         displayInformation();
     }

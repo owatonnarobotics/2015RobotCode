@@ -39,7 +39,6 @@ public class Robot extends IterativeRobot {
     
     /* Commands */
     Command driveCommand;
-    Command liftManual;
     
 
     //CommandGroup currentAutoPreset;
@@ -60,7 +59,6 @@ public class Robot extends IterativeRobot {
         
         /* Initialize 'always on' commands */
         driveCommand    = new DriveCommand();
-        liftManual      = new LiftManual();
         
         //currentAutoPreset = new ExampleAutonomusCommand();
     }
@@ -82,7 +80,6 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         driveCommand.start();
-        liftManual.start();
         dashboardio.updatePID();
     }
 
@@ -99,7 +96,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         
-        // Update ratio on the forklift
+        // Update rate on the forklift
         forklift.update();
     }
 
