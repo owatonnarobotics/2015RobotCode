@@ -19,8 +19,11 @@ public class Forklift extends Subsystem {
     
     Encoder encoder;
     
-    // Goal used for position mode
-    private double goal; // In Rotations
+    // Goal used for manual mode
+    private double rateGoal;
+    
+    // Goal used for level mode
+    private int levelGoal;
     
     private double rateOfChange;
     private double lastDistance;
@@ -32,21 +35,54 @@ public class Forklift extends Subsystem {
         lift = new Jaguar(RobotMap.PWM_LIFT_PORT);
         encoder = new Encoder(RobotMap.LIFT_ENCODER_A, RobotMap.LIFT_ENCODER_B);
         
-        goal = 0.0;
-        
         lastDistance = 0.0;
         lastTime = System.currentTimeMillis();
         rateOfChange = 0.0;
         
+        levelGoal = 0;
+        rateGoal = 0;
+        
+        mode = Mode.MANUAL;
+    }
+ 
+    /** 
+     * Manual Commands
+    **/
+    
+    public void setManualMode(){
+    	mode = Mode.MANUAL;
+    	rateGoal = 0.0;
     }
     
-    // General Commands
+    /** 
+     * Level Commands
+    **/
+    
+    public void setLevelMode(){
+    	mode = Mode.LEVEL;
+    	rateGoal = RobotMap.LEVEL_RATE;
+    }
+    
+    public void increaseLevel(){
+    	
+    }
+    
+    public void decreaseLevel(){
+    	
+    }
+    
+    /** 
+     * General Commands
+    **/
+    
+    // Sets the raw value of the Jaguar motor
     public void setRaw(double raw){
         lift.set(raw);
     }
     
+    // Sets the rate at which the Jaguar should be running
     public void setRate(double rate){
-        
+        rateGoal = rate;
     }
     
     private double getRateOfChange(){
@@ -56,23 +92,17 @@ public class Forklift extends Subsystem {
     private double getRotations(){
         return encoder.getDistance() / 250;
     }
-    // Manual Commands
     
-    // Level Commands
-    
-    @Override
-    protected void initDefaultCommand() {
-        setDefaultCommand(new LiftManual());
-    }
-    
-    /**
-     * Update the system. Call this from a default command.
-     */
+    // Updates the system with the new rate of change
     public void update() {
     	rateOfChange = (encoder.getDistance() - lastDistance) / (System.currentTimeMillis() - lastTime);
     	// Updates to the new encoder and time, for another calculation of the ratio
         lastDistance = encoder.getDistance();
         lastTime = System.currentTimeMillis();
+        
+        if (mode == Mode.LEVEL) {
+        	// Update level info
+        }
         
         displayInformation();
     }
@@ -80,5 +110,10 @@ public class Forklift extends Subsystem {
     private void displayInformation(){
         SmartDashboard.putNumber("Encoder Position", encoder.getDistance() / 250);
         SmartDashboard.putNumber("Rate of Change", (encoder.getDistance() - lastDistance) / (System.currentTimeMillis() - lastTime));
+    }
+    
+    @Override
+    protected void initDefaultCommand() {
+        setDefaultCommand(new LiftManual());
     }
 }

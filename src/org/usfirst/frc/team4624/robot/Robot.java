@@ -99,20 +99,6 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         
-        // TODO Move into DashboardIO class and replace with .update() or something
-        if(dashboardio.newPID()) {
-            dashboardio.setPID();
-            forklift.reinit();
-        }
-        if(dashboardio.newU()) {
-            dashboardio.setU();
-            forklift.reinit();
-        }
-        if(dashboardio.newGoal(forklift.getPosition())) {
-            forklift.setGoal(dashboardio.getGoal());
-        }
-        dashboardio.updateCurrentAndGoal(forklift.getPosition(), forklift.getGoal());
-        
         // Update ratio on the forklift
         forklift.update();
     }

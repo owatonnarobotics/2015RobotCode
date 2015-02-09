@@ -7,6 +7,9 @@ public class RobotMap {
     public static final int LIFT_ENCODER_A = 0;
     public static final int LIFT_ENCODER_B = 1;
     
+    /* The rate of the forklift in level mode */
+    public static final double LEVEL_RATE = 0.5;
+    
     /* PWM Ports */
 /** The PWM port for the left motor in tankdrive mode. */
     public static final int PORT_MOTOR_LEFT             = 1; //TODO Switch these ports?
