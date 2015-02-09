@@ -25,25 +25,25 @@ public class LiftLevel extends Command {
 
     @Override
     protected void execute() {
-
+        
         if(direction == Level.UP) {
             Robot.forklift.increaseLevel();
         } else {
             Robot.forklift.decreaseLevel();
         }
     }
-
+    
     @Override
     protected boolean isFinished() {
         return true; // Move levels can be cumulative
     }
-
+    
     @Override
     protected void end() {
     }
-
+    
     @Override
     protected void interrupted() {
     }
-
+    
 }
