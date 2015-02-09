@@ -1,4 +1,4 @@
-
+package org.usfirst.frc.team4624.robot;
 /**
  * Write a description of class UnitTest here.
  * 

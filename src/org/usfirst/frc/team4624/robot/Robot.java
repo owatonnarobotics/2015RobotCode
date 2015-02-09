@@ -112,6 +112,9 @@ public class Robot extends IterativeRobot {
             forklift.setGoal(dashboardio.getGoal());
         }
         dashboardio.updateCurrentAndGoal(forklift.getPosition(), forklift.getGoal());
+        
+        // Update ratio on the forklift
+        forklift.update();
     }
 
     /**

@@ -14,6 +14,7 @@ public class LiftManual extends Command {
 
     @Override
     protected void initialize() {
+    	Robot.forklift.setManualMode();
     }
 
     @Override
@@ -24,7 +25,7 @@ public class LiftManual extends Command {
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override
