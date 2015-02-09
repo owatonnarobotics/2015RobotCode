@@ -2,7 +2,7 @@ package org.usfirst.frc.team4624.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ExampleAutonomusCommand extends CommandGroup {
+public class ExampleAutonomusCommand extends CommandGroup { //TODO Move this class into robot
     
     /**
      * Example auto period sequence

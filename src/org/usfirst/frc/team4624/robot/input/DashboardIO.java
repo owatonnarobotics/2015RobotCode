@@ -8,7 +8,7 @@ public class DashboardIO {
 
     public DashboardIO() {
         SmartDashboard.putString("Arm Status: ", "Unactivated");
-        SmartDashboard.putNumber("U"       , 0);
+        SmartDashboard.putNumber("U"       , 0); //TODO clean all PID code if we still think it's OK to leave, otherwise delete it
         SmartDashboard.putNumber("P"       , 0);
         SmartDashboard.putNumber("I"       , 0);
         SmartDashboard.putNumber("D"       , 0);

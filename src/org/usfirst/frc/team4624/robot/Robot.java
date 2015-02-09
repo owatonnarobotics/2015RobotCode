@@ -22,26 +22,26 @@ public class Robot extends IterativeRobot {
     
     /* Subsystems */
 /** A reference to the Powertrain subsystem */
-    public static Powertrain     powertrain;
+    public static Powertrain     powertrain = new Powertrain();
     
 /** A reference to the Forkliftsubsystem */
-    public static Forklift       forklift;
+    public static Forklift       forklift = new Forklift();
     
 /** A reference to the PneumaticArms subsystem */
-    public static PneumaticArms  pneumaticArms;
+    public static PneumaticArms  pneumaticArms = new PneumaticArms();
     
 /** A reference to the CAN_Compressor subsystem */
-    public static CAN_Compressor compressor;
+    public static CAN_Compressor compressor = new CAN_Compressor();
     
     
     // TODO make static
-    public static final DashboardIO dashboardio = new DashboardIO();
+    public final DashboardIO dashboardio = new DashboardIO();
     
     /* Commands */
     Command driveCommand;
-    Command liftManual;
     
-    CommandGroup currentAutoPreset;
+
+    //CommandGroup currentAutoPreset;
     
     /**
      * This function is run when the robot is first started up and should be
@@ -53,19 +53,14 @@ public class Robot extends IterativeRobot {
         
         
         
-        /* Initialize subsystems */
-        powertrain      = new Powertrain();
-        forklift        = new Forklift();
-        pneumaticArms   = new PneumaticArms();
-        compressor      = new CAN_Compressor();
+
         
         
         
         /* Initialize 'always on' commands */
         driveCommand    = new DriveCommand();
-        liftManual      = new LiftManual();
         
-        currentAutoPreset = new ExampleAutonomusCommand();
+        //currentAutoPreset = new ExampleAutonomusCommand();
     }
 
     public void disabledPeriodic() {
@@ -73,7 +68,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void autonomousInit() {
-        currentAutoPreset.start();
+        //currentAutoPreset.start();
     }
 
     /**
@@ -85,7 +80,6 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         driveCommand.start();
-        liftManual.start();
         dashboardio.updatePID();
     }
 
@@ -103,19 +97,8 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         
-        // TODO Move into DashboardIO class and replace with .update() or something
-        if(dashboardio.newPID()) {
-            dashboardio.setPID();
-            forklift.reinit();
-        }
-        if(dashboardio.newU()) {
-            dashboardio.setU();
-            forklift.reinit();
-        }
-        if(dashboardio.newGoal(forklift.getPosition())) {
-            forklift.setGoal(dashboardio.getGoal());
-        }
-        dashboardio.updateCurrentAndGoal(forklift.getPosition(), forklift.getGoal());
+        // Update rate on the forklift
+        forklift.update();
     }
 
     /**

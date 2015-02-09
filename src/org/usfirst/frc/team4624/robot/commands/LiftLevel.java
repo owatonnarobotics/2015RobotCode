@@ -6,23 +6,31 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class LiftLevel extends Command {
     
-    public int level;
+    private Level direction;
     
-    public LiftLevel(int changeLevel) {
+    public enum Level{
+    	UP, DOWN
+    }
+    
+    public LiftLevel(Level direction) {
+        this.direction = direction;
+        
         requires(Robot.forklift);
-        if(changeLevel == 0) {
-            Robot.forklift.stop();
-        } else {
-            Robot.forklift.changeLevel(changeLevel);
-        }
     }
     
     @Override
     protected void initialize() {
+    	Robot.forklift.setLevelMode();
     }
 
     @Override
     protected void execute() {
+
+        if(direction == Level.UP) {
+            Robot.forklift.increaseLevel();
+        } else {
+            Robot.forklift.decreaseLevel();
+        }
     }
 
     @Override

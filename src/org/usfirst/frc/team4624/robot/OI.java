@@ -2,6 +2,7 @@ package org.usfirst.frc.team4624.robot;
 
 import org.usfirst.frc.team4624.robot.commands.GrabArms;
 import org.usfirst.frc.team4624.robot.commands.LiftLevel;
+import org.usfirst.frc.team4624.robot.commands.LiftLevel.Level;
 import org.usfirst.frc.team4624.robot.commands.LiftManual;
 import org.usfirst.frc.team4624.robot.commands.ReleaseArms;
 import org.usfirst.frc.team4624.robot.input.XboxController;
@@ -15,9 +16,11 @@ public class OI {
         xboxController.rb.whenPressed(new ReleaseArms());
         xboxController.rb.whenReleased(new GrabArms());
         
-        xboxController.a.whenPressed(new LiftLevel(-1));
-        xboxController.x.whenPressed(new LiftLevel(1));
-        xboxController.lb.whenPressed(new LiftLevel(0));
+        xboxController.rt.whenPressed(new LiftManual());
+        xboxController.lt.whenPressed(new LiftManual());
+        
+        xboxController.a.whenPressed(new LiftLevel(Level.DOWN));
+        xboxController.x.whenPressed(new LiftLevel(Level.UP));
         
         /*
          * a = go down a level
