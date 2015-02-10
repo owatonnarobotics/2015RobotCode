@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4624.autonomous.*;
 import org.usfirst.frc.team4624.robot.commands.*;
@@ -41,6 +43,8 @@ public class Robot extends IterativeRobot {
     /* Commands */
     Command driveCommand;
     Command autoCommand;
+    
+    SendableChooser autoChooser;
 
     //CommandGroup currentAutoPreset;
     
@@ -63,6 +67,11 @@ public class Robot extends IterativeRobot {
     }
 
     public void autonomousInit() {
+        autoChooser = new SendableChooser();
+        autoChooser.addDefault("Center", Integer.valueOf(0));
+        autoChooser.addObject("Left"   , Integer.valueOf(1));
+        autoChooser.addObject("Right"  , Integer.valueOf(2));
+        SmartDashboard.putData("Autonomous", autoChooser);
         autoCommand = new Autonomous(RobotMap.location, RobotMap.goal);
     }
 

@@ -12,9 +12,9 @@ public class DashboardIO {
         SmartDashboard.putNumber("D"       , 0);
         SmartDashboard.putNumber("Goal"    , 0);
         SmartDashboard.putNumber("Position", 0);
-        SmartDashboard.putString("Arm Status: " , "Unactivated");
-        SmartDashboard.putString("Auto Location", "Unactivated");
-        SmartDashboard.putString("Auto Goal"    , "Unactivated");
+        SmartDashboard.putString("Arm Status: "   , "Unactivated");
+        SmartDashboard.putString("Auto Location: ", "Unactivated");
+        SmartDashboard.putString("Auto Goal: "    , "Unactivated");
     }
     
     public boolean getBoolean(String key) {
@@ -79,18 +79,25 @@ public class DashboardIO {
     }
         
     public boolean newAutoLocation() {
-        return !(RobotMap.location == getString("Auto Location"));
+        return !(RobotMap.location == getString("Auto Location: "));
     }
     
     public boolean newAutoGoal() {
-        return !(RobotMap.goal == getString("Auto Goal"));
+        return !(RobotMap.goal == getString("Auto Goal: "));
     }
     
     public void setAutoLocation() {
-        RobotMap.location = getString("Auto Location");
+        RobotMap.location = getString("Auto Location: ");
     }
     
     public void setAutoGoal() {
-        RobotMap.goal = getString("Auto Goal");
+        RobotMap.goal = getString("Auto Goal: ");
+    }
+    
+    public void checkAuto() {
+        if(newAutoLocation() || newAutoGoal()) {
+            setAutoLocation();
+            setAutoGoal();
+        }
     }
 }
