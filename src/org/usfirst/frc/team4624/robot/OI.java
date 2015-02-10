@@ -23,14 +23,12 @@ public class OI {
         xboxController.x.whenPressed(new LiftLevel(Level.UP));
         
         /*
-         * a = go down a level
-         * x = go up a level
+         * a  = go down a level
+         * x  = go up a level
          * rb = release arms
          * rt = go up
          * lt = go down
          * lb = stop moving
-         * 
-         * thumbsticks = ruin everything
          */
     }
 }

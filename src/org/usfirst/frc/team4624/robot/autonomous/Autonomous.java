@@ -4,7 +4,7 @@ import org.usfirst.frc.team4624.robot.commands.*;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class Autonomous extends CommandGroup {
+public class Autonomous extends CommandGroup { //TODO Move this class into commands folder ???
     
     public Autonomous(String location, String goal) {
 

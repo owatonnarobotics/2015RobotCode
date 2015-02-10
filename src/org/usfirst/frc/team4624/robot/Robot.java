@@ -66,7 +66,7 @@ public class Robot extends IterativeRobot {
         locationChooser = new SendableChooser();
         locationChooser.addDefault("Center", Integer.valueOf(0));
         locationChooser.addObject("Left",    Integer.valueOf(1));
-        locationChooser.addObject("Right",   Integer.valueOf(2));
+        locationChooser.addObject("Right",   Integer.valueOf(2)); // Could be a problem if it doesn't give the user time to choose
 
         goalChooser = new SendableChooser();
         goalChooser.addDefault("Bin", Integer.valueOf(0));
