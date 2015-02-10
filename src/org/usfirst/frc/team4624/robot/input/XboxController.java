@@ -676,4 +676,33 @@ public class XboxController extends Joystick {
     public Joystick getJoystick() {
         return controller;
     }
+    
+    
+    
+    /* Set Methods */
+    /**
+     * Make the controller vibrate
+     * @param hand The side of the controller to rumble
+     * @param intensity How strong the rumble is
+     */
+    public void setRumble( HAND hand, double intensity ) {
+        float ammount = new Float( intensity );
+        
+        if ( hand == HAND.LEFT ) {
+            controller.setRumble( RumbleType.kLeftRumble, ammount );
+        } else {
+            controller.setRumble( RumbleType.kRightRumble, ammount );
+        }
+    }
+    
+    /**
+     * Make the controller vibrate
+     * @param intensity How strong the rumble is
+     */
+    public void setRumble( double intensity ) {
+        float ammount = new Float( intensity );
+        
+        controller.setRumble( RumbleType.kLeftRumble, ammount );
+        controller.setRumble( RumbleType.kRightRumble, ammount );
+    }
 }
