@@ -7,7 +7,37 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Autonomous extends CommandGroup {
     
     public Autonomous(String location, String goal) {
-        if(location.equals("center")) {
+
+        /*
+         * Center = 0
+         * Left   = 1
+         * Right  = 2
+         *
+         * Bin    = 0
+         * Tote   = 1
+         */
+
+        if(location == 0 && goal == 0) {
+            //Do stuff
+        }
+
+        if(location == 1 && goal == 0) {
+            //Do stuff
+        }
+
+        if(location == 2 && goal == 0) {
+            //Do stuff
+        }
+
+        if(location == 0 && goal == 1) {
+            //Do stuff
+        }
+
+        if(location == 1 && goal == 1) {
+            //Do stuff
+        }
+
+        if(location == 2 && goal == 1) {
             //Do stuff
         }
     }

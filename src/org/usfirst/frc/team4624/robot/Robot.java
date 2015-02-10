@@ -63,7 +63,18 @@ public class Robot extends IterativeRobot {
     }
 
     public void autonomousInit() {
-        autoCommand = new Autonomous(RobotMap.location, RobotMap.goal);
+        locationChooser = new SendableChooser();
+        locationChooser.addDefault("Center", Integer.valueOf(0));
+        locationChooser.addObject("Left",    Integer.valueOf(1));
+        locationChooser.addObject("Right",   Integer.valueOf(2));
+
+        goalChooser = new SendableChooser();
+        goalChooser.addDefault("Bin", Integer.valueOf(0));
+        goalChooser.addObject("Tote", Integer.valueOf(1));
+
+        SmartDashboard.putData("Autonomous", locationChooser);
+        autoCommand = new Autonomous(((Integer) locationChooser.getSelected()).intValue(),
+                                     ((Integer) goalChooser.getSelected()).intValue());
     }
 
     /**
