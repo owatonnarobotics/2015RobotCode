@@ -1,12 +1,13 @@
 package org.usfirst.frc.team4624.robot.autonomous;
 
+import org.usfirst.frc.team4624.robot.Robot;
 import org.usfirst.frc.team4624.robot.commands.*;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class Autonomous extends CommandGroup { //TODO Move this class into commands folder ???
     
-    public Autonomous(String location, String goal) {
+    public Autonomous(int location, int goal) {
 
         /*
          * Center = 0
@@ -16,6 +17,7 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
          * Bin    = 0
          * Tote   = 1
          */
+    	
 
         if(location == 0 && goal == 0) {
             //Do stuff
