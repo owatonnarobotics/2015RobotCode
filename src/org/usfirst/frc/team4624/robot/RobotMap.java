@@ -70,9 +70,5 @@ public class RobotMap {
     public static double p = .6 * u;
     public static double i = 2 * p / u;
     public static double d = p * u / 8;
-    
-    /* Physical Measurements */
-    public static double CORNER_TO_PIVOT = 30.75;
-    public static double ARM_LENGTH = 38;
 }
 

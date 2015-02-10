@@ -1,4 +1,4 @@
-package org.usfirst.frc.team4624.autonomous;
+package org.usfirst.frc.team4624.robot.autonomous;
 
 import org.usfirst.frc.team4624.robot.Robot;
 
