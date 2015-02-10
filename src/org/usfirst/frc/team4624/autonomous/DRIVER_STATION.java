@@ -16,7 +16,7 @@ public enum DRIVER_STATION {
     }
     
     public DRIVER_STATION getFromInt(int input) {
-        DRIVER_STATION[] enums = this.values();
+        DRIVER_STATION[] enums = DRIVER_STATION.values();
         for (int i = 0; i <= enums.length; i++) {
             if( input == enums[i].getInt() ) {
                 return enums[i];

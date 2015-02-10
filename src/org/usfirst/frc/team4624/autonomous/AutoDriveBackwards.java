@@ -23,7 +23,7 @@ public class AutoDriveBackwards extends Command {
 
     @Override
     protected void execute() {
-        Robot.powertrain.move(0,-1,0);  // Move backwards at supersonic speeds. Don't stop please
+        Robot.powertrain.move(0,-0.3,0);  // Move backwards at supersonic speeds. Don't stop please.
     }
 
     @Override

@@ -1,7 +1,6 @@
 package org.usfirst.frc.team4624.robot.input;
 
 import org.usfirst.frc.team4624.robot.RobotMap;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DashboardIO {

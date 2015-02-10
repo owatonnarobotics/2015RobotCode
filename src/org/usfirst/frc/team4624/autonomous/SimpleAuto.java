@@ -39,10 +39,10 @@ public class SimpleAuto extends CommandGroup {
     private void binTime(int firstMove, int secondMove) {
         addSequential(new GrabArms());
         
-        addSequential(new LiftLevel(1));
+        addSequential(new LiftLevel(LiftLevel.Level.UP));
         addParallel(new AutoDriveBackwards(firstMove));    // Move backwards for 3000 milliseconds
         
-        addSequential(new LiftLevel(-1));
+        addSequential(new LiftLevel(LiftLevel.Level.DOWN));
         
         addSequential(new ReleaseArms());
         
