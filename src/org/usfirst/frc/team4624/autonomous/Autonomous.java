@@ -1,10 +1,17 @@
 package org.usfirst.frc.team4624.autonomous;
 
 import org.usfirst.frc.team4624.robot.commands.*;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class Autonomous extends CommandGroup {
-
+    
+    public Autonomous(String location, String goal) {
+        if(location.equals("center")) {
+            //Do stuff
+        }
+    }
+    
     private void binTime(int firstMove, int secondMove) {
         addSequential(new GrabArms());
         

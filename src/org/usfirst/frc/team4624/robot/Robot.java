@@ -40,7 +40,7 @@ public class Robot extends IterativeRobot {
     
     /* Commands */
     Command driveCommand;
-    
+    Command autoCommand;
 
     //CommandGroup currentAutoPreset;
     
@@ -51,12 +51,6 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         /* Initialize operator input */
         new OI();
-        
-        
-        
-
-        
-        
         
         /* Initialize 'always on' commands */
         driveCommand    = new DriveCommand();
@@ -69,7 +63,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void autonomousInit() {
-
+        autoCommand = new Autonomous(RobotMap.location, RobotMap.goal);
     }
 
     /**

@@ -6,13 +6,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DashboardIO {
 
     public DashboardIO() {
-        SmartDashboard.putString("Arm Status: ", "Unactivated");
         SmartDashboard.putNumber("U"       , 0); //TODO clean all PID code if we still think it's OK to leave, otherwise delete it
         SmartDashboard.putNumber("P"       , 0);
         SmartDashboard.putNumber("I"       , 0);
         SmartDashboard.putNumber("D"       , 0);
         SmartDashboard.putNumber("Goal"    , 0);
         SmartDashboard.putNumber("Position", 0);
+        SmartDashboard.putString("Arm Status: " , "Unactivated");
+        SmartDashboard.putString("Auto Location", "Unactivated");
+        SmartDashboard.putString("Auto Goal"    , "Unactivated");
     }
     
     public boolean getBoolean(String key) {
@@ -74,5 +76,21 @@ public class DashboardIO {
         updatePID();
       //System.out.println("Updated U and PID Values");
       //System.out.println(RobotMap.p + " " + RobotMap.i + " " + RobotMap.d);
+    }
+        
+    public boolean newAutoLocation() {
+        return !(RobotMap.location == getString("Auto Location"));
+    }
+    
+    public boolean newAutoGoal() {
+        return !(RobotMap.goal == getString("Auto Goal"));
+    }
+    
+    public void setAutoLocation() {
+        RobotMap.location = getString("Auto Location");
+    }
+    
+    public void setAutoGoal() {
+        RobotMap.goal = getString("Auto Goal");
     }
 }

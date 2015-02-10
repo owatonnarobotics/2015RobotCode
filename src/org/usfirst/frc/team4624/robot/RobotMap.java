@@ -63,6 +63,9 @@ public class RobotMap {
     public static final int PORT_MOTOR_FRONT_LEFT  = 3;
     public static final int PORT_MOTOR_FRONT_RIGHT = 4;
     
+    //Autonomous Starting Goal (Set initially, will be changeable from DashboardIO)
+    public static String location = "center";
+    public static String goal     = "bin";
     
     
     /* PID Values */
