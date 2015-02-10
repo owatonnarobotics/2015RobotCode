@@ -72,7 +72,8 @@ public class Robot extends IterativeRobot {
         goalChooser.addDefault("Bin", Integer.valueOf(0));
         goalChooser.addObject("Tote", Integer.valueOf(1));
 
-        SmartDashboard.putData("Autonomous", locationChooser);
+        SmartDashboard.putData("Auto Location", locationChooser);
+        SmartDashboard.putData("Auto Goal",     goalChooser);
         autoCommand = new Autonomous(((Integer) locationChooser.getSelected()).intValue(),
                                      ((Integer) goalChooser.getSelected()).intValue());
     }
