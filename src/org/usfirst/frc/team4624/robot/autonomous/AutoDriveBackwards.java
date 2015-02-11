@@ -1,11 +1,11 @@
-package org.usfirst.frc.team4624.autonomous;
+package org.usfirst.frc.team4624.robot.autonomous;
 
 import org.usfirst.frc.team4624.robot.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class AutoDriveBackwards extends Command {
+public class AutoDriveBackwards extends Command { //TODO Possibly place this code inside Autonomous class
 
     private int time;
     private Timer timer;

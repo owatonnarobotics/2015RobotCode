@@ -63,10 +63,6 @@ public class RobotMap {
     public static final int PORT_MOTOR_FRONT_LEFT  = 3;
     public static final int PORT_MOTOR_FRONT_RIGHT = 4;
     
-    //Autonomous Starting Goal (Set initially, will be changeable from DashboardIO)
-    public static String location = "center";
-    public static String goal     = "bin";
-    
     
     /* PID Values */
     /* http://en.wikipedia.org/wiki/PID_controller#Ziegler.E2.80.93Nichols_method */
@@ -74,9 +70,5 @@ public class RobotMap {
     public static double p = .6 * u;
     public static double i = 2 * p / u;
     public static double d = p * u / 8;
-    
-    /* Physical Measurements */
-    public static double CORNER_TO_PIVOT = 30.75;
-    public static double ARM_LENGTH = 38;
 }
 

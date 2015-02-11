@@ -77,27 +77,4 @@ public class DashboardIO {
       //System.out.println("Updated U and PID Values");
       //System.out.println(RobotMap.p + " " + RobotMap.i + " " + RobotMap.d);
     }
-        
-    public boolean newAutoLocation() {
-        return !(RobotMap.location == getString("Auto Location: "));
-    }
-    
-    public boolean newAutoGoal() {
-        return !(RobotMap.goal == getString("Auto Goal: "));
-    }
-    
-    public void setAutoLocation() {
-        RobotMap.location = getString("Auto Location: ");
-    }
-    
-    public void setAutoGoal() {
-        RobotMap.goal = getString("Auto Goal: ");
-    }
-    
-    public void checkAuto() {
-        if(newAutoLocation() || newAutoGoal()) {
-            setAutoLocation();
-            setAutoGoal();
-        }
-    }
 }
