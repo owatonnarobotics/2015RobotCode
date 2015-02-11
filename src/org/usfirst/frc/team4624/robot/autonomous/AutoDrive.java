@@ -9,23 +9,28 @@ public class AutoDrive extends Command {
 
 	private int time;
 	private Timer timer;
+	private boolean forward;
 	
-	public AutoDrive(int dist) {
+	public AutoDrive(int time, boolean forward) {
 		requires(Robot.powertrain);
-		//time = (dist * conversion); //TODO find time-distance conversion
-		time = 1000;
+		this.time = time;
+		this.forward = forward;
 	}
 	
 	@Override
 	protected void end() {
-		timer.reset();
 		timer.stop();
 		
 	}
 
 	@Override
 	protected void execute() {
-		//Robot.powertrain.move(x, y, 0);
+	    if(forward) {
+	        Robot.powertrain.move(0, .05, 0); // Will have to guess/check these later
+	    }
+	    else {
+	        Robot.powertrain.move(0, -.05, 0);
+	    }
 		
 	}
 
@@ -37,14 +42,11 @@ public class AutoDrive extends Command {
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
+		return timer.get() >= time;
 	}
 	
 }

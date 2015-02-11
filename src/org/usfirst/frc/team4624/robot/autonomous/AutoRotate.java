@@ -9,8 +9,9 @@ public class AutoRotate extends Command {
 
 	private int time;
 	private Timer timer;
+	private boolean direction;
 	
-	public AutoRotate() {
+	public AutoRotate(boolean direction) {
 		requires(Robot.powertrain);
 		time = 2000; //TODO guess and check time for 90 degree rotation
 	}
@@ -23,7 +24,12 @@ public class AutoRotate extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.powertrain.move(0, 0, 1); //TODO find correct rate of rotation (90 degrees)
+	    if(direction) {
+	        Robot.powertrain.move(0, 0, 1); //TODO find correct rate of rotation (90 degrees)
+	    }
+	    else {
+	        Robot.powertrain.move(0, 0, -1); //TODO find correct rate of rotation (90 degrees)
+	    }
 	}
 
 	@Override
@@ -38,7 +44,7 @@ public class AutoRotate extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return timer.get() >= time;
 	}
 	
 }

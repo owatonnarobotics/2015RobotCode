@@ -17,43 +17,31 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
          * Bin    = 0
          * Tote   = 1
          */
-    	
-
-        if(location == 0 && goal == 0) {
-            //Do stuff
-        }
-
-        if(location == 1 && goal == 0) {
-            //Do stuff
-        }
-
-        if(location == 2 && goal == 0) {
-            //Do stuff
-        }
-
-        if(location == 0 && goal == 1) {
-            //Do stuff
-        }
-
-        if(location == 1 && goal == 1) {
-            //Do stuff
-        }
-
-        if(location == 2 && goal == 1) {
-            //Do stuff
-        }
-    }
-    
-    private void binTime(int firstMove, int secondMove) {
-        addSequential(new GrabArms());
         
+        int driveTime = 5000;
+        int extraDriveTime = 1000;
+        int backupTime = 1000;
+        
+        addSequential(new GrabArms());
         addSequential(new LiftLevel(LiftLevel.Level.UP));
-        addParallel(new AutoDriveBackwards(firstMove));    // Move backwards for 3000 milliseconds
+        
+        if(goal == 1) {
+            addSequential(new AutoRotate(true));
+        }
+        else {
+            addSequential(new AutoRotate(false));
+        }
+
+        if(location == 1) {
+            addSequential(new AutoDrive(driveTime, true));
+        }
+        else {
+            addSequential(new AutoDrive(driveTime + extraDriveTime, true));
+        }
         
         addSequential(new LiftLevel(LiftLevel.Level.DOWN));
-        
         addSequential(new ReleaseArms());
+        addSequential(new AutoDrive(backupTime, false));
         
-        addParallel(new AutoDriveBackwards(secondMove));    // Move backwards for 50 milliseconds
     }
 }

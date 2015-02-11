@@ -61,13 +61,7 @@ public class Robot extends IterativeRobot {
         driveCommand    = new DriveCommand();
         
         //currentAutoPreset = new ExampleAutonomusCommand();
-    }
-
-    public void disabledPeriodic() {
-        Scheduler.getInstance().run();
-    }
-
-    public void autonomousInit() {
+        
         locationChooser = new SendableChooser();
         locationChooser.addDefault("Center", Integer.valueOf(0));
         locationChooser.addObject("Left",    Integer.valueOf(1));
@@ -79,6 +73,13 @@ public class Robot extends IterativeRobot {
 
         SmartDashboard.putData("Auto Location", locationChooser);
         SmartDashboard.putData("Auto Goal",     goalChooser);
+    }
+
+    public void disabledPeriodic() {
+        Scheduler.getInstance().run();
+    }
+
+    public void autonomousInit() {
         autoCommand = new Autonomous(((Integer) locationChooser.getSelected()).intValue(),
                                      ((Integer) goalChooser.getSelected()).intValue());
     }
