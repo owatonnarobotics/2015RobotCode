@@ -21,7 +21,6 @@ public class PneumaticArms extends Subsystem {
      */
     public void grab() {
         arms.set(true);
-        System.out.println("Grabbed");
     }
     
     /**
@@ -29,7 +28,6 @@ public class PneumaticArms extends Subsystem {
      */
     public void release() {
         arms.set(false);
-        System.out.println("Released");
     }
 
     @Override
