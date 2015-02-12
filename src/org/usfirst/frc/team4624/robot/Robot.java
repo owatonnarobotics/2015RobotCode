@@ -1,12 +1,15 @@
 package org.usfirst.frc.team4624.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team4624.autonomous.*;
+import org.usfirst.frc.team4624.robot.autonomous.Autonomous;
 import org.usfirst.frc.team4624.robot.commands.*;
 import org.usfirst.frc.team4624.robot.input.*;
 import org.usfirst.frc.team4624.robot.subsystems.*;
@@ -39,7 +42,10 @@ public class Robot extends IterativeRobot {
     
     /* Commands */
     Command driveCommand;
-    
+    Command autoCommand;
+
+    SendableChooser locationChooser;
+    SendableChooser goalChooser;
 
     //CommandGroup currentAutoPreset;
     
@@ -51,16 +57,22 @@ public class Robot extends IterativeRobot {
         /* Initialize operator input */
         new OI();
         
-        
-        
-
-        
-        
-        
         /* Initialize 'always on' commands */
         driveCommand    = new DriveCommand();
         
         //currentAutoPreset = new ExampleAutonomusCommand();
+        
+        locationChooser = new SendableChooser();
+        locationChooser.addDefault("Center", Integer.valueOf(0));
+        locationChooser.addObject("Left",    Integer.valueOf(1));
+        locationChooser.addObject("Right",   Integer.valueOf(2)); // Could be a problem if it doesn't give the user time to choose
+
+        goalChooser = new SendableChooser();
+        goalChooser.addDefault("Bin", Integer.valueOf(0));
+        goalChooser.addObject("Tote", Integer.valueOf(1));
+
+        SmartDashboard.putData("Auto Location", locationChooser);
+        SmartDashboard.putData("Auto Goal",     goalChooser);
     }
 
     public void disabledPeriodic() {
@@ -68,7 +80,8 @@ public class Robot extends IterativeRobot {
     }
 
     public void autonomousInit() {
-        //currentAutoPreset.start();
+        autoCommand = new Autonomous(((Integer) locationChooser.getSelected()).intValue(),
+                                     ((Integer) goalChooser.getSelected()).intValue());
     }
 
     /**
@@ -88,6 +101,7 @@ public class Robot extends IterativeRobot {
      * to reset subsystems before shutting down.
      */
     public void disabledInit() {
+        System.out.printf("Hey! Did you guys %s?\n", "win");
     }
 
     /**

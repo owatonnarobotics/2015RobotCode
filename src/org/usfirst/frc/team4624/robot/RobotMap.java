@@ -69,16 +69,11 @@ public class RobotMap {
     public static final double LEVEL_RATE               = 0.5;
     
     
-    
     /* PID Values */
     /* http://en.wikipedia.org/wiki/PID_controller#Ziegler.E2.80.93Nichols_method */
     public static int    u = 1100;
     public static double p = .6 * u;
     public static double i = 2 * p / u;
     public static double d = p * u / 8;
-    
-    /* Physical Measurements */
-    public final static double CORNER_TO_PIVOT          = 30.75;
-    public final static double ARM_LENGTH               = 38;
 }
 

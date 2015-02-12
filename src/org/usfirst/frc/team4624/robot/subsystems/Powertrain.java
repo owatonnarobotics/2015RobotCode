@@ -1,11 +1,9 @@
 
 package org.usfirst.frc.team4624.robot.subsystems;
 
-import org.usfirst.frc.team4624.robot.OI;
 import org.usfirst.frc.team4624.robot.RobotMap;	// ENUMS for the ports
 import org.usfirst.frc.team4624.robot.commands.DriveCommand;
 import org.usfirst.frc.team4624.robot.input.XboxController;
-
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -30,7 +28,7 @@ public class Powertrain extends Subsystem {
         stop();
     }
     
-    double inputFunction(final double input) { //TODO Rename this function and paramaters
+    double inputFunction(final double input) {
         final double abs    =  Math.abs(input);
         final double output = -Math.sqrt(1 - Math.pow(abs, 2)) + 1;
         if (input > 0) {
@@ -66,5 +64,9 @@ public class Powertrain extends Subsystem {
     
     public boolean isFinished() {
         return false;
+    }
+
+    public void move(double x, double y, double rotation) {
+        motors.mecanumDrive_Cartesian(x, y, rotation, 0);
     }
 }

@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team4624.robot.OI;
 import org.usfirst.frc.team4624.robot.Robot;
-import org.usfirst.frc.team4624.robot.input.XboxController;
 
 /**
  * DriveCommand
