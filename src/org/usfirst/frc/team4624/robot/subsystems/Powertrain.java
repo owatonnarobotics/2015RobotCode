@@ -20,10 +20,10 @@ public class Powertrain extends Subsystem {
      */
     public Powertrain() {
         /* Initialize */
-        Jaguar rearleftMotor    = new Jaguar(RobotMap.PORT_MOTOR_REAR_LEFT);
-        Jaguar rearRightMotor   = new Jaguar(RobotMap.PORT_MOTOR_REAR_RIGHT);
-        Jaguar frontLeftMotor   = new Jaguar(RobotMap.PORT_MOTOR_FRONT_LEFT);
-        Jaguar frontRightMotor  = new Jaguar(RobotMap.PORT_MOTOR_FRONT_RIGHT);
+        Jaguar rearleftMotor    = new Jaguar(RobotMap.PWM_MOTOR_REAR_LEFT_PORT);
+        Jaguar rearRightMotor   = new Jaguar(RobotMap.PWM_MOTOR_REAR_RIGHT_PORT);
+        Jaguar frontLeftMotor   = new Jaguar(RobotMap.PWM_MOTOR_FRONT_LEFT_PORT);
+        Jaguar frontRightMotor  = new Jaguar(RobotMap.PWM_MOTOR_FRONT_RIGHT_PORT);
         
         motors = new RobotDrive(frontLeftMotor, rearleftMotor, frontRightMotor, rearRightMotor);
         
@@ -51,12 +51,12 @@ public class Powertrain extends Subsystem {
     public void setAsTankdrive(XboxController controller) {
         final double boostScale = .5;   // Smaller makes non boost slower. Boost is always full speed.
         
-        double x = inputFunction(controller.leftStick.getX()) * (controller.leftStick.get() ? 1 : boostScale); //TODO Michael is gonna look this up
+        double x = inputFunction(controller.leftStick.getX()) * (controller.leftStick.get() ? 1 : boostScale);
         double y = inputFunction(controller.leftStick.getY()) * (controller.leftStick.get() ? 1 : boostScale);
         
         motors.mecanumDrive_Cartesian(  x,
                                         -y,    // We already corrected for the mistake that this method also corrects
-                                        controller.rightStick.getX(),
+                                        inputFunction(controller.rightStick.getX()),
                                         0);
     }
     

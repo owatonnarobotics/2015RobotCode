@@ -2,174 +2,210 @@ package org.usfirst.frc.team4624.robot.subsystems;
 
 import org.usfirst.frc.team4624.robot.RobotMap;
 import org.usfirst.frc.team4624.robot.commands.LiftManual;
-
-import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Forklift extends Subsystem {
+	
+    public enum Mode{
+        MANUAL, LEVEL
+    }
     
-    CANJaguar liftParent;
-    CANJaguar liftChild;
+    private Jaguar  lift;
+    private Encoder encoder;
     
-    private final int codesPerRev = 497;
-    private double goal; // In Rotations
+    // Goal used for manual mode
+    private double  rateGoal;
     
+    // Goal used for level mode
+    private int     levelGoal;
+    
+    private double  rateOfChange;
+    private double  lastDistance;
+    private long    lastTime;
+    
+    private Mode mode;
+    
+    /**
+     * Initialize the Forklift subsystem. Sould only be called once.
+     */
     public Forklift() {
-        liftParent = new CANJaguar(RobotMap.CAN_ADDRESS_LIFT_PARENT);
-        liftChild  = new CANJaguar(RobotMap.CAN_ADDRESS_LIFT_CHILD);
+        this.lift           = new Jaguar(RobotMap.PWM_LIFT_PORT);
+        this.encoder        = new Encoder(RobotMap.LIFT_ENCODER_A, RobotMap.LIFT_ENCODER_B);
         
-        liftParent.setPositionMode(CANJaguar.kQuadEncoder, codesPerRev,
-                RobotMap.p, RobotMap.i, RobotMap.d);
-        liftParent.enableControl(0);
-        goal = liftParent.getPosition();
+        this.lastDistance   = 0.0;
+        this.lastTime       = System.currentTimeMillis();
+        this.rateOfChange   = 0.0;
         
-        liftChild.setVoltageMode();
+        this.levelGoal      = 0;
+        this.rateGoal       = 0;
+        
+        this.mode           = Mode.MANUAL;
+    }
+ 
+    /** 
+     * Manual Commands
+    **/
+    
+    public void setManualMode(){
+    	mode = Mode.MANUAL;
+    }
+    
+    /** 
+     * Level Commands
+    **/
+    
+    public void setLevelMode(){
+    	mode       = Mode.LEVEL;
+    	rateGoal   = RobotMap.LEVEL_RATE;
     }
     
     /**
-     * Sets the target of the Forklift to its current position. Effectively stopping it.
+     * Increase the level of the forklift by 1
      */
-    public void stop() {
-        goal = liftParent.getPosition();
-        liftParent.set(goal);
+    public void increaseLevel(){
+    	levelGoal += 1;
+    	levelGoal = clamp(levelGoal, 0, RobotMap.LIFT_HEIGHTS.length);
     }
     
     /**
-     * Snaps the Forklift to a tote level relative to its current position
-     * @param changeLevel
+     * Decrease the level of the forklift by 1
      */
-    public void changeLevel(int changeLevel) { // Convert to rotations here (changeLevel is in levels)
-        // TODO Auto-generated method stub
+    public void decreaseLevel(){
+    	levelGoal -= 1;
+    	levelGoal = clamp(levelGoal, 0, RobotMap.LIFT_HEIGHTS.length);
     }
     
     /**
-     * Changes the Forklift height relative to its current position
-     * @param changeHeight
-     */
-    public void changeHeight(double changeHeight) { // Convert to rotations here (changeHeight is in distance)
-        changeGoal(changeHeight);
-    }
-    
-    /**
-     * Changes the target of the motor relative to what it is
-     * @param changeGoal
-     */
-    private void changeGoal(double changeGoal) { // Takes in Rotations
-        goal += changeGoal;
-        goal = clamp(goal, 0, RobotMap.FORKLIFT_MAX_ROTATIONS);
-        liftParent.set(goal);
-    }
-    
-    /**
-     * Clamps a value between two other values
-     * @param input
+     * Clamp a value between two other values
+     * @param value
      * @param min
      * @param max
-     * @return A clamped value between min and max
+     * @return The clamped value
      */
-    private double clamp(double input, double min, double max) {
-        return Math.max(min, Math.min(max, input));
+    private double clamp(double value, double min, double max) {
+        return Math.max(min, Math.min(max, value));
     }
     
     /**
-     * Converts vertical distance to rotations required to reach that height
-     * @param distance
-     * @return Number of rotations from the initial value (0)
+     * Clamp a value between two other values
+     * @param value
+     * @param min
+     * @param max
+     * @return The clamped value
      */
-    private double distanceToRotations(double distance) { //This is the important one
-        return 0.0; //TODO Add Maths
+    private int clamp(int value, int min, int max) {
+        return Math.max(min, Math.min(max, value));
+    }
+    
+    /** 
+     * General Commands
+    **/
+    
+    /**
+     * Sets the raw value of the Jaguar motor
+     * @param raw
+     */
+    private void setRaw(double raw){
+        lift.set(clamp(raw,-1,1));
     }
     
     /**
-     * For use with commands
-     * @return Returns true if the Forklift has reached its goal
+     * Gets the raw value of the Jaguar motor
+     * @return
      */
-    public boolean isFinished() {
-        return (Math.abs(liftParent.getPosition() - goal) < RobotMap.MOTOR_ACCURACY);
+    private double getRaw(){
+    	return lift.get();
+    }
+    
+    /**
+     * Sets the rate at which the Jaguar should be running
+     * @param rate
+     */
+    public void setRate(double rate){
+        rateGoal = rate;
+    }
+    
+    /**
+     * Get the rotations of the lift motor
+     * @return Double of rotations
+     */
+    private double getRotations(){
+        return encoder.getDistance() / 250;
+    }
+    
+    /**
+     * Increases or decreases the PWM based on the rate goal.
+     * Called every interval
+     */
+    private void updateRate(){
+        
+        double rateDifference = Math.abs(rateOfChange - rateGoal);
+        
+        // If the rate is not within the wanted rate
+    	if (rateDifference > RobotMap.RATE_MARGIN_OF_ERROR) {
+    	    
+    		// If the rate is not large enough, increase the raw value
+    		if (rateOfChange < rateGoal) {
+    			setRaw(getRaw() + RobotMap.RATE_CHANGE);
+    			//setRaw(getRaw() + (rateGoal - rateOfChange));
+    		}
+    		// If the rate is too large, decrease the raw value
+    		if (rateOfChange > rateGoal) {
+    			setRaw(getRaw() - RobotMap.RATE_CHANGE);
+    			//setRaw(getRaw() + (rateGoal - rateOfChange));
+    		}
+    	}
+    }
+    
+    private void updateRateOfChange() {
+        rateOfChange = (encoder.getDistance() - lastDistance) / (System.currentTimeMillis() - lastTime);
+        lastDistance = encoder.getDistance();
+        lastTime = System.currentTimeMillis();
+    }
+    
+    /**
+     * Updates the system with the new rate of change.
+     * Called every interval
+     */
+    public void update() {
+    	updateRateOfChange();
+        
+        if (mode == Mode.LEVEL) {
+        	// If the height is close enough to the goal, disable the rate of the motor
+            //double levelGoal 
+            double levelGoalDifference = Math.abs(RobotMap.LIFT_HEIGHTS[levelGoal] - getRotations());
+            
+        	if (levelGoalDifference < RobotMap.LIFT_MARGIN_OF_ERROR){
+        		setRate(0);
+        	}
+        	// If the height is above the goal, set the rate to be negative
+        	else if (RobotMap.LIFT_HEIGHTS[levelGoal] < getRotations()) {
+        		setRate(-1 * RobotMap.LEVEL_RATE);
+        	}
+        	// If the height is below the goal, set the rate to be positive
+        	else {
+        		setRate(RobotMap.LEVEL_RATE);
+        	}
+        }
+        
+        updateRate();
+        
+        displayInformation();
+    }
+    
+    /**
+     * Update the the smart dashboard with
+     */
+    private void displayInformation(){
+        SmartDashboard.putNumber("Encoder Position", encoder.getDistance() / 250);
+        SmartDashboard.putNumber("Rate of Change", (encoder.getDistance() - lastDistance) / (System.currentTimeMillis() - lastTime));
     }
     
     @Override
     protected void initDefaultCommand() {
         setDefaultCommand(new LiftManual());
-    }
-    
-    public double getHeight(double curveDistance) {
-        return (27.7 - RobotMap.ARM_LENGTH * getAngle(curveDistance));
-        //Is 27.7 actually cornerToPivot???
-    }
-    /**
-     * 
-     * @param curveDistance
-     * @return
-     */
-    public double getAngle(double curveDistance) {
-        return Math.toDegrees(Math.cos(43.2 + (360 * curveDistance) / (76 * Math.PI)));
-        //TODO Get 43.2 and 76 into robotmap
-    }
-    
-    public double getStrapLength(double angle) {
-        return Math.sqrt(Math.pow(RobotMap.CORNER_TO_PIVOT, 2) + Math.pow(RobotMap.ARM_LENGTH, 2) - (2 * RobotMap.CORNER_TO_PIVOT
-                * RobotMap.ARM_LENGTH * Math.cos(angle)));
-    }
-    
-    public double distanceToRevolutions(double distance) {
-        return distance / 2.5; //TODO Adjust for strap wrapping around
-    }
-    
-    /**
-     * Set the voltage of the child motor to the parent motor
-     */
-    private void parentChild() {
-        liftChild.set(liftParent.getOutputVoltage());
-    }
-    
-    /**
-     * Update the system. Call this from a default command.
-     */
-    public void execute() {
-        parentChild();
-        printStatus();
-    }
-    
-    /* Smart Dashboard */
-    /**
-     * For use with the Smart Dashboard
-     * @return The current rotation count of the motor
-     */
-    public double getPosition() {
-        return liftParent.getPosition();
-    }
-    
-    /**
-     * For use with the Smart Dashboard
-     * @return The current goal of the motor
-     */
-    public double getGoal() {
-        return goal;
-    }
-    
-    /**
-     * For use with the Smart Dashboard.
-     * Sets the goal to what is inputed
-     * @param newGoal
-     */
-    public void setGoal(double newGoal) {
-        goal = newGoal;
-        liftParent.set(goal);
-    }
-    
-    /**
-     * For use with the Smart Dashboard.
-     * Resets the P I and D values of the Forklift motor
-     */
-    public void reinit() {
-        liftParent.setPositionMode(CANJaguar.kQuadEncoder, codesPerRev,
-                RobotMap.p, RobotMap.i, RobotMap.d);
-    }
-    
-    public void printStatus() {
-        SmartDashboard.putNumber("Forklift Height", liftParent.get());
-        SmartDashboard.putNumber("Forklift Goal  ", goal);
     }
 }
