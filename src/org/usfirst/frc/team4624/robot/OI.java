@@ -10,7 +10,7 @@ public class OI {
     public static XboxController xboxController = new XboxController();
 
     public OI() {
-        xboxController.leftStick.setYDeadZone(.2);  // Gib me Oreos™
+        xboxController.leftStick.setYDeadZone(.2);  // Gib me Oreos (TM)
         
         xboxController.rb.whenPressed(new ReleaseArms());
         xboxController.rb.whenReleased(new GrabArms());
@@ -20,6 +20,7 @@ public class OI {
         
         xboxController.a.whenPressed(new LiftLevel(Level.DOWN));
         xboxController.x.whenPressed(new LiftLevel(Level.UP));
+        xboxController.b.whenPressed(new LiftLevel(Level.STOP));
         
         /*
          * a  = go down a level

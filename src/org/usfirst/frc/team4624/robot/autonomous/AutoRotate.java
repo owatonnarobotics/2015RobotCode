@@ -25,10 +25,10 @@ public class AutoRotate extends Command {
 	@Override
 	protected void execute() {
 	    if(direction) {
-	        Robot.powertrain.move(0, 0, 1); //TODO find correct rate of rotation (90 degrees)
+	        Robot.powertrain.move(0, 0, .25); //TODO find correct rate of rotation (90 degrees)
 	    }
 	    else {
-	        Robot.powertrain.move(0, 0, -1); //TODO find correct rate of rotation (90 degrees)
+	        Robot.powertrain.move(0, 0, .25); //TODO find correct rate of rotation (90 degrees)
 	    }
 	}
 

@@ -201,7 +201,10 @@ public class Forklift extends Subsystem {
      */
     private void displayInformation(){
         SmartDashboard.putNumber("Encoder Position", encoder.getDistance() / 250);
-        SmartDashboard.putNumber("Rate of Change", (encoder.getDistance() - lastDistance) / (System.currentTimeMillis() - lastTime));
+        SmartDashboard.putNumber("Rate of Change"  , (encoder.getDistance() - lastDistance) / (System.currentTimeMillis() - lastTime));
+        SmartDashboard.putNumber("Level Goal"      , levelGoal);
+        SmartDashboard.putNumber("Rate Goal"       , rateGoal);
+        SmartDashboard.putString("Goal Mode"       , mode.toString());
     }
     
     @Override

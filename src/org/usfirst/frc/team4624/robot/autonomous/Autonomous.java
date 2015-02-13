@@ -18,9 +18,9 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
          * Tote   = 1
          */
         
-        int driveTime = 5000;
-        int extraDriveTime = 1000;
-        int backupTime = 1000;
+        final int driveTime = 5000;
+        final int extraDriveTime = 1000;
+        final int backupTime = 1000;
         
         addSequential(new GrabArms());
         addSequential(new LiftLevel(LiftLevel.Level.UP));

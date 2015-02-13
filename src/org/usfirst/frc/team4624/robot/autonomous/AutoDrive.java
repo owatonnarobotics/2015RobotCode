@@ -20,16 +20,15 @@ public class AutoDrive extends Command {
 	@Override
 	protected void end() {
 		timer.stop();
-		
 	}
 
 	@Override
 	protected void execute() {
 	    if(forward) {
-	        Robot.powertrain.move(0, .05, 0); // Will have to guess/check these later
+	        Robot.powertrain.move(0, .25, 0); // Will have to guess/check these later
 	    }
 	    else {
-	        Robot.powertrain.move(0, -.05, 0);
+	        Robot.powertrain.move(0, -.25, 0);
 	    }
 		
 	}

@@ -9,7 +9,7 @@ public class LiftLevel extends Command {
     private Level direction;
     
     public enum Level{
-    	UP, DOWN
+    	UP, DOWN, STOP
     }
     
     public LiftLevel(Level direction) {
@@ -28,8 +28,11 @@ public class LiftLevel extends Command {
         
         if(direction == Level.UP) {
             Robot.forklift.increaseLevel();
-        } else {
+        } else if(direction == Level.UP) {
             Robot.forklift.decreaseLevel();
+        } else {
+            Robot.forklift.setRate(0); //Not 100% sure this will work
+            Robot.forklift.setManualMode();
         }
     }
     
