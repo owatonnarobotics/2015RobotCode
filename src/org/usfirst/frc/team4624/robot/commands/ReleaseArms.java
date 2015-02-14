@@ -19,6 +19,7 @@ public class ReleaseArms extends Command {
     @Override
     protected void execute() {
         Robot.pneumaticArms.release();
+        OI.xboxController.setRumble(1);
         SmartDashboard.putString("Arm Status: ", "Releasing");
     }
 
