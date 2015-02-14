@@ -333,10 +333,8 @@ public class XboxController extends Joystick {
         
         /* Get Methods */
         /**
-         * getHand
+         * Used to see which side of the controller this thumbstick is
          * @return Thumbstick hand
-         * 
-         * See which side of the controller this thumbstick is
          */
         public HAND getHand() {
             return hand;
