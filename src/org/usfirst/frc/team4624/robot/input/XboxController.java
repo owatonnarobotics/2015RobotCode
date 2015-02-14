@@ -91,26 +91,26 @@ public class XboxController extends Joystick {
      * you can specify which port you expect the controller to be on.
      * @param port
      */
-    public XboxController( final int port ) {
-        super( port );  // Extends Joystick...
+    public XboxController(final int port) {
+        super(port);  // Extends Joystick...
         
         /* Initialize */
         this.port       = port;
-        this.controller = new Joystick( this.port );    // Joystick referenced by everything
+        this.controller = new Joystick(this.port);    // Joystick referenced by everything
         
-        this.leftStick  = new Thumbstick    ( this.controller, HAND.LEFT );
-        this.rightStick = new Thumbstick    ( this.controller, HAND.RIGHT );
-        this.dPad       = new DirectionalPad( this.controller );
-        this.lt         = new Trigger       ( this.controller, HAND.LEFT );
-        this.rt         = new Trigger       ( this.controller, HAND.RIGHT );
-        this.a          = new JoystickButton( this.controller, A_BUTTON_ID );
-        this.b          = new JoystickButton( this.controller, B_BUTTON_ID );
-        this.x          = new JoystickButton( this.controller, X_BUTTON_ID );
-        this.y          = new JoystickButton( this.controller, Y_BUTTON_ID );
-        this.lb         = new JoystickButton( this.controller, LB_BUTTON_ID );
-        this.rb         = new JoystickButton( this.controller, RB_BUTTON_ID );
-        this.back       = new JoystickButton( this.controller, BACK_BUTTON_ID );
-        this.start      = new JoystickButton( this.controller, START_BUTTON_ID );
+        this.leftStick  = new Thumbstick    (this.controller, HAND.LEFT);
+        this.rightStick = new Thumbstick    (this.controller, HAND.RIGHT);
+        this.dPad       = new DirectionalPad(this.controller);
+        this.lt         = new Trigger       (this.controller, HAND.LEFT);
+        this.rt         = new Trigger       (this.controller, HAND.RIGHT);
+        this.a          = new JoystickButton(this.controller, A_BUTTON_ID);
+        this.b          = new JoystickButton(this.controller, B_BUTTON_ID);
+        this.x          = new JoystickButton(this.controller, X_BUTTON_ID);
+        this.y          = new JoystickButton(this.controller, Y_BUTTON_ID);
+        this.lb         = new JoystickButton(this.controller, LB_BUTTON_ID);
+        this.rb         = new JoystickButton(this.controller, RB_BUTTON_ID);
+        this.back       = new JoystickButton(this.controller, BACK_BUTTON_ID);
+        this.start      = new JoystickButton(this.controller, START_BUTTON_ID);
     }
     
     
@@ -161,7 +161,7 @@ public class XboxController extends Joystick {
          * Constructor
          * @param value
          */
-        DPAD( final int value ) {
+        DPAD(final int value) {
             this.value = value;
         }
         
@@ -170,19 +170,19 @@ public class XboxController extends Joystick {
          * @param value
          * @return DPAD with matching angle
          */
-        public static DPAD getEnum( int angle ) {
+        public static DPAD getEnum(int angle) {
             angle = Math.abs(angle);
             angle %= 360;
             
             DPAD[] all = DPAD.values();
             
-            for( int i = 0; i < all.length; i++ ) {
-                if ( all[i].value == angle ) {
+            for(int i = 0; i < all.length; i++) {
+                if (all[i].value == angle) {
                     return all[i] ;
                 }
             }
             // I don't know what to do where
-            throw new UnsupportedOperationException( "Integer supplied (" + angle + ") is not a possible value of this enum." );
+            throw new UnsupportedOperationException("Integer supplied (" + angle + ") is not a possible value of this enum.");
         }
     }
     
@@ -210,7 +210,7 @@ public class XboxController extends Joystick {
          * @param parent
          * @param hand
          */
-        Thumbstick( final Joystick parent, final HAND hand ) {
+        Thumbstick(final Joystick parent, final HAND hand) {
             
             /* Initialize */
             this.parent     = parent;
@@ -218,7 +218,7 @@ public class XboxController extends Joystick {
             this.xDeadZone   = DEFAULT_THUMBSTICK_DEADZONE;
             this.yDeadZone   = DEFAULT_THUMBSTICK_DEADZONE;
             
-            if ( hand == HAND.LEFT ) {
+            if (hand == HAND.LEFT) {
                 this.xAxisID    = LEFT_THUMBSTICK_X_AXIS_ID;
                 this.yAxisID    = LEFT_THUMBSTICK_Y_AXIS_ID;
                 this.pressedID	= LEFT_THUMBSTIKC_BUTTON_ID;
@@ -237,9 +237,9 @@ public class XboxController extends Joystick {
          * @return X but with a deadzone
          */
         private double rawX() {
-            final double rawInput = parent.getRawAxis( xAxisID );
+            final double rawInput = parent.getRawAxis(xAxisID);
             
-            return createDeadZone( rawInput, xDeadZone );
+            return createDeadZone(rawInput, xDeadZone);
         }
         
         /**
@@ -248,9 +248,9 @@ public class XboxController extends Joystick {
          * @return Y but with a deadzone
          */
         private double rawY() {
-            final double rawInput = -parent.getRawAxis( yAxisID );    // -Y was up on our thumbsticks. Consider this a fix?
+            final double rawInput = -parent.getRawAxis(yAxisID);    // -Y was up on our thumbsticks. Consider this a fix?
             
-            return createDeadZone( rawInput, yDeadZone );
+            return createDeadZone(rawInput, yDeadZone);
         }
         
         /**
@@ -259,11 +259,11 @@ public class XboxController extends Joystick {
          * @param y
          * @return Magnitude of thing
          */
-        private double magnitude( double x, double y ) {
-            final double xSquared   = Math.pow( x, 2 );
-            final double ySquared   = Math.pow( y, 2 );
+        private double magnitude(double x, double y) {
+            final double xSquared   = Math.pow(x, 2);
+            final double ySquared   = Math.pow(y, 2);
             
-            return Math.sqrt( xSquared + ySquared );
+            return Math.sqrt(xSquared + ySquared);
         }
         
         /**
@@ -271,13 +271,13 @@ public class XboxController extends Joystick {
          * @param angle
          * @return Number between 0 and PI/4
          */
-        private double angleToSquareSpace( double angle ) {
-            final double absAngle   = Math.abs( angle );
+        private double angleToSquareSpace(double angle) {
+            final double absAngle   = Math.abs(angle);
             final double halfPi     = Math.PI / 2;
             final double quarterPi  = Math.PI / 4;
             final double modulus    = absAngle % halfPi;
             
-            return -Math.abs( modulus - quarterPi ) + quarterPi;
+            return -Math.abs(modulus - quarterPi) + quarterPi;
         }
         
         /**
@@ -286,11 +286,11 @@ public class XboxController extends Joystick {
          * @param y
          * @return 
          */
-        private double scaleMagnitude( double x, double y ) {
-            final double magnitude      = magnitude( x, y );
-            final double angle          = Math.atan2( x, y );
-            final double newAngle       = angleToSquareSpace( angle );
-            final double scaleFactor    = Math.cos( newAngle );
+        private double scaleMagnitude(double x, double y) {
+            final double magnitude      = magnitude(x, y);
+            final double angle          = Math.atan2(x, y);
+            final double newAngle       = angleToSquareSpace(angle);
+            final double scaleFactor    = Math.cos(newAngle);
             
             return magnitude * scaleFactor;
         }
@@ -300,7 +300,7 @@ public class XboxController extends Joystick {
         /* Extended Methods */
         @Override
         public boolean get() {
-            return parent.getRawButton( pressedID );
+            return parent.getRawButton(pressedID);
         }
         
         
@@ -337,9 +337,9 @@ public class XboxController extends Joystick {
          * @return Angle the thumbstick is pointing
          */
         public double getAngle() {
-            final double angle = Math.atan2( rawX(), rawY() );
+            final double angle = Math.atan2(rawX(), rawY());
             
-            return Math.toDegrees( angle );
+            return Math.toDegrees(angle);
         }
         
         /**
@@ -347,9 +347,9 @@ public class XboxController extends Joystick {
          * @return A number between 0 and 1
          */
         public double getMagnitude() {
-            double magnitude = scaleMagnitude( rawX(), rawY() );
+            double magnitude = scaleMagnitude(rawX(), rawY());
             
-            if ( magnitude > 1 ) {
+            if (magnitude > 1) {
                 magnitude = 1;  // Prevent any errors that might arise
             }
             
@@ -363,9 +363,9 @@ public class XboxController extends Joystick {
         public double getTrueX() {
             final double x      = rawX();
             final double y      = rawY();
-            final double angle  = Math.atan2( x, y );
+            final double angle  = Math.atan2(x, y);
             
-            return scaleMagnitude( x, y ) * Math.sin( angle );
+            return scaleMagnitude(x, y) * Math.sin(angle);
         }
         
         /**
@@ -375,9 +375,9 @@ public class XboxController extends Joystick {
         public double getTrueY() {
             final double x      = rawX();
             final double y      = rawY();
-            final double angle  = Math.atan2( x, y );
+            final double angle  = Math.atan2(x, y);
             
-            return scaleMagnitude( x, y ) * Math.cos( angle );
+            return scaleMagnitude(x, y) * Math.cos(angle);
         }
         
         
@@ -387,7 +387,7 @@ public class XboxController extends Joystick {
          * Set the X axis deadzone of this thumbstick
          * @param number
          */
-        public void setXDeadZone( double number ) {
+        public void setXDeadZone(double number) {
             xDeadZone = number;
         }
         
@@ -395,7 +395,7 @@ public class XboxController extends Joystick {
          * Set the Y axis deadzone of this thumbstick
          * @param number
          */
-        public void setYDeadZone( double number ) {
+        public void setYDeadZone(double number) {
             yDeadZone = number;
         }
     }
@@ -422,7 +422,7 @@ public class XboxController extends Joystick {
          * @param joystick
          * @param hand
          */
-        Trigger( final Joystick joystick, final HAND hand ) {
+        Trigger(final Joystick joystick, final HAND hand) {
             
             /* Initialize */
             this.parent         = joystick;
@@ -460,13 +460,13 @@ public class XboxController extends Joystick {
         public double getX() {
             final double rawInput;
             
-            if ( hand == HAND.LEFT ) {
-                rawInput = parent.getRawAxis( LEFT_TRIGGER_AXIS_ID );
+            if (hand == HAND.LEFT) {
+                rawInput = parent.getRawAxis(LEFT_TRIGGER_AXIS_ID);
             } else {
-                rawInput = parent.getRawAxis( RIGHT_TRIGGER_AXIS_ID );
+                rawInput = parent.getRawAxis(RIGHT_TRIGGER_AXIS_ID);
             }
             
-            return createDeadZone( rawInput, deadZone );
+            return createDeadZone(rawInput, deadZone);
         }
         
         public double getY() {
@@ -480,7 +480,7 @@ public class XboxController extends Joystick {
          * Set the deadzone of this trigger
          * @param number
          */
-        public void setTriggerDeadZone( double number ) {
+        public void setTriggerDeadZone(double number) {
             this.deadZone = number;
         }
         
@@ -488,7 +488,7 @@ public class XboxController extends Joystick {
          * How far you need to press this trigger to activate a button press
          * @param number
          */
-        public void setTriggerSensitivity( double number ) {
+        public void setTriggerSensitivity(double number) {
             this.sensitivity = number;
         }
     }
@@ -518,18 +518,18 @@ public class XboxController extends Joystick {
          * Constructor
          * @param parent
          */
-        DirectionalPad( final Joystick parent ) {
+        DirectionalPad(final Joystick parent) {
             
             /* Initialize */
             this.parent	    = parent;
-            this.up         = new DPadButton( this, DPAD.UP );
-            this.upRight    = new DPadButton( this, DPAD.UP_RIGHT );
-            this.right      = new DPadButton( this, DPAD.RIGHT );
-            this.downRight  = new DPadButton( this, DPAD.DOWN_RIGHT );
-            this.down       = new DPadButton( this, DPAD.DOWN );
-            this.downLeft   = new DPadButton( this, DPAD.DOWN_LEFT );
-            this.left       = new DPadButton( this, DPAD.LEFT );
-            this.upLeft     = new DPadButton( this, DPAD.UP_LEFT );
+            this.up         = new DPadButton(this, DPAD.UP);
+            this.upRight    = new DPadButton(this, DPAD.UP_RIGHT);
+            this.right      = new DPadButton(this, DPAD.RIGHT);
+            this.downRight  = new DPadButton(this, DPAD.DOWN_RIGHT);
+            this.down       = new DPadButton(this, DPAD.DOWN);
+            this.downLeft   = new DPadButton(this, DPAD.DOWN_LEFT);
+            this.left       = new DPadButton(this, DPAD.LEFT);
+            this.upLeft     = new DPadButton(this, DPAD.UP_LEFT);
         }
         
         
@@ -551,7 +551,7 @@ public class XboxController extends Joystick {
              * @param parent
              * @param dPad
              */
-            DPadButton( final DirectionalPad parent, final DPAD dPadDirection ) {
+            DPadButton(final DirectionalPad parent, final DPAD dPadDirection) {
                 
                 /* Initialize */
                 this.direction  = dPadDirection;
@@ -603,7 +603,7 @@ public class XboxController extends Joystick {
          * @return A DPAD direction
          */
         public DPAD getDirection() {
-            return DPAD.getEnum( angle() );
+            return DPAD.getEnum(angle());
         }
     }
     
@@ -618,20 +618,20 @@ public class XboxController extends Joystick {
      * @param deadZoneSize
      * @return adjusted_input
      */
-    private static double createDeadZone( double input, double deadZoneSize ) {
-        double          deadZoneSizeClamp = deadZoneSize;
-        final double    negative;
-        double          adjusted;
+    private static double createDeadZone(double input, double deadZoneSize) {
+                double  deadZoneSizeClamp = deadZoneSize;
+        final   double  negative;
+                double  adjusted;
         
-        if ( deadZoneSizeClamp < 0 || deadZoneSizeClamp >= 1 ) {
+        if (deadZoneSizeClamp < 0 || deadZoneSizeClamp >= 1) {
             deadZoneSizeClamp = 0;  // Prevent any weird errors
         }
         
         negative    = input < 0 ? -1 : 1;
         
-        adjusted    = Math.abs( input ) - deadZoneSizeClamp; // Subtract the deadzone from the magnitude
+        adjusted    = Math.abs(input) - deadZoneSizeClamp; // Subtract the deadzone from the magnitude
         adjusted    = adjusted < 0 ? 0 : adjusted;  // if the new input is negative, make it zero
-        adjusted    = adjusted / ( 1 - deadZoneSizeClamp );  // Adjust the adjustment so it can max at 1
+        adjusted    = adjusted / (1 - deadZoneSizeClamp);  // Adjust the adjustment so it can max at 1
         
         return negative * adjusted;
     }
@@ -661,13 +661,13 @@ public class XboxController extends Joystick {
      * @param hand The side of the controller to rumble
      * @param intensity How strong the rumble is
      */
-    public void setRumble( HAND hand, double intensity ) {
-        float ammount = new Float( intensity );
+    public void setRumble(HAND hand, double intensity) {
+        float ammount = new Float(intensity);
         
-        if ( hand == HAND.LEFT ) {
-            controller.setRumble( RumbleType.kLeftRumble, ammount );
+        if (hand == HAND.LEFT) {
+            controller.setRumble(RumbleType.kLeftRumble, ammount);
         } else {
-            controller.setRumble( RumbleType.kRightRumble, ammount );
+            controller.setRumble(RumbleType.kRightRumble, ammount);
         }
     }
     
@@ -675,10 +675,10 @@ public class XboxController extends Joystick {
      * Make the controller vibrate
      * @param intensity How strong the rumble is
      */
-    public void setRumble( double intensity ) {
-        float ammount = new Float( intensity );
+    public void setRumble(double intensity) {
+        float ammount = new Float(intensity);
         
-        controller.setRumble( RumbleType.kLeftRumble, ammount );
-        controller.setRumble( RumbleType.kRightRumble, ammount );
+        controller.setRumble(RumbleType.kLeftRumble, ammount);
+        controller.setRumble(RumbleType.kRightRumble, ammount);
     }
 }
