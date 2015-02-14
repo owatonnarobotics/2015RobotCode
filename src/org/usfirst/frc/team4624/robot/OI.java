@@ -21,6 +21,7 @@ public class OI {
         xboxController.a.whenPressed(new LiftLevel(Level.DOWN));
         xboxController.x.whenPressed(new LiftLevel(Level.UP));
         xboxController.b.whenPressed(new LiftLevel(Level.STOP));
+        xboxController.y.whenPressed(new SwitchLevelMode());
         
         /*
          * a  = go down a level
