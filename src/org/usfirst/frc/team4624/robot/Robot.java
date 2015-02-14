@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4624.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -27,7 +28,7 @@ public class Robot extends IterativeRobot {
 /** A reference to the Powertrain subsystem */
     public static Powertrain     powertrain = new Powertrain();
     
-/** A reference to the Forkliftsubsystem */
+/** A reference to the Forklift subsystem */
     public static Forklift       forklift = new Forklift();
     
 /** A reference to the PneumaticArms subsystem */
@@ -36,9 +37,7 @@ public class Robot extends IterativeRobot {
 /** A reference to the CAN_Compressor subsystem */
     public static CAN_Compressor compressor = new CAN_Compressor();
     
-    
-    // TODO make static
-    public final DashboardIO dashboardio = new DashboardIO();
+    public static DigitalInput toteDetector = new DigitalInput(RobotMap.PORT_TOTE_DETECTOR);
     
     /* Commands */
     Command driveCommand;
@@ -46,6 +45,8 @@ public class Robot extends IterativeRobot {
 
     SendableChooser locationChooser;
     SendableChooser goalChooser;
+    
+    boolean pressed = false;
 
     //CommandGroup currentAutoPreset;
     
@@ -93,7 +94,6 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         driveCommand.start();
-        dashboardio.updatePID();
     }
 
     /**
@@ -109,7 +109,13 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        
+        if(toteDetector.get() && pressed) {
+            new SensorHit();
+            pressed = false;
+        }
+        else if(!toteDetector.get()){
+            pressed = true;
+        }
         // Update rate on the forklift
         forklift.update();
     }

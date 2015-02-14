@@ -59,26 +59,21 @@ public class RobotMap {
     };
     
 /** The margin of error for updating the rate of the motor */
-    public static final double RATE_MARGIN_OF_ERROR     = .01;
+    public static final double RATE_MARGIN_OF_ERROR    = .01;
     
 /** The rate at which the motor changes the PWM level */
-    public static final double RATE_CHANGE              = .01;
+    public static final double RATE_CHANGE             = .01;
     
 /** The rate of the forklift in level mode */
-    public static final double LEVEL_RATE               = 0.5;
+    public static final double LEVEL_RATE              = 0.5;
 
-public static final int PORT_ENCODER_RESET = 2;
+    public static final int    PORT_ENCODER_RESET      = 2;
 
-public static final double FORKLIFT_SLOW_ZONE = .75;
+    public static final double FORKLIFT_SLOW_ZONE      = .75;
 
-public static final double FORKLIFT_SLOW_ZONE_RATE = -.1;
+    public static final double FORKLIFT_SLOW_ZONE_RATE = -.1;
+
+    public static final int    PORT_TOTE_DETECTOR      = 3;
     
-    
-    /* PID Values */
-    /* http://en.wikipedia.org/wiki/PID_controller#Ziegler.E2.80.93Nichols_method */
-    public static int    u = 1100;
-    public static double p = .6 * u;
-    public static double i = 2 * p / u;
-    public static double d = p * u / 8;
 }
 
