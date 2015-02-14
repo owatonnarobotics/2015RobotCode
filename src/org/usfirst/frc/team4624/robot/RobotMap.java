@@ -54,10 +54,10 @@ public class RobotMap {
     };
     
 /** The margin of error for updating the rate of the motor */
-    public static final double RATE_MARGIN_OF_ERROR     = .01;
+    public static final double RATE_MARGIN_OF_ERROR     = .15;
     
 /** The rate at which the motor changes the PWM level */
-    public static final double RATE_CHANGE              = 0.01;
+    public static final double RATE_CHANGE              = .01;
     
 /** The rate of the forklift in level mode */
     public static final double LEVEL_RATE               = 0.5;

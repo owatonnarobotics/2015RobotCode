@@ -146,7 +146,13 @@ public class Forklift extends Subsystem {
         
         // If the rate is not within the wanted rate
     	if (rateDifference > RobotMap.RATE_MARGIN_OF_ERROR) {
-    		setRaw(getRaw() + (rateGoal - rateOfChange) / 5);
+    		//setRaw(getRaw() + (rateGoal - rateOfChange) / 5);
+    	    if(rateOfChange > rateGoal) {
+    	        setRaw(getRaw() - RobotMap.RATE_CHANGE);
+    	    }
+    	    else if (rateOfChange < rateGoal) {
+    	        setRaw(getRaw() + RobotMap.RATE_CHANGE);
+    	    }
     	}
     }
     
@@ -181,11 +187,11 @@ public class Forklift extends Subsystem {
         	}
         	// If the height is above the goal, set the rate to be negative
         	else if (RobotMap.LIFT_HEIGHTS[levelGoal] < getRotations()) {
-        		setRate(-1 * RobotMap.LEVEL_RATE);
+        		setRate(clamp(-1 * RobotMap.LEVEL_RATE * levelGoalDifference, -1, 0));
         	}
         	// If the height is below the goal, set the rate to be positive
         	else {
-        		setRate(RobotMap.LEVEL_RATE);
+        		setRate(clamp(RobotMap.LEVEL_RATE * levelGoalDifference, 0, 1));
         	}
         }
         

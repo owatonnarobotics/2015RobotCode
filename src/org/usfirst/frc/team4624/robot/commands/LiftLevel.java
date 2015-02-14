@@ -28,10 +28,10 @@ public class LiftLevel extends Command {
         
         if(direction == Level.UP) {
             Robot.forklift.increaseLevel();
-        } else if(direction == Level.UP) {
+        } else if(direction == Level.DOWN) {
             Robot.forklift.decreaseLevel();
         } else {
-            Robot.forklift.setRate(0); //Not 100% sure this will work
+            Robot.forklift.setRate(0);
             Robot.forklift.setManualMode();
         }
     }
