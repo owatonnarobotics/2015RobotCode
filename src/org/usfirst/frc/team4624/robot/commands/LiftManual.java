@@ -20,6 +20,7 @@ public class LiftManual extends Command {
     protected void execute() {
         Robot.forklift.changeHeight((OI.xboxController.rt.getX() -
                                      OI.xboxController.lt.getX()) * RobotMap.MANUAL_LIFT_SPEED);
+        Robot.forklift.execute();
     }
 
     @Override

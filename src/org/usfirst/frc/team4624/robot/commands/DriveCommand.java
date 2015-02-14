@@ -28,7 +28,7 @@ public class DriveCommand extends Command {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.powertrain.setAsTankdrive(OI.xboxController.leftStick);
+        Robot.powertrain.setAsTankdrive(OI.xboxController);
     }
     
     // Make this return true when this Command no longer needs to run execute()

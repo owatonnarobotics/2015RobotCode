@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team4624.robot.subsystems;
 
+import org.usfirst.frc.team4624.robot.OI;
 import org.usfirst.frc.team4624.robot.RobotMap;	// ENUMS for the ports
 import org.usfirst.frc.team4624.robot.commands.DriveCommand;
 import org.usfirst.frc.team4624.robot.input.XboxController;
@@ -15,16 +16,16 @@ public class Powertrain extends Subsystem {
     RobotDrive motors;
     
     /**
-     * Constructor
-     * This initializes the powertrain
+     * Initializes Powertrain subsystem. Should only be called once.
      */
     public Powertrain() {
         /* Initialize */
-        Jaguar leftMotor  = new Jaguar(RobotMap.PORT_MOTOR_LEFT);
-        Jaguar rightMotor = new Jaguar(RobotMap.PORT_MOTOR_RIGHT);
+        Jaguar rearleftMotor    = new Jaguar(RobotMap.PORT_MOTOR_REAR_LEFT);
+        Jaguar rearRightMotor   = new Jaguar(RobotMap.PORT_MOTOR_REAR_RIGHT);
+        Jaguar frontLeftMotor   = new Jaguar(RobotMap.PORT_MOTOR_FRONT_LEFT);
+        Jaguar frontRightMotor  = new Jaguar(RobotMap.PORT_MOTOR_FRONT_RIGHT);
         
-        motors = new RobotDrive(leftMotor, rightMotor);
-        motors.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+        motors = new RobotDrive(frontLeftMotor, rearleftMotor, frontRightMotor, rearRightMotor);
         
         stop();
     }
@@ -47,13 +48,16 @@ public class Powertrain extends Subsystem {
         setDefaultCommand(new DriveCommand());
     }
     
-    public void setAsTankdrive(XboxController.Thumbstick stick) {
+    public void setAsTankdrive(XboxController controller) {
         final double boostScale = .5;   // Smaller makes non boost slower. Boost is always full speed.
         
-        double x = inputFunction(stick.getRawX()) * (stick.get() ? 1 : boostScale);
-        double y = inputFunction(stick.getRawY()) * (stick.get() ? 1 : boostScale);
+        double x = inputFunction(controller.leftStick.getX()) * (controller.leftStick.get() ? 1 : boostScale); //TODO Michael is gonna look this up
+        double y = inputFunction(controller.leftStick.getY()) * (controller.leftStick.get() ? 1 : boostScale);
         
-        motors.arcadeDrive(x, y);
+        motors.mecanumDrive_Cartesian(  x,
+                                        -y,    // We already corrected for the mistake that this method also corrects
+                                        controller.rightStick.getX(),
+                                        0);
     }
     
     public void stop() {

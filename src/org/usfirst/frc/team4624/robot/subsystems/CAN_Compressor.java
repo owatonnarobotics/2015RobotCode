@@ -9,6 +9,9 @@ public class CAN_Compressor extends Subsystem {
 
     Compressor compressor;
     
+    /**
+     * Initializes CAN_Compressor subsystem. Should only be called once.
+     */
     public CAN_Compressor() {
         compressor = new Compressor(RobotMap.PORT_COMPRESSOR);
         compressor.start();
