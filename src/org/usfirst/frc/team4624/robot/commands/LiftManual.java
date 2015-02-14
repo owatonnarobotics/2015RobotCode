@@ -1,14 +1,15 @@
 package org.usfirst.frc.team4624.robot.commands;
 
+import org.usfirst.frc.team4624.robot.OI;
 import org.usfirst.frc.team4624.robot.Robot;
+import org.usfirst.frc.team4624.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class LiftManual extends Command {
 
-    public LiftManual(int changeHeight) { // May want to rename paramater
+    public LiftManual() {
         requires(Robot.forklift);
-        Robot.forklift.changeHeight(changeHeight);
     }
 
     @Override
@@ -17,6 +18,8 @@ public class LiftManual extends Command {
 
     @Override
     protected void execute() {
+        Robot.forklift.changeHeight((OI.xboxController.rt.getX() -
+                                     OI.xboxController.lt.getX()) * RobotMap.MANUAL_LIFT_SPEED);
     }
 
     @Override
@@ -30,6 +33,7 @@ public class LiftManual extends Command {
 
     @Override
     protected void interrupted() {
+        end();
     }
 
 }
