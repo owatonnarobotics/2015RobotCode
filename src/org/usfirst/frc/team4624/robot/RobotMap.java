@@ -61,6 +61,8 @@ public class RobotMap {
     
 /** The rate of the forklift in level mode */
     public static final double LEVEL_RATE               = 0.5;
+
+public static final int PORT_ENCODER_RESET = 2;
     
     
     /* PID Values */

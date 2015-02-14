@@ -3,6 +3,7 @@ package org.usfirst.frc.team4624.robot.subsystems;
 import org.usfirst.frc.team4624.robot.RobotMap;
 import org.usfirst.frc.team4624.robot.commands.LiftManual;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -16,6 +17,7 @@ public class Forklift extends Subsystem {
     
     private Jaguar  lift;
     private Encoder encoder;
+    private DigitalInput encoderReset;
     
     // Goal used for manual mode
     private double  rateGoal;
@@ -35,6 +37,7 @@ public class Forklift extends Subsystem {
     public Forklift() {
         this.lift           = new Jaguar(RobotMap.PWM_LIFT_PORT);
         this.encoder        = new Encoder(RobotMap.LIFT_ENCODER_A, RobotMap.LIFT_ENCODER_B);
+        this.encoderReset   = new DigitalInput(RobotMap.PORT_ENCODER_RESET);
         
         this.lastDistance   = 0.0;
         this.lastTime       = System.currentTimeMillis();
@@ -183,7 +186,7 @@ public class Forklift extends Subsystem {
      */
     public void update() {
     	updateRateOfChange();
-        
+    	
         if (mode == Mode.LEVEL) {
         	// If the height is close enough to the goal, disable the rate of the motor
             //double levelGoal 
@@ -203,6 +206,10 @@ public class Forklift extends Subsystem {
         }
         
         updateRate();
+        
+        if(!encoderReset.get()) {
+            encoder.reset();
+        }
         
         displayInformation();
     }
