@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4624.robot.commands;
 
+import org.usfirst.frc.team4624.robot.OI;
 import org.usfirst.frc.team4624.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -18,6 +19,7 @@ public class ReleaseArms extends Command {
     @Override
     protected void execute() {
         Robot.pneumaticArms.release();
+        OI.xboxController.setRumble(1);
         SmartDashboard.putString("Arm Status: ", "Releasing");
     }
 
