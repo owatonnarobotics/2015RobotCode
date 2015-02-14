@@ -14,18 +14,20 @@ public class LiftManual extends Command {
 
     @Override
     protected void initialize() {
+        if(OI.xboxController.lt.getX() != 0 || OI.xboxController.rt.getX() !=0) {
+            Robot.forklift.setManualMode();
+        }
     }
 
     @Override
     protected void execute() {
-        Robot.forklift.changeHeight((OI.xboxController.rt.getX() -
-                                     OI.xboxController.lt.getX()) * RobotMap.MANUAL_LIFT_SPEED);
-        Robot.forklift.execute();
+        Robot.forklift.setRate((OI.xboxController.rt.getX() -
+                                OI.xboxController.lt.getX()) * RobotMap.MANUAL_LIFT_SPEED);
     }
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override
