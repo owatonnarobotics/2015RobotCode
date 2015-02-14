@@ -43,7 +43,7 @@ public class RobotMap {
     
     /* Global */
 /** The max rotations allowed by the forklift */
-    public static final double FORKLIFT_MAX_ROTATIONS   = 8;
+    public static final double FORKLIFT_MAX_ROTATIONS   = 5.5;
     
 /** The speed at which the position changes for manual control */
     public static final double MANUAL_LIFT_SPEED        = .5; // Value between 0 and 1
@@ -63,6 +63,10 @@ public class RobotMap {
     public static final double LEVEL_RATE               = 0.5;
 
 public static final int PORT_ENCODER_RESET = 2;
+
+public static final double FORKLIFT_SLOW_ZONE = .75;
+
+public static final double FORKLIFT_SLOW_ZONE_RATE = -.1;
     
     
     /* PID Values */
