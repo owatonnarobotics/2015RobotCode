@@ -2,6 +2,7 @@ package org.usfirst.frc.team4624.robot.subsystems;
 
 import org.usfirst.frc.team4624.robot.RobotMap;
 import org.usfirst.frc.team4624.robot.commands.LiftManual;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -29,7 +30,7 @@ public class Forklift extends Subsystem {
     private Mode mode;
     
     /**
-     * Initialize the Forklift subsystem. Sould only be called once.
+     * Initialize the Forklift subsystem. Should only be called once.
      */
     public Forklift() {
         this.lift           = new Jaguar(RobotMap.PWM_LIFT_PORT);
@@ -108,7 +109,7 @@ public class Forklift extends Subsystem {
      * Sets the raw value of the Jaguar motor
      * @param raw
      */
-    private void setRaw(double raw){
+    public void setRaw(double raw){
         lift.set(clamp(raw,-1,1));
     }
     
@@ -133,9 +134,12 @@ public class Forklift extends Subsystem {
      * @return Double of rotations
      */
     private double getRotations(){
-        return encoder.getDistance() / 250;
+        return correctDistance() / 250;
     }
     
+    public double correctDistance() { // TODO fix this later
+        return encoder.getDistance();
+    }
     /**
      * Increases or decreases the PWM based on the rate goal.
      * Called every interval
@@ -148,10 +152,10 @@ public class Forklift extends Subsystem {
     	if (rateDifference > RobotMap.RATE_MARGIN_OF_ERROR) {
     		//setRaw(getRaw() + (rateGoal - rateOfChange) / 5);
     	    if(rateOfChange > rateGoal) {
-    	        setRaw(getRaw() - RobotMap.RATE_CHANGE);
+    	        setRaw(getRaw() + RobotMap.RATE_CHANGE);
     	    }
     	    else if (rateOfChange < rateGoal) {
-    	        setRaw(getRaw() + RobotMap.RATE_CHANGE);
+    	        setRaw(getRaw() - RobotMap.RATE_CHANGE);
     	    }
     	}
     }
@@ -159,14 +163,17 @@ public class Forklift extends Subsystem {
     private void updateRateOfChange() {
         long currentTime = System.currentTimeMillis();
         long timeChanged = currentTime - lastTime;
+        double encoderPosition = correctDistance();
+        
         SmartDashboard.putNumber("Time between intervals", timeChanged);
         if(Math.abs(timeChanged) <= .05) {
             rateOfChange = 0;
         }
         else {
-            rateOfChange = (encoder.getDistance() - lastDistance) / (timeChanged);
+            rateOfChange = (encoderPosition - lastDistance) / (timeChanged);
         }
-        lastDistance = encoder.getDistance();
+        
+        lastDistance = encoderPosition;
         lastTime = currentTime;
     }
     
@@ -180,13 +187,13 @@ public class Forklift extends Subsystem {
         if (mode == Mode.LEVEL) {
         	// If the height is close enough to the goal, disable the rate of the motor
             //double levelGoal 
-            double levelGoalDifference = Math.abs(RobotMap.LIFT_HEIGHTS[levelGoal] - getRotations());
+            double levelGoalDifference = Math.abs(RobotMap.LIFT_HEIGHTS[levelGoal] - Math.abs(getRotations()));
             
         	if (levelGoalDifference < RobotMap.RATE_MARGIN_OF_ERROR){
         		setRate(0);
         	}
         	// If the height is above the goal, set the rate to be negative
-        	else if (RobotMap.LIFT_HEIGHTS[levelGoal] < getRotations()) {
+        	else if (RobotMap.LIFT_HEIGHTS[levelGoal] < Math.abs(getRotations())) {
         		setRate(clamp(-1 * RobotMap.LEVEL_RATE * levelGoalDifference, -1, 0));
         	}
         	// If the height is below the goal, set the rate to be positive
@@ -204,9 +211,9 @@ public class Forklift extends Subsystem {
      * Update the the smart dashboard with
      */
     private void displayInformation(){
-        SmartDashboard.putNumber("Encoder Position", encoder.getDistance() / 250);
+        SmartDashboard.putNumber("Encoder Position", correctDistance() / 250);
         SmartDashboard.putNumber("Rate of Change"  , rateOfChange);
-        SmartDashboard.putNumber("Level Goal"      , levelGoal);
+        SmartDashboard.putNumber("Level Goal"      , RobotMap.LIFT_HEIGHTS[levelGoal]);
         SmartDashboard.putNumber("Rate Goal"       , rateGoal);
         SmartDashboard.putString("Goal Mode"       , mode.toString());
     }
