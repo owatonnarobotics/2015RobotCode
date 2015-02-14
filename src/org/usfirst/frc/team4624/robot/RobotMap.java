@@ -45,14 +45,8 @@ public class RobotMap {
 /** The max rotations allowed by the forklift */
     public static final double FORKLIFT_MAX_ROTATIONS   = 8;
     
-/** The margin of error for reaching the forklift goal */
-    public static final double MOTOR_ACCURACY           = .05;  //Figure out max
-    
 /** The speed at which the position changes for manual control */
     public static final double MANUAL_LIFT_SPEED        = .5; // Value between 0 and 1
-    
-    /** During level mode the margin of error allowed to the goal */
-    public static final double LIFT_MARGIN_OF_ERROR     = 0.1;
     
 /** Array of all the heights for the Forklift */
     public static final double[] LIFT_HEIGHTS = {
@@ -60,7 +54,7 @@ public class RobotMap {
     };
     
 /** The margin of error for updating the rate of the motor */
-    public static final double RATE_MARGIN_OF_ERROR     = 0.05;
+    public static final double RATE_MARGIN_OF_ERROR     = .01;
     
 /** The rate at which the motor changes the PWM level */
     public static final double RATE_CHANGE              = 0.01;

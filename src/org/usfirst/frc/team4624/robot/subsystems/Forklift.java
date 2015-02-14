@@ -65,9 +65,9 @@ public class Forklift extends Subsystem {
     /**
      * Increase the level of the forklift by 1
      */
-    public void increaseLevel(){
+    public void increaseLevel(){  //Check for level going too high
     	levelGoal += 1;
-    	levelGoal = clamp(levelGoal, 0, RobotMap.LIFT_HEIGHTS.length);
+    	levelGoal = clamp(levelGoal, 0, RobotMap.LIFT_HEIGHTS.length - 1);
     }
     
     /**
@@ -75,7 +75,7 @@ public class Forklift extends Subsystem {
      */
     public void decreaseLevel(){
     	levelGoal -= 1;
-    	levelGoal = clamp(levelGoal, 0, RobotMap.LIFT_HEIGHTS.length);
+    	levelGoal = clamp(levelGoal, 0, RobotMap.LIFT_HEIGHTS.length - 1);
     }
     
     /**
@@ -146,24 +146,22 @@ public class Forklift extends Subsystem {
         
         // If the rate is not within the wanted rate
     	if (rateDifference > RobotMap.RATE_MARGIN_OF_ERROR) {
-    	    
-    		// If the rate is not large enough, increase the raw value
-    		if (rateOfChange < rateGoal) {
-    			setRaw(getRaw() + RobotMap.RATE_CHANGE);
-    			//setRaw(getRaw() + (rateGoal - rateOfChange));
-    		}
-    		// If the rate is too large, decrease the raw value
-    		if (rateOfChange > rateGoal) {
-    			setRaw(getRaw() - RobotMap.RATE_CHANGE);
-    			//setRaw(getRaw() + (rateGoal - rateOfChange));
-    		}
+    		setRaw(getRaw() + (rateGoal - rateOfChange) / 5);
     	}
     }
     
     private void updateRateOfChange() {
-        rateOfChange = (encoder.getDistance() - lastDistance) / (System.currentTimeMillis() - lastTime);
+        long currentTime = System.currentTimeMillis();
+        long timeChanged = currentTime - lastTime;
+        SmartDashboard.putNumber("Time between intervals", timeChanged);
+        if(Math.abs(timeChanged) <= .05) {
+            rateOfChange = 0;
+        }
+        else {
+            rateOfChange = (encoder.getDistance() - lastDistance) / (timeChanged);
+        }
         lastDistance = encoder.getDistance();
-        lastTime = System.currentTimeMillis();
+        lastTime = currentTime;
     }
     
     /**
@@ -178,7 +176,7 @@ public class Forklift extends Subsystem {
             //double levelGoal 
             double levelGoalDifference = Math.abs(RobotMap.LIFT_HEIGHTS[levelGoal] - getRotations());
             
-        	if (levelGoalDifference < RobotMap.LIFT_MARGIN_OF_ERROR){
+        	if (levelGoalDifference < RobotMap.RATE_MARGIN_OF_ERROR){
         		setRate(0);
         	}
         	// If the height is above the goal, set the rate to be negative
@@ -201,7 +199,7 @@ public class Forklift extends Subsystem {
      */
     private void displayInformation(){
         SmartDashboard.putNumber("Encoder Position", encoder.getDistance() / 250);
-        SmartDashboard.putNumber("Rate of Change"  , (encoder.getDistance() - lastDistance) / (System.currentTimeMillis() - lastTime));
+        SmartDashboard.putNumber("Rate of Change"  , rateOfChange);
         SmartDashboard.putNumber("Level Goal"      , levelGoal);
         SmartDashboard.putNumber("Rate Goal"       , rateGoal);
         SmartDashboard.putString("Goal Mode"       , mode.toString());
