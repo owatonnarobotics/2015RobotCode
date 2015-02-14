@@ -49,8 +49,13 @@ public class RobotMap {
     public static final double MANUAL_LIFT_SPEED        = .5; // Value between 0 and 1
     
 /** Array of all the heights for the Forklift */
-    public static final double[] LIFT_HEIGHTS = {
-        1.0, 2.0, 3.0, 4.0
+    public static final double[] LIFT_HEIGHTS_GROUND = {
+        0, 1.381, 2.714, 3.867
+    };
+    
+    /** Array of all the heights for the Forklift */
+    public static final double[] LIFT_HEIGHTS_STEP = {
+        .311, 1.666, 2.893, 4.212
     };
     
 /** The margin of error for updating the rate of the motor */
