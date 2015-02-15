@@ -1,4 +1,4 @@
-package org.usfirst.frc.team4624.robot.input;   // Change to whatever package you would like
+package org.usfirst.frc.team4624.robot.input;
 
 /* Imports */
 import edu.wpi.first.wpilibj.Joystick;

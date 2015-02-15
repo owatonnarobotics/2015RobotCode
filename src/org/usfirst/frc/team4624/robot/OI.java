@@ -24,8 +24,8 @@ public class OI {
         xboxController.y.whenPressed(new SwitchLevelMode());
         
         /*
-         * a  = go down a level
-         * x  = go up a level
+         * a = go down a level
+         * x = go up a level
          * rb = release arms
          * rt = go up
          * lt = go down
