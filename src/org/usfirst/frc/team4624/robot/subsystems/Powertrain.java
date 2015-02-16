@@ -49,12 +49,13 @@ public class Powertrain extends Subsystem {
     public void setAsTankdrive(XboxController controller) {
         final double boostScale = .5;   // Smaller makes non boost slower. Boost is always full speed.
         
-        double x = inputFunction(controller.leftStick.getX()) * (controller.leftStick.get() ? 1 : boostScale);
-        double y = inputFunction(controller.leftStick.getY()) * (controller.leftStick.get() ? 1 : boostScale);
+        double x    = inputFunction(controller.leftStick.getX()) * (controller.leftStick.get() ? 1 : boostScale);
+        double y    = inputFunction(controller.leftStick.getY()) * (controller.leftStick.get() ? 1 : boostScale);
+        double turn = inputFunction(controller.rightStick.getX()) * RobotMap.ROTATE_SPEED;
         
         motors.mecanumDrive_Cartesian(  x,
                                         -y,    // We already corrected for the mistake that this method also corrects
-                                        inputFunction(controller.rightStick.getX()),
+                                        turn,
                                         0);
     }
     

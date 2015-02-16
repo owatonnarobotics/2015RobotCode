@@ -17,14 +17,29 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
          * Tote   = 1
          */
         
-        final int driveTime = 5;
-        final int extraDriveTime = 1;
-        final int backupTime = 1;
+        final double driveTime = 3;
+        final double extraDriveTime = 1;
+        final double backupTime = 1;
         
-        addSequential(new GrabArms());
+        //addSequential(new AutoPause(5));
+        addSequential(new ReleaseArms());
         addSequential(new LiftLevel(LiftLevel.Level.UP));
+        addSequential(new AutoPause(2));
+        addSequential(new AutoDrive(1.0, true));
+        addSequential(new AutoPause(.5));
+        addSequential(new GrabArms());
+
+        addSequential(new LiftLevel(LiftLevel.Level.UP));
+
+        addSequential(new AutoPause(1));
         
-        if(goal == 1) {
+        addSequential(new AutoDrive(5.5, false));
+        addSequential(new LiftLevel(LiftLevel.Level.DOWN));
+        addSequential(new LiftLevel(LiftLevel.Level.DOWN));
+        addSequential(new AutoPause(2));
+        addSequential(new ReleaseArms());
+        
+        /*if(goal == 1) {
             addSequential(new AutoRotate(true));
         }
         else {
@@ -37,9 +52,11 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
             addSequential(new AutoDrive(driveTime + extraDriveTime, true));
         }
         
+        addSequential(new AutoPause(.5));
         addSequential(new LiftLevel(LiftLevel.Level.DOWN));
+        addSequential(new AutoPause(1.5));
         addSequential(new ReleaseArms());
-        addSequential(new AutoDrive(backupTime, false));
-        
+        addSequential(new AutoPause(.5));
+        addSequential(new AutoDrive(backupTime, false));*/
     }
 }

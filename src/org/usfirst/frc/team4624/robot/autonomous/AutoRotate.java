@@ -7,44 +7,39 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoRotate extends Command {
 
-	private int time;
-	private Timer timer;
 	private boolean direction;
 	
 	public AutoRotate(boolean direction) {
 		requires(Robot.powertrain);
-		time = 2000; //TODO guess and check time for 90 degree rotation
+		this.direction = direction;
 	}
-	
-	@Override
-	protected void end() {
-		timer.reset();
-		timer.stop();
-	}
-
-	@Override
-	protected void execute() {
-	    if(direction) {
-	        Robot.powertrain.move(0, 0, .25); //TODO find correct rate of rotation (90 degrees)
-	    }
-	    else {
-	        Robot.powertrain.move(0, 0, .25); //TODO find correct rate of rotation (90 degrees)
-	    }
-	}
-
 	@Override
 	protected void initialize() {
-		timer.reset();
-		timer.start();
+		this.setTimeout(1);
 	}
+	
+    @Override
+    protected void execute() {
+        if(direction) {
+            Robot.powertrain.move(0, 0, -.5); //TODO find correct rate of rotation (90 degrees)
+        }
+        else {
+            Robot.powertrain.move(0, 0, .5); //TODO find correct rate of rotation (90 degrees)
+        }
+    }
+
+    @Override
+    protected boolean isFinished() {
+        return this.isTimedOut();
+    }
+    
+    @Override
+    protected void end() {
+    }
+
 
 	@Override
 	protected void interrupted() {
-	}
-
-	@Override
-	protected boolean isFinished() {
-		return timer.get() >= time;
 	}
 	
 }

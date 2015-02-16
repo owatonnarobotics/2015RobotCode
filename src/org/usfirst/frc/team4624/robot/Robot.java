@@ -91,6 +91,7 @@ public class Robot extends IterativeRobot {
         autoCommand = new Autonomous(
                 ((Integer) locationChooser.getSelected()).intValue(),
                 ((Integer) goalChooser.getSelected()).intValue());
+        autoCommand.start();
     }
     
     /**
@@ -99,6 +100,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        forklift.update();
     }
     
     @Override

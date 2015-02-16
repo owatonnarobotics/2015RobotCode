@@ -19,7 +19,6 @@ public class GrabArms extends Command {
     @Override
     protected void execute() {
         Robot.pneumaticArms.grab();
-        OI.xboxController.setRumble(0);
         SmartDashboard.putString("Arm Status: ", "Grabbing");
     }
 

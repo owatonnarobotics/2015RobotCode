@@ -75,5 +75,7 @@ public class RobotMap {
     public static final double   FORKLIFT_SLOW_ZONE_RATE    = -.1;
     
     public static final int      PORT_TOTE_DETECTOR         = 3;
+
+    public static final double   ROTATE_SPEED               = .5;
     
 }
