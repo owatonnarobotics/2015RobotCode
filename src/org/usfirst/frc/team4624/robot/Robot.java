@@ -68,17 +68,18 @@ public class Robot extends IterativeRobot {
         // currentAutoPreset = new ExampleAutonomusCommand();
         
         locationChooser = new SendableChooser();
-        locationChooser.addDefault("Center", Integer.valueOf(0));
-        locationChooser.addObject("Left", Integer.valueOf(1));
-        locationChooser.addObject("Right", Integer.valueOf(2)); // Could be a
-// problem if it doesn't give the user time to choose
+        locationChooser.addDefault("No Platform", Integer.valueOf(0));
+        locationChooser.addObject("Platform", Integer.valueOf(1)); // Could be a problem if it doesn't give the user time to choose
         
         goalChooser = new SendableChooser();
         goalChooser.addDefault("Bin", Integer.valueOf(0));
         goalChooser.addObject("Tote", Integer.valueOf(1));
+        goalChooser.addObject("Nothing", Integer.valueOf(2));
         
         SmartDashboard.putData("Auto Location", locationChooser);
         SmartDashboard.putData("Auto Goal", goalChooser);
+        
+        System.out.println("Hello, Stupid!");
     }
     
     @Override
@@ -91,6 +92,7 @@ public class Robot extends IterativeRobot {
         autoCommand = new Autonomous(
                 ((Integer) locationChooser.getSelected()).intValue(),
                 ((Integer) goalChooser.getSelected()).intValue());
+        
         autoCommand.start();
     }
     
@@ -124,7 +126,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         if (toteDetector.get() && pressed) {
-            new SensorHit();
+            new SensorHit().start();
             pressed = false;
         } else if (!toteDetector.get()) {
             pressed = true;

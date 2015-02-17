@@ -1,38 +1,37 @@
 package org.usfirst.frc.team4624.robot.commands;
 
-import org.usfirst.frc.team4624.robot.OI;
-
+import org.usfirst.frc.team4624.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class SensorHit extends Command {
-    
+
+public class ToggleOverride extends Command {
+
+    public ToggleOverride() {
+        requires(Robot.forklift);
+    }
     @Override
     protected void initialize() {
-        this.setTimeout(.5);
-        OI.xboxController.setRumble(.5);
-        System.out.println("Sensor Initialized");
     }
 
     @Override
-    protected void execute() { 
+    protected void execute() {
+        Robot.forklift.toggleOverride();
     }
 
     @Override
     protected boolean isFinished() {
-        // TODO Auto-generated method stub
-        return this.isTimedOut();
+        return true;
     }
 
     @Override
     protected void end() {
-        OI.xboxController.setRumble(0);
-        
     }
 
     @Override
     protected void interrupted() {
+    
         // TODO Auto-generated method stub
         
     }
-
+    
 }

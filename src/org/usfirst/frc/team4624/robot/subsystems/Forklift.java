@@ -287,4 +287,10 @@ public class Forklift extends Subsystem {
     
         setDefaultCommand(new LiftManual());
     }
+
+    public void toggleOverride() {
+    
+        // TODO Auto-generated method stub
+        
+    }
 }

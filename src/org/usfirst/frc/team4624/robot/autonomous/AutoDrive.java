@@ -7,13 +7,20 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoDrive extends Command {
 
-	private boolean forward;
+    private double forward;
+    private double right;
 	
-	public AutoDrive(double time, boolean forward) {
+	public AutoDrive(double time, double forward) {
 		requires(Robot.powertrain);
 		this.setTimeout(time);
 		this.forward = forward;
+		this.right = 0;
 	}
+	
+	public AutoDrive(double time, double forward, double right) {
+        this(time, forward);
+        this.right = right;
+    }
 
     @Override
     protected void initialize() {
@@ -21,13 +28,7 @@ public class AutoDrive extends Command {
 
 	@Override
 	protected void execute() {
-	    if(forward) {
-	        Robot.powertrain.move(0, -.25, 0); // Will have to guess/check these later
-	    }
-	    else {
-	        Robot.powertrain.move(0, .25, 0);
-	    }
-		
+	    Robot.powertrain.move(right, forward, 0); // Will have to guess/check these later
 	}
 
     @Override

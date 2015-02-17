@@ -23,6 +23,8 @@ public class OI {
         xboxController.b.whenPressed(new LiftLevel(Level.STOP));
         xboxController.y.whenPressed(new SwitchLevelMode());
         
+        xboxController.start.whenPressed(new ToggleOverride());
+        
         /*
          * a = go down a level
          * x = go up a level
