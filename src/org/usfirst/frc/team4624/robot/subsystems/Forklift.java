@@ -159,7 +159,10 @@ public class Forklift extends Subsystem {
      */
     public void setRate(double rate) {
         rateGoal = rate;
-        if (getRotations() > RobotMap.FORKLIFT_MAX_ROTATIONS && rateGoal > 0 && !override) { // Does override belong here???
+        if(getRotations() == 0 && !override) {
+            rateGoal = clamp(rateGoal, 0, 1);
+        }
+        if (getRotations() > RobotMap.FORKLIFT_MAX_ROTATIONS && rateGoal > 0) {
             rateGoal = 0;
         }
         if (getRotations() < RobotMap.FORKLIFT_SLOW_ZONE) {
@@ -275,5 +278,10 @@ public class Forklift extends Subsystem {
     @Override
     protected void initDefaultCommand() {
         setDefaultCommand(new LiftManual());
+    }
+
+    public void liftToHeight(int level) {
+        levels = RobotMap.LIFT_HEIGHTS_AUTO;
+        levelGoal = level;
     }
 }

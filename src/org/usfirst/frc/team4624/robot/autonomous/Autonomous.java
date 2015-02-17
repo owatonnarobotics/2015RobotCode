@@ -12,80 +12,61 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
          * 
          * Center = 0
          * Left   = 1
-         * Right  = 2
+         * Right  = 0
          *
          * Bin    = 0
          * Tote   = 1
          */
-        
-        final double driveTime      = 3;
-        final double extraDriveTime = 1;
-        final double backupTime     = 1;
         final double speed;
         
         if (location == 0){
-            speed = .35;
-        } else {
+            speed = .4;
+        }
+        
+        else {
             speed = .25;
         }
         
         if (goal == 0) { //Bin
-
             addSequential(new ReleaseArms());
-            addSequential(new LiftLevel(LiftLevel.Level.UP));
-            addSequential(new AutoPause(2));
-            addSequential(new AutoDrive(.85, speed));
-            addSequential(new AutoPause(.5));
+            pause(.25);
+            addSequential(new AutoLift(2));
+            pause(.25);
+            addSequential(new AutoDrive(.25, .1));
+            pause(.25);
             addSequential(new GrabArms());
-            addSequential(new LiftLevel(LiftLevel.Level.UP));
-    
-            addSequential(new AutoPause(1));
-            
+            pause(.25);
+            addSequential(new AutoLift(3));
+            pause(.25);
             addSequential(new AutoDrive(5.0, -speed));
-            addSequential(new LiftLevel(LiftLevel.Level.DOWN));
-            addSequential(new AutoPause(.5));
-            addSequential(new LiftLevel(LiftLevel.Level.DOWN));
-            addSequential(new AutoPause(2));
+            pause(5);
+            addSequential(new AutoLift(0));
+            pause(.75);
             addSequential(new ReleaseArms());
+            pause(.25);
+            addSequential(new AutoDrive(.25, -speed));
+            pause(.25);
+        }
         
-        } if (goal == 1){  //Tote
-            
-            //addSequential(new AutoDrive(2.0, speed));
-            //addSequential(new AutoPause(1));
-            //addSequential(new LiftLevel(LiftLevel.Level.UP));
-            addSequential(new LiftLevel(LiftLevel.Level.UP));
-            addSequential(new AutoPause(1));
+        else if (goal == 1){  //Tote
+            addSequential(new AutoDrive(.25, .1));
+            pause(.25);
+            addSequential(new AutoLift(1));
+            pause(.25);
             addSequential(new AutoDrive(5.0, -speed));
-     
-            addSequential(new AutoPause(1));
-                
-            //addSequential(new LiftLevel(LiftLevel.Level.DOWN));
-            addSequential(new LiftLevel(LiftLevel.Level.DOWN));
-            addSequential(new AutoDrive(.5,-speed));
-     
-        } else { //Nothing
-            
-            addSequential(new AutoDrive(3.0, -speed));
-        
-        }
-        /*if(goal == 1) {
-            addSequential(new AutoRotate(true));
-        }
-        else {
-            addSequential(new AutoRotate(false));
-        }
-
-        if(location == 1) {
-            addSequential(new AutoDrive(driveTime, true));
-        } else {
-            addSequential(new AutoDrive(driveTime + extraDriveTime, true));
+            pause(5);
+            addSequential(new AutoLift(0));
+            pause(.25);
+            addSequential(new AutoDrive(.25, -speed));
+            pause(.25);
         }
         
-        addSequential(new AutoPause(.5));
-        addSequential(new LiftLevel(LiftLevel.Level.DOWN));
-        addSequential(new AutoPause(1.5));
-        addSequential(new ReleaseArms());
-        addSequential(new AutoPause(.5));
-        addSequential(new AutoDrive(backupTime, false));*/
+        else { //Nothing
+            addSequential(new AutoDrive(5.0, -speed));
+        }
+    }
+    
+    private void pause(double time){
+        addSequential(new AutoPause(time));
     }
 }
