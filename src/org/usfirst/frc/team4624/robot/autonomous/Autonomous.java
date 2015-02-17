@@ -10,16 +10,17 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
 
         /*
          * 
-         * Center = 0
-         * Left   = 1
-         * Right  = 0
+         * No Platform = 0
+         *    Platform = 1
          *
          * Bin    = 0
          * Tote   = 1
          */
         final double speed;
-        
-        if (location == 0){
+        final double actionTime = 4.0;
+        final double smallTime = .25;
+
+        if (location == 1){
             speed = .4;
         }
         
@@ -29,40 +30,39 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
         
         if (goal == 0) { //Bin
             addSequential(new ReleaseArms());
-            pause(.25);
             addSequential(new AutoLift(2));
             pause(.25);
-            addSequential(new AutoDrive(.25, .1));
+            addSequential(new AutoDrive(smallTime, .1));
             pause(.25);
             addSequential(new GrabArms());
             pause(.25);
             addSequential(new AutoLift(3));
             pause(.25);
-            addSequential(new AutoDrive(5.0, -speed));
+            addSequential(new AutoDrive(actionTime, -speed));
             pause(5);
             addSequential(new AutoLift(0));
             pause(.75);
             addSequential(new ReleaseArms());
             pause(.25);
-            addSequential(new AutoDrive(.25, -speed));
+            addSequential(new AutoDrive(smallTime, -speed));
             pause(.25);
         }
         
         else if (goal == 1){  //Tote
-            addSequential(new AutoDrive(.25, .1));
+            addSequential(new AutoDrive(smallTime, .1));
             pause(.25);
             addSequential(new AutoLift(1));
             pause(.25);
-            addSequential(new AutoDrive(5.0, -speed));
+            addSequential(new AutoDrive(actionTime, -speed));
             pause(5);
             addSequential(new AutoLift(0));
             pause(.25);
-            addSequential(new AutoDrive(.25, -speed));
+            addSequential(new AutoDrive(smallTime, -speed));
             pause(.25);
         }
         
         else { //Nothing
-            addSequential(new AutoDrive(5.0, -speed));
+            addSequential(new AutoDrive(actionTime, -speed));
         }
     }
     
