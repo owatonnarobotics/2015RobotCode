@@ -159,7 +159,7 @@ public class Forklift extends Subsystem {
      */
     public void setRate(double rate) {
         rateGoal = rate;
-        if (getRotations() > RobotMap.FORKLIFT_MAX_ROTATIONS && rateGoal > 0) { // Add override switch here???
+        if (getRotations() > RobotMap.FORKLIFT_MAX_ROTATIONS && rateGoal > 0 && !override) { // Does override belong here???
             rateGoal = 0;
         }
         if (getRotations() < RobotMap.FORKLIFT_SLOW_ZONE) {
