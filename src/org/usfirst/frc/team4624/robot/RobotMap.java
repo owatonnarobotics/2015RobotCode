@@ -64,8 +64,9 @@ public class RobotMap {
      * .5  is carry tote
      * 1.1 is grab  bin
      * 1.6 is carry bin
+     * 3 is over bin
      */
-    public static final double[] LIFT_HEIGHTS_AUTO          = {0, .5, 1.1, 1.6};
+    public static final double[] LIFT_HEIGHTS_AUTO          = {0, .5, 1.1, 1.6, 2.5};
     
     /** The margin of error for updating the rate of the motor */
     public static final double   RATE_MARGIN_OF_ERROR       = .01;

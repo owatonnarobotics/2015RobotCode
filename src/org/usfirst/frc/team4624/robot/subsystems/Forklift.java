@@ -31,13 +31,14 @@ public class Forklift extends Subsystem {
     
     private Mode         mode;
     private double[]     levels;
-
+    
     private boolean      override;
     
     /**
      * Initialize the Forklift subsystem. Should only be called once.
      */
     public Forklift() {
+    
         this.lift = new Jaguar(RobotMap.PWM_LIFT_PORT);
         this.encoder = new Encoder(RobotMap.LIFT_ENCODER_A, RobotMap.LIFT_ENCODER_B);
         this.encoderSwitch = new DigitalInput(RobotMap.PORT_ENCODER_RESET);
@@ -51,7 +52,7 @@ public class Forklift extends Subsystem {
         
         this.mode = Mode.MANUAL;
         this.levels = RobotMap.LIFT_HEIGHTS_GROUND;
-
+        
         this.override = false;
     }
     
@@ -59,6 +60,7 @@ public class Forklift extends Subsystem {
      * Manual Commands
      **/
     public void setManualMode() {
+    
         mode = Mode.MANUAL;
     }
     
@@ -66,6 +68,7 @@ public class Forklift extends Subsystem {
      * Level Commands
      **/
     public void setLevelMode() {
+    
         mode = Mode.LEVEL;
         rateGoal = RobotMap.LEVEL_RATE;
     }
@@ -83,11 +86,13 @@ public class Forklift extends Subsystem {
      * Decrease the level of the forklift by 1
      */
     public void decreaseLevel() {
+    
         levelGoal -= 1;
         levelGoal = clamp(levelGoal, 0, levels.length - 1);
     }
     
     public void switchLevelArray() {
+    
         if (levels.equals(RobotMap.LIFT_HEIGHTS_GROUND)) {
             levels = RobotMap.LIFT_HEIGHTS_STEP;
         } else {
@@ -96,6 +101,7 @@ public class Forklift extends Subsystem {
     }
     
     public String getLevelArray() {
+    
         if (levels.equals(RobotMap.LIFT_HEIGHTS_GROUND)) {
             return "Ground";
         }
@@ -104,8 +110,9 @@ public class Forklift extends Subsystem {
         }
         return "Something's wrong here...";
     }
-
+    
     public void toggleOverride() {
+    
         override = !override;
     }
     
@@ -118,6 +125,7 @@ public class Forklift extends Subsystem {
      * @return The clamped value
      */
     private double clamp(double value, double min, double max) {
+    
         return Math.max(min, Math.min(max, value));
     }
     
@@ -130,6 +138,7 @@ public class Forklift extends Subsystem {
      * @return The clamped value
      */
     private int clamp(int value, int min, int max) {
+    
         return Math.max(min, Math.min(max, value));
     }
     
@@ -139,6 +148,7 @@ public class Forklift extends Subsystem {
      * @param raw
      */
     public void setRaw(double raw) {
+    
         lift.set(clamp(raw, -1, 1));
     }
     
@@ -148,6 +158,7 @@ public class Forklift extends Subsystem {
      * @return
      */
     private double getRaw() {
+    
         return lift.get();
     }
     
@@ -158,8 +169,9 @@ public class Forklift extends Subsystem {
      * @param rate
      */
     public void setRate(double rate) {
+    
         rateGoal = rate;
-        if(getRotations() == 0 && !override) {
+        if (getRotations() == 0 && !override) {
             rateGoal = clamp(rateGoal, 0, 1);
         }
         if (getRotations() > RobotMap.FORKLIFT_MAX_ROTATIONS && rateGoal > 0) {
@@ -179,6 +191,7 @@ public class Forklift extends Subsystem {
      * @return Double of rotations
      */
     private double getRotations() {
+    
         return correctDistance() / 250;
     }
     
@@ -188,6 +201,7 @@ public class Forklift extends Subsystem {
      * @return encoder distance
      */
     public double correctDistance() {
+    
         return encoder.getDistance();
     }
     
@@ -195,6 +209,7 @@ public class Forklift extends Subsystem {
      * Updates the system with the new rate of change. Called every interval
      */
     public void update() {
+    
         if (!encoderSwitch.get()) {
             encoder.reset();
         }
@@ -210,6 +225,7 @@ public class Forklift extends Subsystem {
      * Sets the PWM based on the rate goal. Called every interval
      */
     private void updateRate() {
+    
         double rateDifference = Math.abs(rateOfChange - rateGoal);
         SmartDashboard.putNumber("Rate Difference", rateDifference);
         // If the rate is not within the wanted rate
@@ -230,6 +246,7 @@ public class Forklift extends Subsystem {
      * Updates current and last time and position, and calculates rate of change
      */
     private void updateRateOfChange() {
+    
         long currentTime = System.currentTimeMillis();
         long timeChanged = currentTime - lastTime;
         double encoderPosition = correctDistance();
@@ -247,6 +264,7 @@ public class Forklift extends Subsystem {
      * Sets the rate to get to the next level
      */
     private void updateLevel() {
+    
         // If the height is close enough to the goal, disable the rate of the motor
         double levelGoalDifference = Math.abs(levels[levelGoal] - Math.abs(getRotations()));
         if (levelGoalDifference < RobotMap.RATE_MARGIN_OF_ERROR) {
@@ -266,6 +284,7 @@ public class Forklift extends Subsystem {
      * Update the the smart dashboard
      */
     private void displayInformation() {
+    
         SmartDashboard.putNumber("Encoder Position", correctDistance() / 250);
         //SmartDashboard.putNumber("Rate of Change", rateOfChange);
         SmartDashboard.putNumber("Level Goal", levelGoal);
@@ -277,10 +296,13 @@ public class Forklift extends Subsystem {
     
     @Override
     protected void initDefaultCommand() {
+    
         setDefaultCommand(new LiftManual());
     }
-
+    
     public void liftToHeight(int level) {
+        
+        mode = Mode.LEVEL;
         levels = RobotMap.LIFT_HEIGHTS_AUTO;
         levelGoal = level;
     }

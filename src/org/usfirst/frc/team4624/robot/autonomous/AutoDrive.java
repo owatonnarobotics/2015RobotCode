@@ -13,7 +13,7 @@ public class AutoDrive extends Command {
 	public AutoDrive(double time, double forward) {
 		requires(Robot.powertrain);
 		this.setTimeout(time);
-		this.forward = forward;
+		this.forward = -forward;
 		this.right = 0;
 	}
 	

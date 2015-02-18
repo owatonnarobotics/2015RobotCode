@@ -125,11 +125,11 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        if (toteDetector.get() && pressed) {
+        if (toteDetector.get() && !pressed) {
             new SensorHit().start();
-            pressed = false;
-        } else if (!toteDetector.get()) {
             pressed = true;
+        } else if (! toteDetector.get()) {
+            pressed = false;
         }
         // Update rate on the forklift
         forklift.update();

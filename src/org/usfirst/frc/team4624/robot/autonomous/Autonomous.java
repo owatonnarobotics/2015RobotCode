@@ -17,53 +17,63 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
          * Tote   = 1
          */
         final double speed;
-        final double actionTime = 4.0;
-        final double smallTime = .25;
+        final double actionTime = 3;
+        final double smallTime = 1.1;
+        final double forwardSpeed = .2;
 
         if (location == 1){
-            speed = .4;
+            speed = .375;
         }
         
         else {
-            speed = .25;
+            speed = .35;
         }
         
         if (goal == 0) { //Bin
             addSequential(new ReleaseArms());
             addSequential(new AutoLift(2));
-            pause(.25);
-            addSequential(new AutoDrive(smallTime, .1));
-            pause(.25);
+            pause(2.5);
+            addSequential(new AutoDrive(smallTime, forwardSpeed));
+            pause(.8);
             addSequential(new GrabArms());
             pause(.25);
             addSequential(new AutoLift(3));
             pause(.25);
             addSequential(new AutoDrive(actionTime, -speed));
-            pause(5);
-            addSequential(new AutoLift(0));
+            addSequential(new AutoLift(2));
             pause(.75);
             addSequential(new ReleaseArms());
-            pause(.25);
-            addSequential(new AutoDrive(smallTime, -speed));
-            pause(.25);
+            pause(.5);
+            addSequential(new AutoLift(4));
+            pause(2.5);
+            //pause(.25);
+            //addSequential(new AutoDrive(smallTime, -speed));
+            //pause(.25);
         }
         
         else if (goal == 1){  //Tote
-            addSequential(new AutoDrive(smallTime, .1));
-            pause(.25);
+            addSequential(new ReleaseArms());
+            addSequential(new AutoDrive(smallTime, forwardSpeed));
+            pause(.6);
+            addSequential(new GrabArms());
             addSequential(new AutoLift(1));
-            pause(.25);
+            pause(1.0);
             addSequential(new AutoDrive(actionTime, -speed));
-            pause(5);
             addSequential(new AutoLift(0));
-            pause(.25);
-            addSequential(new AutoDrive(smallTime, -speed));
-            pause(.25);
+            pause(1.2);
+            addSequential(new ReleaseArms());
+            addSequential(new AutoLift(3));
+            pause(1.0);
         }
         
         else { //Nothing
-            addSequential(new AutoDrive(actionTime, -speed));
+            addSequential(new AutoDrive(actionTime - smallTime, -speed));
         }
+
+        addSequential(new AutoRotate(true));
+        pause(1);
+        addSequential(new AutoLift(0));
+        addSequential(new GrabArms());
     }
     
     private void pause(double time){
