@@ -4,6 +4,8 @@ package org.usfirst.frc.team4624.robot;
 
 public class RobotMap {
     
+    
+    
     /* Digital IO Ports */
     /** Used with the forklift */
     public static final int      LIFT_ENCODER_A             = 0;
@@ -46,27 +48,27 @@ public class RobotMap {
     
     
     
-    /* Global */
+    /* Globals */
     /** The max rotations allowed by the forklift */
     public static final double   FORKLIFT_MAX_ROTATIONS     = 5.5;
     
     /** The speed at which the position changes for manual control */
-    public static final double   MANUAL_LIFT_SPEED          = .5;                         // Value between 0 and 1
-                                                                                           
+    public static final double   MANUAL_LIFT_SPEED          = .5; // Value between 0 and 1
+                                                                   
     /** Array of all the heights for the Forklift */
-    public static final double[] LIFT_HEIGHTS_GROUND        = {0, 1.381, 2.714, 3.867};
+    public static final double[] LIFT_HEIGHTS_GROUND        = { 0, 1.381,
+            2.714, 3.867                                   };
     
     /** Array of all the heights for the Forklift */
-    public static final double[] LIFT_HEIGHTS_STEP          = {.311, 1.666, 2.893, 4.212};
+    public static final double[] LIFT_HEIGHTS_STEP          = { .311, 1.666,
+            2.893, 4.212                                   };
     
-    /** Array of all the heights for the Forklift
-     * 0 is ground
-     * .5  is carry tote
-     * 1.1 is grab  bin
-     * 1.6 is carry bin
-     * 3 is over bin
+    /**
+     * Array of all the heights for the Forklift 0 is ground .5 is carry tote
+     * 1.1 is grab bin 1.6 is carry bin 3 is over bin
      */
-    public static final double[] LIFT_HEIGHTS_AUTO          = {0, .5, 1.1, 1.6, 2.5};
+    public static final double[] LIFT_HEIGHTS_AUTO          = { 0, .5, 1.1,
+            1.6, 2.5                                       };
     
     /** The margin of error for updating the rate of the motor */
     public static final double   RATE_MARGIN_OF_ERROR       = .01;
@@ -77,14 +79,21 @@ public class RobotMap {
     /** The rate of the forklift in level mode */
     public static final double   LEVEL_RATE                 = 0.5;
     
+    /** The Digital Input (DIO) port used to reset the forklift encoder */
     public static final int      PORT_ENCODER_RESET         = 2;
     
+    /** The zone where the speed of the forklift is reduced to prevent slamming */
     public static final double   FORKLIFT_SLOW_ZONE         = .75;
     
+    /**
+     * Relates to FORKLIFT_SLOW_ZONE, this is the rate at which to descend in
+     * that zone
+     */
     public static final double   FORKLIFT_SLOW_ZONE_RATE    = -.1;
     
+    /** The Digital Input (DIO) port used to detect totes */
     public static final int      PORT_TOTE_DETECTOR         = 3;
-
-    public static final double   ROTATE_SPEED               = .5;
     
+    /** The speed at whicth the forklift motors are to rotate */
+    public static final double   ROTATE_SPEED               = .5;
 }

@@ -1,41 +1,54 @@
 package org.usfirst.frc.team4624.robot.commands;
 
-import org.usfirst.frc.team4624.robot.Robot;
 
+
+import org.usfirst.frc.team4624.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class SwitchLevelMode extends Command{
 
+
+public class SwitchLevelMode extends Command {
+    
+    
+    
+    /**
+     * Switch the forklift level mode from ground to platform and vice versa
+     */
     public SwitchLevelMode() {
-        requires(Robot.forklift);      
+    
+        requires(Robot.forklift);
     }
+    
     @Override
-    protected void initialize() {
-          
+    protected void end() {
+    
+        // TODO Auto-generated method stub
+        
     }
-
+    
     @Override
     protected void execute() {
+    
         Robot.forklift.switchLevelArray();
         
     }
-
+    
+    @Override
+    protected void initialize() {
+    
+    }
+    
+    @Override
+    protected void interrupted() {
+    
+        // TODO Auto-generated method stub
+        
+    }
+    
     @Override
     protected boolean isFinished() {
+    
         // TODO Auto-generated method stub
         return true;
     }
-
-    @Override
-    protected void end() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    protected void interrupted() {
-        // TODO Auto-generated method stub
-        
-    }
-
 }

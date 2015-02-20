@@ -3,6 +3,7 @@ package org.usfirst.frc.team4624.robot.subsystems;
 
 
 import org.usfirst.frc.team4624.robot.RobotMap;
+import org.usfirst.frc.team4624.robot.Util;
 import org.usfirst.frc.team4624.robot.commands.LiftManual;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -14,9 +15,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Forklift extends Subsystem {
     
+    
+    
     public enum Mode {
         MANUAL, LEVEL
     }
+    
+    
     
     private Jaguar       lift;
     private Encoder      encoder;
@@ -34,13 +39,16 @@ public class Forklift extends Subsystem {
     
     private boolean      override;
     
+    
+    
     /**
      * Initialize the Forklift subsystem. Should only be called once.
      */
     public Forklift() {
     
         this.lift = new Jaguar(RobotMap.PWM_LIFT_PORT);
-        this.encoder = new Encoder(RobotMap.LIFT_ENCODER_A, RobotMap.LIFT_ENCODER_B);
+        this.encoder = new Encoder(RobotMap.LIFT_ENCODER_A,
+                RobotMap.LIFT_ENCODER_B);
         this.encoderSwitch = new DigitalInput(RobotMap.PORT_ENCODER_RESET);
         
         this.lastDistance = 0.0;
@@ -57,29 +65,13 @@ public class Forklift extends Subsystem {
     }
     
     /**
-     * Manual Commands
-     **/
-    public void setManualMode() {
-    
-        mode = Mode.MANUAL;
-    }
-    
-    /**
-     * Level Commands
-     **/
-    public void setLevelMode() {
-    
-        mode = Mode.LEVEL;
-        rateGoal = RobotMap.LEVEL_RATE;
-    }
-    
-    /**
-     * Increase the level of the forklift by 1
+     * Returns encoder's position, with errors corrected
+     * 
+     * @return encoder distance
      */
-    public void increaseLevel() { // Check for level going too high
+    public double correctDistance() {
     
-        levelGoal += 1;
-        levelGoal = clamp(levelGoal, 0, levels.length - 1);
+        return encoder.getDistance();
     }
     
     /**
@@ -88,18 +80,28 @@ public class Forklift extends Subsystem {
     public void decreaseLevel() {
     
         levelGoal -= 1;
-        levelGoal = clamp(levelGoal, 0, levels.length - 1);
+        levelGoal = Util.clamp(levelGoal, 0, levels.length - 1);
     }
     
-    public void switchLevelArray() {
+    /**
+     * Update the the smart dashboard. Called every interval.
+     */
+    private void displayInformation() {
     
-        if (levels.equals(RobotMap.LIFT_HEIGHTS_GROUND)) {
-            levels = RobotMap.LIFT_HEIGHTS_STEP;
-        } else {
-            levels = RobotMap.LIFT_HEIGHTS_GROUND;
-        }
+        SmartDashboard.putNumber("Encoder Position", correctDistance() / 250);
+        //SmartDashboard.putNumber("Rate of Change", rateOfChange);
+        SmartDashboard.putNumber("Level Goal", levelGoal);
+        //SmartDashboard.putNumber("Rate Goal", rateGoal);
+        SmartDashboard.putString("Goal Mode", mode.toString());
+        SmartDashboard.putString("Level Mode", getLevelArray());
+        SmartDashboard.putBoolean("Override", override);
     }
     
+    /**
+     * Get what current level mode is running for the Dashboard
+     * 
+     * @return Either "Ground" or "Step"
+     */
     public String getLevelArray() {
     
         if (levels.equals(RobotMap.LIFT_HEIGHTS_GROUND)) {
@@ -111,55 +113,68 @@ public class Forklift extends Subsystem {
         return "Something's wrong here...";
     }
     
-    public void toggleOverride() {
-    
-        override = !override;
-    }
-    
-    /**
-     * Clamp a value between two other values
-     * 
-     * @param value
-     * @param min
-     * @param max
-     * @return The clamped value
-     */
-    private double clamp(double value, double min, double max) {
-    
-        return Math.max(min, Math.min(max, value));
-    }
-    
-    /**
-     * Clamp a value between two other values
-     * 
-     * @param value
-     * @param min
-     * @param max
-     * @return The clamped value
-     */
-    private int clamp(int value, int min, int max) {
-    
-        return Math.max(min, Math.min(max, value));
-    }
-    
-    /**
-     * Sets the raw value of the Jaguar motor
-     * 
-     * @param raw
-     */
-    public void setRaw(double raw) {
-    
-        lift.set(clamp(raw, -1, 1));
-    }
-    
     /**
      * Gets the raw value of the Jaguar motor
      * 
-     * @return
+     * @return The power between -1 and 1
      */
     private double getRaw() {
     
         return lift.get();
+    }
+    
+    /**
+     * Convert encoder cycles to rotations
+     * 
+     * @return Get the current rotations of the lift motor
+     */
+    private double getRotations() {
+    
+        return correctDistance() / 250;
+    }
+    
+    /**
+     * Increase the level of the forklift by 1
+     */
+    public void increaseLevel() { // Check for level going too high
+    
+        levelGoal += 1;
+        levelGoal = Util.clamp(levelGoal, 0, levels.length - 1);
+    }
+    
+    @Override
+    protected void initDefaultCommand() {
+    
+        setDefaultCommand(new LiftManual());
+    }
+    
+    /**
+     * Lift the arms to the specified level height
+     * 
+     * @param level The level (either step of ground) of which to lift to
+     */
+    public void liftToHeight(int level) {
+    
+        mode = Mode.LEVEL;
+        levels = RobotMap.LIFT_HEIGHTS_AUTO;
+        levelGoal = level;
+    }
+    
+    /**
+     * Set the movement mode to levels
+     */
+    public void setLevelMode() {
+    
+        mode = Mode.LEVEL;
+        rateGoal = RobotMap.LEVEL_RATE;
+    }
+    
+    /**
+     * Set the movement mode to manual
+     **/
+    public void setManualMode() {
+    
+        mode = Mode.MANUAL;
     }
     
     /**
@@ -172,37 +187,52 @@ public class Forklift extends Subsystem {
     
         rateGoal = rate;
         if (getRotations() == 0 && !override) {
-            rateGoal = clamp(rateGoal, 0, 1);
+            rateGoal = Util.clamp(rateGoal, 0, 1);
         }
         if (getRotations() > RobotMap.FORKLIFT_MAX_ROTATIONS && rateGoal > 0) {
             rateGoal = 0;
         }
         if (getRotations() < RobotMap.FORKLIFT_SLOW_ZONE) {
-            rateGoal = clamp(rateGoal, RobotMap.FORKLIFT_SLOW_ZONE_RATE, 1);
+            rateGoal = Util
+                    .clamp(rateGoal, RobotMap.FORKLIFT_SLOW_ZONE_RATE, 1);
         }
-        if (getRotations() > RobotMap.FORKLIFT_MAX_ROTATIONS - RobotMap.FORKLIFT_SLOW_ZONE) {
-            rateGoal = clamp(rateGoal, -1, -RobotMap.FORKLIFT_SLOW_ZONE_RATE);
+        if (getRotations() > RobotMap.FORKLIFT_MAX_ROTATIONS
+                - RobotMap.FORKLIFT_SLOW_ZONE) {
+            rateGoal = Util.clamp(rateGoal, -1,
+                    -RobotMap.FORKLIFT_SLOW_ZONE_RATE);
         }
     }
     
     /**
-     * Get the rotations of the lift motor
+     * Sets the raw value of the Jaguar motor
      * 
-     * @return Double of rotations
+     * @param raw The raw power between -1 and 1
      */
-    private double getRotations() {
+    public void setRaw(double raw) {
     
-        return correctDistance() / 250;
+        lift.set(Util.clamp(raw, -1, 1));
     }
     
     /**
-     * Returns encoder's position, with errors corrected
-     * 
-     * @return encoder distance
+     * Toggle the lift level goals from the ones calibrated to the ground, to
+     * the step and vice versa
      */
-    public double correctDistance() {
+    public void switchLevelArray() {
     
-        return encoder.getDistance();
+        if (levels.equals(RobotMap.LIFT_HEIGHTS_GROUND)) {
+            levels = RobotMap.LIFT_HEIGHTS_STEP;
+        } else {
+            levels = RobotMap.LIFT_HEIGHTS_GROUND;
+        }
+    }
+    
+    /**
+     * Toggle the override. When active, this will allow the user to go below
+     * the minimum height
+     */
+    public void toggleOverride() {
+    
+        override = !override;
     }
     
     /**
@@ -222,11 +252,33 @@ public class Forklift extends Subsystem {
     }
     
     /**
+     * Sets the rate to get to the next level. Called every interval.
+     */
+    private void updateLevel() {
+    
+        // If the height is close enough to the goal, disable the rate of the motor
+        final double levelGoalDifference = Math.abs(levels[levelGoal]
+                - Math.abs(getRotations()));
+        if (levelGoalDifference < RobotMap.RATE_MARGIN_OF_ERROR) {
+            setRate(0);
+        }
+        // If the height is above the goal, set the rate to be negative
+        else if (levels[levelGoal] < Math.abs(getRotations())) {
+            setRate(Util.clamp(-1 * RobotMap.LEVEL_RATE * levelGoalDifference,
+                    -1, 0));
+        }
+        // If the height is below the goal, set the rate to be positive
+        else {
+            setRate(Util.clamp(RobotMap.LEVEL_RATE * levelGoalDifference, 0, 1));
+        }
+    }
+    
+    /**
      * Sets the PWM based on the rate goal. Called every interval
      */
     private void updateRate() {
     
-        double rateDifference = Math.abs(rateOfChange - rateGoal);
+        final double rateDifference = Math.abs(rateOfChange - rateGoal);
         SmartDashboard.putNumber("Rate Difference", rateDifference);
         // If the rate is not within the wanted rate
         if (rateDifference > RobotMap.RATE_MARGIN_OF_ERROR) {
@@ -243,13 +295,14 @@ public class Forklift extends Subsystem {
     }
     
     /**
-     * Updates current and last time and position, and calculates rate of change
+     * Updates current and last time and position, and calculates rate of
+     * change. Called every interval.
      */
     private void updateRateOfChange() {
     
-        long currentTime = System.currentTimeMillis();
-        long timeChanged = currentTime - lastTime;
-        double encoderPosition = correctDistance();
+        final long currentTime = System.currentTimeMillis();
+        final long timeChanged = currentTime - lastTime;
+        final double encoderPosition = correctDistance();
         SmartDashboard.putNumber("Time between intervals", timeChanged);
         if (Math.abs(timeChanged) <= .05) {
             rateOfChange = 0;
@@ -258,52 +311,5 @@ public class Forklift extends Subsystem {
         }
         lastDistance = encoderPosition;
         lastTime = currentTime;
-    }
-    
-    /**
-     * Sets the rate to get to the next level
-     */
-    private void updateLevel() {
-    
-        // If the height is close enough to the goal, disable the rate of the motor
-        double levelGoalDifference = Math.abs(levels[levelGoal] - Math.abs(getRotations()));
-        if (levelGoalDifference < RobotMap.RATE_MARGIN_OF_ERROR) {
-            setRate(0);
-        }
-        // If the height is above the goal, set the rate to be negative
-        else if (levels[levelGoal] < Math.abs(getRotations())) {
-            setRate(clamp(-1 * RobotMap.LEVEL_RATE * levelGoalDifference, -1, 0));
-        }
-        // If the height is below the goal, set the rate to be positive
-        else {
-            setRate(clamp(RobotMap.LEVEL_RATE * levelGoalDifference, 0, 1));
-        }
-    }
-    
-    /**
-     * Update the the smart dashboard
-     */
-    private void displayInformation() {
-    
-        SmartDashboard.putNumber("Encoder Position", correctDistance() / 250);
-        //SmartDashboard.putNumber("Rate of Change", rateOfChange);
-        SmartDashboard.putNumber("Level Goal", levelGoal);
-        //SmartDashboard.putNumber("Rate Goal", rateGoal);
-        SmartDashboard.putString("Goal Mode", mode.toString());
-        SmartDashboard.putString("Level Mode", getLevelArray());
-        SmartDashboard.putBoolean("Override", override);
-    }
-    
-    @Override
-    protected void initDefaultCommand() {
-    
-        setDefaultCommand(new LiftManual());
-    }
-    
-    public void liftToHeight(int level) {
-        
-        mode = Mode.LEVEL;
-        levels = RobotMap.LIFT_HEIGHTS_AUTO;
-        levelGoal = level;
     }
 }
