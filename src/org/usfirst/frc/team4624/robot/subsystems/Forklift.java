@@ -23,7 +23,7 @@ public class Forklift extends Subsystem {
     private DigitalInput encoderSwitch;
     
     private double       rateGoal;
-    private int          levelGoal;
+    public  int          levelGoal;
     
     private double       rateOfChange;
     private double       lastDistance;

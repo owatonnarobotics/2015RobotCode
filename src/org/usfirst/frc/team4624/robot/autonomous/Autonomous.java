@@ -22,7 +22,7 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
         final double forwardSpeed = .2;
 
         if (location == 1){
-            speed = .375;
+            speed = .405;
         }
         
         else {

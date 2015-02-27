@@ -108,6 +108,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopInit() {
         driveCommand.start();
+        forklift.switchLevelArray();
     }
     
     /**
