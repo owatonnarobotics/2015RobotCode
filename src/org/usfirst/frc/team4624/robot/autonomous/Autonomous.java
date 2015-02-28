@@ -6,21 +6,26 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class Autonomous extends CommandGroup { //TODO Move this class into commands folder ???
     
-    public Autonomous(int location, int goal) {
+    public Autonomous(int location, int goal, int rotation) {
 
         /*
          * 
          * No Platform = 0
          *    Platform = 1
          *
-         * Bin    = 0
-         * Tote   = 1
+         * Bin     = 0
+         * Tote    = 1
+         * Drive   = 2
+         * Nothing = 3
+         * 
+         * Rotate = 0
+         * No Rotate = 1
          */
         final double speed;
         final double actionTime = 2.65;
         final double smallTime = .7;
         final double forwardSpeed = .2;
-
+        
         if (location == 1){
             speed = .39;
         }
@@ -46,9 +51,6 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
             pause(.5);
             addSequential(new AutoLift(4));
             pause(2.5);
-            //pause(.25);
-            //addSequential(new AutoDrive(smallTime, -speed));
-            //pause(.25);
         }
         
         else if (goal == 1){  //Tote
@@ -66,11 +68,16 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
             pause(1.0);
         }
         
-        else { //Nothing
+        else if(goal == 2) { //Drive
             addSequential(new AutoDrive(actionTime - smallTime, -speed));
         }
+        
+        else{ //Nothing, leave this here just in case
+        }
 
-        addSequential(new AutoRotate(true));
+        if(rotation == 0) {
+            addSequential(new AutoRotate(true));
+        }
         pause(1);
         addSequential(new AutoLift(0));
         addSequential(new GrabArms());
