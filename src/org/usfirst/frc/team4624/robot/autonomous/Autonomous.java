@@ -17,12 +17,12 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
          * Tote   = 1
          */
         final double speed;
-        final double actionTime = 3;
-        final double smallTime = 1.1;
+        final double actionTime = 2.65;
+        final double smallTime = .7;
         final double forwardSpeed = .2;
 
         if (location == 1){
-            speed = .405;
+            speed = .39;
         }
         
         else {
