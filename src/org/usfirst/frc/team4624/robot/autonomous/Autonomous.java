@@ -22,7 +22,7 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
          * No Rotate = 1
          */
         final double speed;
-        final double actionTime = 2.65;
+        final double actionTime = 2.6;
         final double smallTime = .7;
         final double forwardSpeed = .2;
         
@@ -78,6 +78,10 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
         if(rotation == 0) {
             addSequential(new AutoRotate(true));
         }
+        else if(rotation == 1) {
+            addSequential(new AutoRotate(false));
+        }
+        
         pause(1);
         addSequential(new AutoLift(0));
         addSequential(new GrabArms());

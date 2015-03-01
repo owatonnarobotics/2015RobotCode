@@ -80,11 +80,13 @@ public class Robot extends IterativeRobot {
         goalChooser.addObject("Nothing", Integer.valueOf(3));
         
         rotationChooser = new SendableChooser();
-        rotationChooser.addDefault("Rotate", Integer.valueOf(0));
-        rotationChooser.addObject("No Rotate", Integer.valueOf(1));
+        rotationChooser.addDefault("Rotate Left (Counter-Clockwise)", Integer.valueOf(0));
+        rotationChooser.addObject("Rotate Right (Clockwise)", Integer.valueOf(1));
+        rotationChooser.addObject("No Rotate", Integer.valueOf(2));
         
         SmartDashboard.putData("Auto Location", locationChooser);
         SmartDashboard.putData("Auto Goal", goalChooser);
+        SmartDashboard.putData("Auto Rotation", rotationChooser);
         
         System.out.println("Hello, Stupid!");
     }

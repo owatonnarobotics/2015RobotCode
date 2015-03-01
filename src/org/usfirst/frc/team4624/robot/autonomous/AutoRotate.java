@@ -15,7 +15,7 @@ public class AutoRotate extends Command {
 	}
 	@Override
 	protected void initialize() {
-		this.setTimeout(.7);
+		this.setTimeout(.58);
 	}
 	
     @Override
