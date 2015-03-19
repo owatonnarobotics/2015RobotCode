@@ -235,9 +235,17 @@ public class Forklift extends Subsystem {
         if (rateDifference > RobotMap.RATE_MARGIN_OF_ERROR) {
             // setRaw(getRaw() + (rateGoal - rateOfChange) / 5);
             if (rateOfChange > rateGoal) {
+                System.out.println("Updating: " + getRaw());
                 setRaw(getRaw() + RobotMap.RATE_CHANGE);
+                if(getRotations() == 0.0) {
+                    setRaw(getRaw() + RobotMap.RATE_CHANGE);
+                }
             } else if (rateOfChange < rateGoal) {
+                System.out.println("Updating Negative: " + getRaw());
                 setRaw(getRaw() - RobotMap.RATE_CHANGE);
+                if(getRotations() == 0.0) {
+                    setRaw(getRaw() - RobotMap.RATE_CHANGE);
+                }
             }
         }
         if (getRotations() == 0 && rateGoal == 0) {
