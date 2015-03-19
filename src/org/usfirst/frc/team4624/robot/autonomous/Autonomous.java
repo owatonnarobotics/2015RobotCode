@@ -97,7 +97,8 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
             addSequential(new GrabArms());
         }
         
-        else if (type == 1) {
+        // Should be 1, switched to two so it doesn't happen
+        else if (type == 2) {
            addSequential(new AutoDriveAdvanced(.1, 0, FOOT_ISH / 12));
            pause(0.1);
            addSequential(new GrabArms());
