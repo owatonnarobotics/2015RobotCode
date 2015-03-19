@@ -182,6 +182,9 @@ public class Forklift extends Subsystem {
         }
         if (getRotations() > RobotMap.FORKLIFT_MAX_ROTATIONS - RobotMap.FORKLIFT_SLOW_ZONE) {
             rateGoal = clamp(rateGoal, -1, -RobotMap.FORKLIFT_SLOW_ZONE_RATE);
+        }        
+        if(!encoderSwitch.get()){
+            rateGoal = clamp(rateGoal, 0, 1);
         }
     }
     
