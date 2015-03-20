@@ -94,7 +94,7 @@ public class Forklift extends Subsystem {
     public void switchLevelArray() {
     
         if (levels.equals(RobotMap.LIFT_HEIGHTS_GROUND)) {
-            levels = RobotMap.LIFT_HEIGHTS_STEP;
+            levels = RobotMap.LIFT_HEIGHTS_FEEDER;
         } else {
             levels = RobotMap.LIFT_HEIGHTS_GROUND;
         }
@@ -105,8 +105,8 @@ public class Forklift extends Subsystem {
         if (levels.equals(RobotMap.LIFT_HEIGHTS_GROUND)) {
             return "Ground";
         }
-        if (levels.equals(RobotMap.LIFT_HEIGHTS_STEP)) {
-            return "Step";
+        if (levels.equals(RobotMap.LIFT_HEIGHTS_FEEDER)) {
+            return "Feeder";
         }
         return "Something's wrong here...";
     }

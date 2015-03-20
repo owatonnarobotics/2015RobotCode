@@ -57,7 +57,7 @@ public class RobotMap {
     public static final double[] LIFT_HEIGHTS_GROUND        = {0, 1.381, 2.714, 3.867};
     
     /** Array of all the heights for the Forklift */
-    public static final double[] LIFT_HEIGHTS_STEP          = {.311, 1.666, 2.893, 4.212};
+    public static final double[] LIFT_HEIGHTS_FEEDER        = {0, .98, 3.35};
     
     /** Array of all the heights for the Forklift
      * 0 is ground

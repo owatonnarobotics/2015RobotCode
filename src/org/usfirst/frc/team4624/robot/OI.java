@@ -14,6 +14,7 @@ public class OI {
         
         xboxController.rb.whenPressed(new ReleaseArms());
         xboxController.rb.whenReleased(new GrabArms());
+
         
         xboxController.rt.whenPressed(new LiftManual());
         xboxController.lt.whenPressed(new LiftManual());

@@ -30,7 +30,7 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
         
          final double FOOT_ISH = .29; //give or take a lot... ish
         
-        if (type == 0) {
+        if (type == 0 || type == 1) {
             
             final double speed;
             final double actionTime = 2.6;
@@ -67,7 +67,7 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
             else if (goal == 1) { //Tote
                 addSequential(new ReleaseArms());
                 addSequential(new AutoDrive(smallTime, forwardSpeed));
-                pause(.6);
+                pause(.8);
                 addSequential(new GrabArms());
                 addSequential(new AutoLift(1));
                 pause(1.0);
@@ -94,7 +94,9 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
             
             pause(1);
             addSequential(new AutoLift(0));
-            addSequential(new GrabArms());
+            if(! (rotation == 2)) {
+                addSequential(new GrabArms());
+            }
         }
         
         // Should be 1, switched to two so it doesn't happen
