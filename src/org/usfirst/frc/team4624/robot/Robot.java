@@ -53,6 +53,8 @@ public class Robot extends IterativeRobot {
     
     SendableChooser              tripleChooser;
     
+    SendableChooser              armChooser;
+    
     boolean                      pressed       = false;
     
     // CommandGroup currentAutoPreset;
@@ -90,10 +92,15 @@ public class Robot extends IterativeRobot {
         tripleChooser.addDefault("Standard", Integer.valueOf(0));
         tripleChooser.addObject("3 Tote (UNSTABLE)", Integer.valueOf(1));
         
+        armChooser = new SendableChooser();
+        armChooser.addDefault("Arms Enabled", Integer.valueOf(0));
+        armChooser.addObject("Arms Disabled", Integer.valueOf(1));
+        
         SmartDashboard.putData("Auto Location", locationChooser);
         SmartDashboard.putData("Auto Goal", goalChooser);
         SmartDashboard.putData("Auto Rotation", rotationChooser);
         SmartDashboard.putData("Auto Type", tripleChooser);
+        SmartDashboard.putData("Auto Arms", armChooser);
         
     }
     
@@ -106,9 +113,10 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         autoCommand = new Autonomous(
                 ((Integer) locationChooser.getSelected()).intValue(),
-                ((Integer) goalChooser.getSelected()).intValue(),
+                ((Integer)     goalChooser.getSelected()).intValue(),
                 ((Integer) rotationChooser.getSelected()).intValue(),
-                ((Integer) tripleChooser.getSelected()).intValue());
+                ((Integer)   tripleChooser.getSelected()).intValue(),
+                ((Integer)      armChooser.getSelected()).intValue());
         
         autoCommand.start();
     }

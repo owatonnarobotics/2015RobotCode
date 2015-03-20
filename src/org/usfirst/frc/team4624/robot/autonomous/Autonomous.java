@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class Autonomous extends CommandGroup { //TODO Move this class into commands folder ???
 
-    public Autonomous(int location, int goal, int rotation, int type) {
+    public Autonomous(int location, int goal, int rotation, int type, int arms) {
     
         /*
          * 
@@ -26,6 +26,10 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
          * 
          * Standard = 0
          * 3 Tote = 1
+         * 
+         * Arms = 0
+         * No Arms = 1
+         * 
          */
         
          final double FOOT_ISH = .29; //give or take a lot... ish
@@ -46,35 +50,47 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
             }
             
             if (goal == 0) { //Bin
-                addSequential(new ReleaseArms());
+                if(arms != 1) {
+                    addSequential(new ReleaseArms());
+                }
                 addSequential(new AutoLift(2));
                 pause(2.5);
                 addSequential(new AutoDrive(smallTime, forwardSpeed));
                 pause(.8);
-                addSequential(new GrabArms());
+                if(arms != 1) {
+                    addSequential(new GrabArms());
+                }
                 pause(.25);
                 addSequential(new AutoLift(3));
                 pause(.25);
                 addSequential(new AutoDrive(actionTime, -speed));
                 addSequential(new AutoLift(2));
                 pause(.75);
-                addSequential(new ReleaseArms());
+                if(arms != 1) {
+                    addSequential(new ReleaseArms());
+                }
                 pause(.5);
                 addSequential(new AutoLift(4));
                 pause(2.5);
             }
             
             else if (goal == 1) { //Tote
-                addSequential(new ReleaseArms());
+                if(arms != 1) {
+                    addSequential(new ReleaseArms());
+                }
                 addSequential(new AutoDrive(smallTime, forwardSpeed));
                 pause(.8);
-                addSequential(new GrabArms());
+                if(arms != 1) {
+                    addSequential(new GrabArms());
+                }
                 addSequential(new AutoLift(1));
                 pause(1.0);
                 addSequential(new AutoDrive(actionTime, -speed));
                 addSequential(new AutoLift(0));
                 pause(1.2);
-                addSequential(new ReleaseArms());
+                if(arms != 1) {
+                    addSequential(new ReleaseArms());
+                }
                 addSequential(new AutoLift(3));
                 pause(1.0);
             }
@@ -94,7 +110,7 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
             
             pause(1);
             addSequential(new AutoLift(0));
-            if(! (rotation == 2)) {
+            if((!(rotation == 2)) && (arms != 1)) {
                 addSequential(new GrabArms());
             }
         }
