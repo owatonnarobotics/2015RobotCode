@@ -9,7 +9,7 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
 
     private int arms;
     
-    public Autonomous(int location, int goal, int rotation, int type, int arms) {
+    public Autonomous(int location, int goal, int rotation, int type, int arms, int drive) {
     
         /*
          * 
@@ -29,6 +29,9 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
          * 
          * Arms = 0
          * No Arms = 1
+         * 
+         * Full drive = 0
+         * Half Drive = 1
          */
         
         this.arms = arms;
@@ -38,7 +41,10 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
         if (type == 0 || type == 1) {
             
             final double speed;
-            final double actionTime = 2.6;
+                  double actionTime = 2.6;
+            if(drive == 1) {
+                actionTime /= 1.3;
+            }
             final double smallTime = .7;
             final double forwardSpeed = .2;
             

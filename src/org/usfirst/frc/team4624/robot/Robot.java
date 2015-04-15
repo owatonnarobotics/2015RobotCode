@@ -55,6 +55,8 @@ public class Robot extends IterativeRobot {
     
     SendableChooser              armChooser;
     
+    SendableChooser              driveChooser;
+    
     boolean                      pressed       = false;
     
     // CommandGroup currentAutoPreset;
@@ -83,6 +85,10 @@ public class Robot extends IterativeRobot {
         goalChooser.addObject("Drive", Integer.valueOf(2));
         goalChooser.addObject("Nothing", Integer.valueOf(3));
         
+        driveChooser = new SendableChooser();
+        driveChooser.addDefault("Full Drive", Integer.valueOf(0));
+        driveChooser.addDefault("Half Drive", Integer.valueOf(1));
+        
         rotationChooser = new SendableChooser();
         rotationChooser.addDefault("Rotate Left (Counter-Clockwise)", Integer.valueOf(0));
         rotationChooser.addObject("Rotate Right (Clockwise)", Integer.valueOf(1));
@@ -101,6 +107,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Auto Rotation", rotationChooser);
         SmartDashboard.putData("Auto Type", tripleChooser);
         SmartDashboard.putData("Auto Arms", armChooser);
+        SmartDashboard.putData("Auto Drive Distance", driveChooser);
         
     }
     
@@ -116,7 +123,8 @@ public class Robot extends IterativeRobot {
                 ((Integer)     goalChooser.getSelected()).intValue(),
                 ((Integer) rotationChooser.getSelected()).intValue(),
                 ((Integer)   tripleChooser.getSelected()).intValue(),
-                ((Integer)      armChooser.getSelected()).intValue());
+                ((Integer)      armChooser.getSelected()).intValue(),
+                ((Integer)    driveChooser.getSelected()).intValue());
         
         autoCommand.start();
     }
