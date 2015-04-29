@@ -4,12 +4,15 @@ package org.usfirst.frc.team4624.robot;
 
 public class RobotMap {
     
-    /* Digital IO Ports */
-    /** Used with the forklift */
-    public static final int      LIFT_ENCODER_A             = 0;
+    /* Digital IO Ports */    
+    /** Used for rotation in auto mode */
+    public static final int      GYRO                       = 0;
     
     /** Used with the forklift */
-    public static final int      LIFT_ENCODER_B             = 1;
+    public static final int      LIFT_ENCODER_A             = 1; //TODO: Changed from 0 to 1, check that
+    
+    /** Used with the forklift */
+    public static final int      LIFT_ENCODER_B             = 2; //TODO: Changed from 1 to 2, check that
     
     
     

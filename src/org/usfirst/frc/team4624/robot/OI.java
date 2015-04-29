@@ -10,7 +10,7 @@ public class OI {
     public static XboxController xboxController = new XboxController();
 
     public OI() {
-        xboxController.leftStick.setYDeadZone(.2);  // Gib me Oreos (TM)
+        xboxController.leftStick.setYDeadZone(.2);
         
         xboxController.rb.whenPressed(new ReleaseArms());
         xboxController.rb.whenReleased(new GrabArms());

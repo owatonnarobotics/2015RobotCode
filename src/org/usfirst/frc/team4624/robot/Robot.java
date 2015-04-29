@@ -3,9 +3,11 @@ package org.usfirst.frc.team4624.robot;
 
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,8 +39,9 @@ public class Robot extends IterativeRobot {
     /** A reference to the CAN_Compressor subsystem */
     public static CAN_Compressor compressor    = new CAN_Compressor();
     
-    public static DigitalInput   toteDetector  = new DigitalInput(
-                                                       RobotMap.PORT_TOTE_DETECTOR);
+    public static DigitalInput   toteDetector  = new DigitalInput(RobotMap.PORT_TOTE_DETECTOR);
+    
+    public static GyroSensor     gyroSensor    = new GyroSensor();
     
     /* Commands */
     Command                      driveCommand;
@@ -109,6 +112,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Auto Arms", armChooser);
         SmartDashboard.putData("Auto Drive Distance", driveChooser);
         
+
     }
     
     @Override
@@ -118,6 +122,7 @@ public class Robot extends IterativeRobot {
     
     @Override
     public void autonomousInit() {
+        gyroSensor.reset();
         autoCommand = new Autonomous(
                 ((Integer) locationChooser.getSelected()).intValue(),
                 ((Integer)     goalChooser.getSelected()).intValue(),
