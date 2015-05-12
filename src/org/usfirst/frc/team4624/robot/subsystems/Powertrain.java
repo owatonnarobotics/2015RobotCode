@@ -123,23 +123,58 @@ public class Powertrain extends Subsystem {
     
     boolean isTurning = false;
     double targetAngle = 0;
+    double turnEndTime = 0;
+    double totalTurnTime = 0;
     
     /**
      * Turn the robot to this relative angle
      */
-    public void setAngle(double angle) {
-        angle %= angle;
-        angle -= 180;
+    public void setAngle(double angle, double timeToTurn) {
+        
         targetAngle = angle;
+        totalTurnTime = timeToTurn;
+        turnEndTime = System.currentTimeMillis() + (timeToTurn / 1000);
         isTurning = true;
     }
     
+    /**
+     * Returns a percent of the angle it should be at. 1 = complete.
+     * @param endTime
+     * @param totalTime
+     * @return
+     */
+    private double functionOfT(double endTime, double totalTime) {
+        final double currentTime        = System.currentTimeMillis();
+        final double percentComplete    = 1 - ((endTime - currentTime) / totalTime);
+        
+        // Function of time T
+        return 1 - Math.cos((Math.PI / 2) * percentComplete);
+    }
+    
+    /**
+     * Update the Powertraim for gyro stuff
+     */
     public void update() {
         if (isTurning) {
-            // setRawAngle as function of T
+            double currentTime = System.currentTimeMillis();
             
-            double angleDifference = angleDifference(targetAngle, gyro.getAngle() - 180);
-            boolean reachedTarget = Math.abs(angleDifference) < 1;
+            
+            
+            double currentTargetAngle = functionOfT(turnEndTime, totalTurnTime) * targetAngle;
+            
+            // Offset currentTargetAngle to 0-360
+            while(currentTargetAngle < 0) {
+                currentTargetAngle += 360;
+            }
+            currentTargetAngle %= 360;
+            
+            // Set the current angle as a function of time T
+            setRawAngle(currentTargetAngle);
+            
+            //double angleDifference = angleDifference(targetAngle, gyro.getAngle() - 180);
+            //boolean reachedTarget = Math.abs(angleDifference) < 1;
+            
+            boolean reachedTarget = currentTime > turnEndTime;
             
             if (reachedTarget) {
                 isTurning = false;
