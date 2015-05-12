@@ -79,4 +79,66 @@ public class Tools {
     
     
     
+    /**
+     * Find the difference between two values
+     * @param a
+     * @param b
+     * @return difference
+     */
+    public static byte difference(byte a, byte b) {
+        return (byte) Math.abs(a - b);
+    }
+    
+    /**
+     * Find the difference between two values
+     * @param a
+     * @param b
+     * @return difference
+     */
+    public static double difference(double a, double b) {
+        return Math.abs(a - b);
+    }
+    
+    /**
+     * Find the difference between two values
+     * @param a
+     * @param b
+     * @return difference
+     */
+    public static float difference(float a, float b) {
+        return Math.abs(a - b);
+    }
+    
+    /**
+     * Find the difference between two values
+     * @param a
+     * @param b
+     * @return difference
+     */
+    public static int difference(int a, int b) {
+        return Math.abs(a - b);
+    }
+    
+    /**
+     * Find the difference between two values
+     * @param a
+     * @param b
+     * @return difference
+     */
+    public static long difference(long a, long b) {
+        return Math.abs(a - b);
+    }
+    
+    /**
+     * Find the difference between two values
+     * @param a
+     * @param b
+     * @return difference
+     */
+    public static short difference(short a, short b) {
+        return (short) Math.abs(a - b);
+    }
+    
+    
+    
 }
