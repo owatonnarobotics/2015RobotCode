@@ -3,8 +3,8 @@ package org.usfirst.frc.team4624.robot.subsystems;
 
 
 import org.usfirst.frc.team4624.robot.RobotMap;
-import org.usfirst.frc.team4624.robot.Tools;
 import org.usfirst.frc.team4624.robot.commands.LiftManual;
+import org.usfirst.frc.team4624.robot.library.Tools;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;
@@ -204,7 +204,7 @@ public class Forklift extends Subsystem {
      */
     private void updateRate() {
     
-        double rateDifference = Math.abs(rateOfChange - rateGoal);
+        double rateDifference = Tools.difference(rateOfChange, rateGoal);
         SmartDashboard.putNumber("Rate Difference", rateDifference);
         // If the rate is not within the wanted rate
         if (rateDifference > RobotMap.RATE_MARGIN_OF_ERROR) {
@@ -252,7 +252,7 @@ public class Forklift extends Subsystem {
     private void updateLevel() {
     
         // If the height is close enough to the goal, disable the rate of the motor
-        double levelGoalDifference = Math.abs(levels[levelGoal] - Math.abs(getRotations()));
+        double levelGoalDifference = Tools.difference(levels[levelGoal], Math.abs(getRotations()));
         if (levelGoalDifference < RobotMap.RATE_MARGIN_OF_ERROR) {
             setRate(0);
         }
