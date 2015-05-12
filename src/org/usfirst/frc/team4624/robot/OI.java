@@ -2,7 +2,7 @@ package org.usfirst.frc.team4624.robot;
 
 import org.usfirst.frc.team4624.robot.commands.*;
 import org.usfirst.frc.team4624.robot.commands.LiftLevel.Level;
-import org.usfirst.frc.team4624.robot.input.*;
+import org.usfirst.frc.team4624.robot.library.*;
 
 public class OI {
     
