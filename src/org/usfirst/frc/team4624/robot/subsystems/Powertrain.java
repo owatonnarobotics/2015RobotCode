@@ -138,7 +138,7 @@ public class Powertrain extends Subsystem {
         if (isTurning) {
             // setRawAngle as function of T
             
-            double angleDifference = angleDifference(targetAngle, gyro.getAngle());
+            double angleDifference = angleDifference(targetAngle, gyro.getAngle() - 180);
             boolean reachedTarget = Math.abs(angleDifference) < 1;
             
             if (reachedTarget) {
