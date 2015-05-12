@@ -12,6 +12,7 @@ public class Powertrain extends Subsystem {
     
     /* Instance Values */
     RobotDrive motors;
+    GyroSensor gyro;
     
     /**
      * Initializes Powertrain subsystem. Should only be called once.
@@ -24,8 +25,9 @@ public class Powertrain extends Subsystem {
         Jaguar frontRightMotor  = new Jaguar(RobotMap.PWM_MOTOR_FRONT_RIGHT_PORT);
         
         motors = new RobotDrive(frontLeftMotor, rearleftMotor, frontRightMotor, rearRightMotor);
-        
         stop();
+        
+        gyro = new GyroSensor();
     }
     
     double inputFunction(final double input) {
@@ -69,5 +71,80 @@ public class Powertrain extends Subsystem {
 
     public void move(double x, double y, double rotation) {
         motors.mecanumDrive_Cartesian(x, y, rotation, 0);
+    }
+    
+    
+    /**
+     * Calculates the difference between two angles. Max is 180.
+     * @param angleA
+     * @param angleB
+     */
+    private double angleDifference(double targetAngle, double currentAngle) {
+        final double fullRotation   = 360;
+        final double halfRotation   = fullRotation / 2;
+        
+        
+        
+        final double angleDifference = targetAngle - currentAngle;
+        
+        
+        
+        if (angleDifference > halfRotation) {
+            return angleDifference - fullRotation;
+        }
+        if (angleDifference < -halfRotation) {
+            return angleDifference + fullRotation;
+        }
+        
+        return angleDifference;
+    }
+    
+    /**
+     * Rotate the robot to match the gyro angle
+     * @param angle
+     */
+    private void setRawAngle(double angle) {
+        final double constant = 360;
+        double turnPower;
+        
+        turnPower = angleDifference(angle, gyro.getAngle()) / constant;
+        
+        turnPower = Math.pow( turnPower, 3);
+        
+        // Replace with clamp method
+        if (turnPower > 1) {
+            turnPower = 1;
+        } else if (turnPower < -1) {
+            turnPower = -1;
+        }
+        
+        motors.mecanumDrive_Cartesian(0,0,turnPower,0);
+    }
+    
+    boolean isTurning = false;
+    double targetAngle = 0;
+    
+    /**
+     * Turn the robot to this relative angle
+     */
+    public void setAngle(double angle) {
+        angle %= angle;
+        angle -= 180;
+        targetAngle = angle;
+        isTurning = true;
+    }
+    
+    public void update() {
+        if (isTurning) {
+            // setRawAngle as function of T
+            
+            double angleDifference = angleDifference(targetAngle, gyro.getAngle());
+            boolean reachedTarget = Math.abs(angleDifference) < 1;
+            
+            if (reachedTarget) {
+                isTurning = false;
+                gyro.reset();
+            }
+        }
     }
 }
