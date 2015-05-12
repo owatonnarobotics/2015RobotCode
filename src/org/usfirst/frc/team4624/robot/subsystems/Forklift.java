@@ -3,6 +3,7 @@ package org.usfirst.frc.team4624.robot.subsystems;
 
 
 import org.usfirst.frc.team4624.robot.RobotMap;
+import org.usfirst.frc.team4624.robot.Tools;
 import org.usfirst.frc.team4624.robot.commands.LiftManual;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -79,7 +80,7 @@ public class Forklift extends Subsystem {
     public void increaseLevel() { // Check for level going too high
     
         levelGoal += 1;
-        levelGoal = clamp(levelGoal, 0, levels.length - 1);
+        levelGoal = Tools.clamp(levelGoal, 0, levels.length - 1);
     }
     
     /**
@@ -88,7 +89,7 @@ public class Forklift extends Subsystem {
     public void decreaseLevel() {
     
         levelGoal -= 1;
-        levelGoal = clamp(levelGoal, 0, levels.length - 1);
+        levelGoal = Tools.clamp(levelGoal, 0, levels.length - 1);
     }
     
     public void switchLevelArray() {
@@ -117,39 +118,13 @@ public class Forklift extends Subsystem {
     }
     
     /**
-     * Clamp a value between two other values
-     * 
-     * @param value
-     * @param min
-     * @param max
-     * @return The clamped value
-     */
-    private double clamp(double value, double min, double max) {
-    
-        return Math.max(min, Math.min(max, value));
-    }
-    
-    /**
-     * Clamp a value between two other values
-     * 
-     * @param value
-     * @param min
-     * @param max
-     * @return The clamped value
-     */
-    private int clamp(int value, int min, int max) {
-    
-        return Math.max(min, Math.min(max, value));
-    }
-    
-    /**
      * Sets the raw value of the Jaguar motor
      * 
      * @param raw
      */
     public void setRaw(double raw) {
     
-        lift.set(clamp(raw, -1, 1));
+        lift.set(Tools.clamp(raw, -1, 1));
     }
     
     /**
@@ -172,19 +147,19 @@ public class Forklift extends Subsystem {
     
         rateGoal = rate;
         if (getRotations() == 0 && !override) {
-            rateGoal = clamp(rateGoal, 0, 1);
+            rateGoal = Tools.clamp(rateGoal, 0, 1);
         }
         if (getRotations() > RobotMap.FORKLIFT_MAX_ROTATIONS && rateGoal > 0) {
             rateGoal = 0;
         }
         if (getRotations() < RobotMap.FORKLIFT_SLOW_ZONE) {
-            rateGoal = clamp(rateGoal, RobotMap.FORKLIFT_SLOW_ZONE_RATE, 1);
+            rateGoal = Tools.clamp(rateGoal, RobotMap.FORKLIFT_SLOW_ZONE_RATE, 1);
         }
         if (getRotations() > RobotMap.FORKLIFT_MAX_ROTATIONS - RobotMap.FORKLIFT_SLOW_ZONE) {
-            rateGoal = clamp(rateGoal, -1, -RobotMap.FORKLIFT_SLOW_ZONE_RATE);
+            rateGoal = Tools.clamp(rateGoal, -1, -RobotMap.FORKLIFT_SLOW_ZONE_RATE);
         }        
         if(!encoderSwitch.get()){
-            rateGoal = clamp(rateGoal, 0, 1);
+            rateGoal = Tools.clamp(rateGoal, 0, 1);
         }
     }
     
@@ -283,11 +258,11 @@ public class Forklift extends Subsystem {
         }
         // If the height is above the goal, set the rate to be negative
         else if (levels[levelGoal] < Math.abs(getRotations())) {
-            setRate(clamp(-1 * RobotMap.LEVEL_RATE * levelGoalDifference, -1, 0));
+            setRate(Tools.clamp(-1 * RobotMap.LEVEL_RATE * levelGoalDifference, -1, 0));
         }
         // If the height is below the goal, set the rate to be positive
         else {
-            setRate(clamp(RobotMap.LEVEL_RATE * levelGoalDifference, 0, 1));
+            setRate(Tools.clamp(RobotMap.LEVEL_RATE * levelGoalDifference, 0, 1));
         }
     }
     
