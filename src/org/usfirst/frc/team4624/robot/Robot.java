@@ -26,6 +26,8 @@ import org.usfirst.frc.team4624.robot.subsystems.*;
  */
 public class Robot extends IterativeRobot {
     
+    
+    
     /* Subsystems */
     /** A reference to the Powertrain subsystem */
     public static Powertrain     powertrain    = new Powertrain();
@@ -45,22 +47,16 @@ public class Robot extends IterativeRobot {
     
     /* Commands */
     Command                      driveCommand;
-    
     Command                      autoCommand;
-    
     SendableChooser              locationChooser;
-    
     SendableChooser              goalChooser;
-    
     SendableChooser              rotationChooser;
-    
     SendableChooser              tripleChooser;
-    
     SendableChooser              armChooser;
-    
     SendableChooser              driveChooser;
-    
     boolean                      pressed       = false;
+    
+    
     
     // CommandGroup currentAutoPreset;
     
@@ -70,6 +66,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotInit() {
+    
         /* Initialize operator input */
         new OI();
         
@@ -112,24 +109,26 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Auto Arms", armChooser);
         SmartDashboard.putData("Auto Drive Distance", driveChooser);
         
-
+        
     }
     
     @Override
     public void disabledPeriodic() {
+    
         Scheduler.getInstance().run();
     }
     
     @Override
     public void autonomousInit() {
+    
         gyroSensor.reset();
         autoCommand = new Autonomous(
                 ((Integer) locationChooser.getSelected()).intValue(),
-                ((Integer)     goalChooser.getSelected()).intValue(),
+                ((Integer) goalChooser.getSelected()).intValue(),
                 ((Integer) rotationChooser.getSelected()).intValue(),
-                ((Integer)   tripleChooser.getSelected()).intValue(),
-                ((Integer)      armChooser.getSelected()).intValue(),
-                ((Integer)    driveChooser.getSelected()).intValue());
+                ((Integer) tripleChooser.getSelected()).intValue(),
+                ((Integer) armChooser.getSelected()).intValue(),
+                ((Integer) driveChooser.getSelected()).intValue());
         
         autoCommand.start();
     }
@@ -139,12 +138,14 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousPeriodic() {
+    
         Scheduler.getInstance().run();
         forklift.update();
     }
     
     @Override
     public void teleopInit() {
+    
         driveCommand.start();
     }
     
@@ -154,6 +155,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void disabledInit() {
+    
         System.out.printf("Hey! Did you guys %s?\n", "win");
     }
     
@@ -162,11 +164,12 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopPeriodic() {
+    
         Scheduler.getInstance().run();
         if (toteDetector.get() && !pressed) {
             new SensorHit().start();
             pressed = true;
-        } else if (! toteDetector.get()) {
+        } else if (!toteDetector.get()) {
             pressed = false;
         }
         // Update rate on the forklift
@@ -178,6 +181,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void testPeriodic() {
+    
         LiveWindow.run();
     }
 }
