@@ -3,8 +3,8 @@ package org.usfirst.frc.team4624.robot.subsystems;
 
 
 import org.usfirst.frc.team4624.robot.RobotMap;
-import org.usfirst.frc.team4624.robot.Tools;
 import org.usfirst.frc.team4624.robot.commands.LiftManual;
+import org.usfirst.frc.team4624.robot.library.Tools;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;
