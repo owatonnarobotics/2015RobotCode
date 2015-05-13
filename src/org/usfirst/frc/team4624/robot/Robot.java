@@ -2,18 +2,21 @@ package org.usfirst.frc.team4624.robot;
 
 
 
+import org.usfirst.frc.team4624.robot.autonomous.Autonomous;
+import org.usfirst.frc.team4624.robot.commands.DriveCommand;
+import org.usfirst.frc.team4624.robot.commands.SensorHit;
+import org.usfirst.frc.team4624.robot.subsystems.CAN_Compressor;
+import org.usfirst.frc.team4624.robot.subsystems.Forklift;
+import org.usfirst.frc.team4624.robot.subsystems.GyroSensor;
+import org.usfirst.frc.team4624.robot.subsystems.PneumaticArms;
+import org.usfirst.frc.team4624.robot.subsystems.Powertrain;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team4624.robot.autonomous.Autonomous;
-import org.usfirst.frc.team4624.robot.commands.*;
-import org.usfirst.frc.team4624.robot.subsystems.*;
 
 
 
@@ -59,6 +62,47 @@ public class Robot extends IterativeRobot {
     
     
     // CommandGroup currentAutoPreset;
+    
+    @Override
+    public void autonomousInit() {
+    
+        gyroSensor.reset();
+        autoCommand = new Autonomous(
+                ((Integer) locationChooser.getSelected()).intValue(),
+                ((Integer) goalChooser.getSelected()).intValue(),
+                ((Integer) rotationChooser.getSelected()).intValue(),
+                ((Integer) tripleChooser.getSelected()).intValue(),
+                ((Integer) armChooser.getSelected()).intValue(),
+                ((Integer) driveChooser.getSelected()).intValue());
+        
+        autoCommand.start();
+    }
+    
+    /**
+     * This function is called periodically during autonomous
+     */
+    @Override
+    public void autonomousPeriodic() {
+    
+        Scheduler.getInstance().run();
+        forklift.update();
+    }
+    
+    /**
+     * This function is called when the disabled button is hit. You can use it
+     * to reset subsystems before shutting down.
+     */
+    @Override
+    public void disabledInit() {
+    
+        System.out.printf("Hey! Did you guys %s?\n", "win");
+    }
+    
+    @Override
+    public void disabledPeriodic() {
+    
+        Scheduler.getInstance().run();
+    }
     
     /**
      * This function is run when the robot is first started up and should be
@@ -113,50 +157,9 @@ public class Robot extends IterativeRobot {
     }
     
     @Override
-    public void disabledPeriodic() {
-    
-        Scheduler.getInstance().run();
-    }
-    
-    @Override
-    public void autonomousInit() {
-    
-        gyroSensor.reset();
-        autoCommand = new Autonomous(
-                ((Integer) locationChooser.getSelected()).intValue(),
-                ((Integer) goalChooser.getSelected()).intValue(),
-                ((Integer) rotationChooser.getSelected()).intValue(),
-                ((Integer) tripleChooser.getSelected()).intValue(),
-                ((Integer) armChooser.getSelected()).intValue(),
-                ((Integer) driveChooser.getSelected()).intValue());
-        
-        autoCommand.start();
-    }
-    
-    /**
-     * This function is called periodically during autonomous
-     */
-    @Override
-    public void autonomousPeriodic() {
-    
-        Scheduler.getInstance().run();
-        forklift.update();
-    }
-    
-    @Override
     public void teleopInit() {
     
         driveCommand.start();
-    }
-    
-    /**
-     * This function is called when the disabled button is hit. You can use it
-     * to reset subsystems before shutting down.
-     */
-    @Override
-    public void disabledInit() {
-    
-        System.out.printf("Hey! Did you guys %s?\n", "win");
     }
     
     /**
