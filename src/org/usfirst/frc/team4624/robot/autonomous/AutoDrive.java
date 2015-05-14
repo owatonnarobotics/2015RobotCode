@@ -3,7 +3,6 @@ package org.usfirst.frc.team4624.robot.autonomous;
 
 
 import org.usfirst.frc.team4624.robot.Robot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 
@@ -32,7 +31,7 @@ public class AutoDrive extends Command {
     }
     
     @Override
-    protected void initialize() {
+    protected void end() {
     
     }
     
@@ -43,19 +42,19 @@ public class AutoDrive extends Command {
     }
     
     @Override
-    protected boolean isFinished() {
-    
-        return this.isTimedOut();
-    }
-    
-    @Override
-    protected void end() {
+    protected void initialize() {
     
     }
     
     @Override
     protected void interrupted() {
     
+    }
+    
+    @Override
+    protected boolean isFinished() {
+    
+        return this.isTimedOut();
     }
     
 }
