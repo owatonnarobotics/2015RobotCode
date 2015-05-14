@@ -97,6 +97,11 @@ public class Forklift extends Subsystem {
         SmartDashboard.putBoolean("Override", override);
     }
     
+    /**
+     * Find the current lift mode
+     * 
+     * @return the current lift levels mode as a string
+     */
     public String getLevelArray() {
     
         if (levels.equals(RobotMap.LIFT_HEIGHTS_GROUND)) {
@@ -143,6 +148,11 @@ public class Forklift extends Subsystem {
         setDefaultCommand(new LiftManual());
     }
     
+    /**
+     * Set the arms to the inputed lift level
+     * 
+     * @param level
+     */
     public void liftToHeight(int level) {
     
         mode = Mode.LEVEL;
@@ -206,6 +216,9 @@ public class Forklift extends Subsystem {
         lift.set(Tools.clamp(raw, -1, 1));
     }
     
+    /**
+     * Switch between ground levels and feeder levels
+     */
     public void switchLevelArray() {
     
         if (levels.equals(RobotMap.LIFT_HEIGHTS_GROUND)) {
@@ -215,6 +228,9 @@ public class Forklift extends Subsystem {
         }
     }
     
+    /**
+     * Toggle the override for the arms
+     */
     public void toggleOverride() {
     
         override = !override;
