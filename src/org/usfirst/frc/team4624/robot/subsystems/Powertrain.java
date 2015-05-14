@@ -51,6 +51,12 @@ public class Powertrain extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
+    /**
+     * Map the linear values of the controller input to something else
+     * 
+     * @param input
+     * @return the input mapped to a quarter circle
+     */
     double inputFunction(final double input) {
     
         final double abs = Math.abs(input);
@@ -62,16 +68,33 @@ public class Powertrain extends Subsystem {
         }
     }
     
+    /**
+     * Inform any listening commands to end
+     * 
+     * @return true will end the command
+     */
     public boolean isFinished() {
     
         return false;
     }
     
+    /**
+     * Move the powertrain in a sensible fashion for autonomous mode
+     * 
+     * @param x
+     * @param y
+     * @param rotation
+     */
     public void move(double x, double y, double rotation) {
     
         motors.mecanumDrive_Cartesian(x, y, rotation, 0);
     }
     
+    /**
+     * Control the powertrain directly from an XBoxController
+     * 
+     * @param controller
+     */
     public void setAsTankdrive(XboxController controller) {
     
         final double boostScale = .5; // Smaller makes non boost slower. Boost is always full speed.
@@ -87,6 +110,9 @@ public class Powertrain extends Subsystem {
                 turn, 0);
     }
     
+    /**
+     * Stop the powertrain motors if needed for some reason...
+     */
     public void stop() {
     
         motors.stopMotor();
