@@ -22,6 +22,11 @@ public class GyroSensor extends Subsystem {
         gyroSensor.initGyro();
     }
     
+    /**
+     * Get the current angle of the gyro
+     * 
+     * @return the angle in degrees?
+     */
     public double getAngle() {
     
         return gyroSensor.getAngle();
@@ -32,6 +37,9 @@ public class GyroSensor extends Subsystem {
     
     }
     
+    /**
+     * Reset the gyro angle to zero
+     */
     public void reset() {
     
         gyroSensor.reset();
