@@ -1,34 +1,44 @@
 package org.usfirst.frc.team4624.robot.commands;
 
-import org.usfirst.frc.team4624.robot.Robot;
 
+
+import org.usfirst.frc.team4624.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
+
+
 
 public class LiftLevel extends Command {
     
-    private Level direction;
     
-    public enum Level{
-    	UP, DOWN, STOP
+    
+    public enum Level {
+        UP, DOWN, STOP
     }
     
+    
+    
+    private Level direction;
+    
+    
+    
     public LiftLevel(Level direction) {
+    
         this.direction = direction;
         
         requires(Robot.forklift);
     }
     
     @Override
-    protected void initialize() {
-    	Robot.forklift.setLevelMode();
+    protected void end() {
+    
     }
-
+    
     @Override
     protected void execute() {
-        
-        if(direction == Level.UP) {
+    
+        if (direction == Level.UP) {
             Robot.forklift.increaseLevel();
-        } else if(direction == Level.DOWN) {
+        } else if (direction == Level.DOWN) {
             Robot.forklift.decreaseLevel();
         } else {
             Robot.forklift.setRate(0);
@@ -37,16 +47,20 @@ public class LiftLevel extends Command {
     }
     
     @Override
-    protected boolean isFinished() {
-        return true; // Move levels can be cumulative
-    }
+    protected void initialize() {
     
-    @Override
-    protected void end() {
+        Robot.forklift.setLevelMode();
     }
     
     @Override
     protected void interrupted() {
+    
+    }
+    
+    @Override
+    protected boolean isFinished() {
+    
+        return true; // Move levels can be cumulative
     }
     
 }
