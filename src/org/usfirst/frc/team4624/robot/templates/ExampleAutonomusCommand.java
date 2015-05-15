@@ -1,13 +1,20 @@
 package org.usfirst.frc.team4624.robot.templates;
 
+
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+
+
 public class ExampleAutonomusCommand extends CommandGroup {
+    
+    
     
     /**
      * Example auto period sequence
      */
     public ExampleAutonomusCommand() {
+    
         /*
         addSequential( new DriveToTote() );
         addSequential( new GrabTote() );

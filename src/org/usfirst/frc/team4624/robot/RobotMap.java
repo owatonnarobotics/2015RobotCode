@@ -4,18 +4,20 @@ package org.usfirst.frc.team4624.robot;
 
 public class RobotMap {
     
-    /* Digital IO Ports */    
+    
+    
+    /* Digital IO Ports */
     /** Used for rotation in auto mode */
     public static final int      GYRO                       = 0;
     
     /** Used with the forklift */
-    public static final int      LIFT_ENCODER_A             = 1; //TODO: Changed from 0 to 1, check that
-    
+    public static final int      LIFT_ENCODER_A             = 1;             //TODO: Changed from 0 to 1, check that
+                                                                              
     /** Used with the forklift */
-    public static final int      LIFT_ENCODER_B             = 2; //TODO: Changed from 1 to 2, check that
-    
-    
-    
+    public static final int      LIFT_ENCODER_B             = 2;             //TODO: Changed from 1 to 2, check that
+                                                                              
+                                                                              
+                                                                              
     /* PWM Ports */
     /** The PWM port the the lift motors */
     public static final int      PWM_LIFT_PORT              = 0;
@@ -54,18 +56,19 @@ public class RobotMap {
     public static final double   FORKLIFT_MAX_ROTATIONS     = 5.5;
     
     /** The speed at which the position changes for manual control */
-    public static final double   MANUAL_LIFT_SPEED          = .5;                         // Value between 0 and 1
-                                                                                           
+    public static final double   MANUAL_LIFT_SPEED          = .5;            // Value between 0 and 1
+                                                                              
     /** Array of all the heights for the Forklift */
     public static final double[] LIFT_HEIGHTS_GROUND        = {0, 1.381, 2.714, 3.867};
     
     /** Array of all the heights for the Forklift */
     public static final double[] LIFT_HEIGHTS_FEEDER        = {0, .98, 3.35};
     
-    /** Array of all the heights for the Forklift
+    /**
+     * Array of all the heights for the Forklift
      * 0 is ground
-     * .5  is carry tote
-     * 1.1 is grab  bin
+     * .5 is carry tote
+     * 1.1 is grab bin
      * 1.6 is carry bin
      * 3 is over bin
      */
@@ -87,7 +90,7 @@ public class RobotMap {
     public static final double   FORKLIFT_SLOW_ZONE_RATE    = -.1;
     
     public static final int      PORT_TOTE_DETECTOR         = 3;
-
+    
     public static final double   ROTATE_SPEED               = .5;
     
 }

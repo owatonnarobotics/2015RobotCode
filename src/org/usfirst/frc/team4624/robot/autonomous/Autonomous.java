@@ -2,14 +2,22 @@ package org.usfirst.frc.team4624.robot.autonomous;
 
 
 
-import org.usfirst.frc.team4624.robot.commands.*;
+import org.usfirst.frc.team4624.robot.commands.GrabArms;
+import org.usfirst.frc.team4624.robot.commands.ReleaseArms;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+
+
 
 public class Autonomous extends CommandGroup { //TODO Move this class into commands folder ???
 
+    
+    
     private int arms;
     
-    public Autonomous(int location, int goal, int rotation, int type, int arms, int drive) {
+    
+    
+    public Autonomous(int location, int goal, int rotation, int type, int arms,
+            int drive) {
     
         /*
          * 
@@ -41,8 +49,8 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
         if (type == 0 || type == 1) {
             
             final double speed;
-                  double actionTime = 2.6;
-            if(drive == 1) {
+            double actionTime = 2.6;
+            if (drive == 1) {
                 actionTime /= 1.3;
             }
             final double smallTime = .7;
@@ -147,17 +155,20 @@ public class Autonomous extends CommandGroup { //TODO Move this class into comma
         }
     }
     
-    private void pause(double time) {
-        addSequential(new AutoPause(time));
-    }
-    
     private void grabArms() {
+    
         if (arms != 1) {
             addSequential(new GrabArms());
         }
     }
     
+    private void pause(double time) {
+    
+        addSequential(new AutoPause(time));
+    }
+    
     private void releaseArms() {
+    
         if (arms != 1) {
             addSequential(new ReleaseArms());
         }
