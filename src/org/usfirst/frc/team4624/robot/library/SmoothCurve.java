@@ -62,6 +62,7 @@ public class SmoothCurve {
             final double timePassed = currentSeconds() - startTime;
             final double timeAsPercent = timePassed / totalTime;
             
+            // The return MUST be the end value if it has been longer than the time of the curve
             if (timePassed > totalTime) {
                 isFinished = true;
                 return endValue;
@@ -70,11 +71,13 @@ public class SmoothCurve {
             return startValue + (endValue - startValue)
                     * mapToCurve(timeAsPercent);
         }
+        
         return endValue;
     }
     
     /**
      * Has this curve been completed?
+     * 
      * @return
      */
     public boolean isFinished() {
