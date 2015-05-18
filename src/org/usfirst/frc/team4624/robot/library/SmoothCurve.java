@@ -48,7 +48,7 @@ public class SmoothCurve {
      */
     private double currentSeconds() {
     
-        return System.currentTimeMillis() * 1000;
+        return System.currentTimeMillis() / 1000;
     }
     
     /**
