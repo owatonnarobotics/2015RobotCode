@@ -28,15 +28,15 @@ public class SmoothCurve {
      * @param endValue
      * @param seconds
      */
-    public SmoothCurve(double startValue, double endValue, double seconds) {
+    public SmoothCurve(final double startValue, final double endValue, final double seconds) {
     
         this.startValue = startValue;
         this.endValue = endValue;
         
-        this.startTime = currentSeconds();
-        this.totalTime = seconds;
+        startTime = currentSeconds();
+        totalTime = seconds;
         
-        this.isFinished = false;
+        isFinished = false;
     }
     
     
@@ -68,8 +68,8 @@ public class SmoothCurve {
                 return endValue;
             }
             
-            return startValue + (endValue - startValue)
-                    * mapToCurve(timeAsPercent);
+            return startValue +
+                   ((endValue - startValue) * mapToCurve(timeAsPercent));
         }
         
         return endValue;
