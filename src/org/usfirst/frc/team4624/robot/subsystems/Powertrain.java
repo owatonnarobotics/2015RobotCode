@@ -17,7 +17,6 @@ public class Powertrain extends Subsystem {
     
     /* Instance Values */
     RobotDrive motors;
-    GyroSensor gyro;
     
     
     
@@ -41,7 +40,6 @@ public class Powertrain extends Subsystem {
         
         stop();
         
-        gyro = new GyroSensor();
     }
     
     @Override
@@ -119,115 +117,5 @@ public class Powertrain extends Subsystem {
     public void stop() {
     
         motors.stopMotor();
-    }
-    
-    
-    /**
-     * Calculates the difference between two angles. Max is 180.
-     * @param angleA
-     * @param angleB
-     */
-    private double angleDifference(double targetAngle, double currentAngle) {
-        final double fullRotation   = 360;
-        final double halfRotation   = fullRotation / 2;
-        
-        
-        
-        final double angleDifference = targetAngle - currentAngle;
-        
-        
-        
-        if (angleDifference > halfRotation) {
-            return angleDifference - fullRotation;
-        }
-        if (angleDifference < -halfRotation) {
-            return angleDifference + fullRotation;
-        }
-        
-        return angleDifference;
-    }
-    
-    /**
-     * Rotate the robot to match the gyro angle
-     * @param angle
-     */
-    private void setRawAngle(double angle) {
-        final double constant = 360;
-        double turnPower;
-        
-        turnPower = angleDifference(angle, gyro.getAngle()) / constant;
-        
-        turnPower = Math.pow( turnPower, 3);
-        
-        // Replace with clamp method
-        if (turnPower > 1) {
-            turnPower = 1;
-        } else if (turnPower < -1) {
-            turnPower = -1;
-        }
-        
-        motors.mecanumDrive_Cartesian(0,0,turnPower,0);
-    }
-    
-    boolean isTurning = false;
-    double targetAngle = 0;
-    double turnEndTime = 0;
-    double totalTurnTime = 0;
-    
-    /**
-     * Turn the robot to this relative angle
-     */
-    public void setAngle(double angle, double timeToTurn) {
-        
-        targetAngle = angle;
-        totalTurnTime = timeToTurn;
-        turnEndTime = System.currentTimeMillis() + (timeToTurn / 1000);
-        isTurning = true;
-    }
-    
-    /**
-     * Returns a percent of the angle it should be at. 1 = complete.
-     * @param endTime
-     * @param totalTime
-     * @return
-     */
-    private double functionOfT(double endTime, double totalTime) {
-        final double currentTime        = System.currentTimeMillis();
-        final double percentComplete    = 1 - ((endTime - currentTime) / totalTime);
-        
-        // Function of time T
-        return 1 - Math.cos((Math.PI / 2) * percentComplete);
-    }
-    
-    /**
-     * Update the Powertraim for gyro stuff
-     */
-    public void update() {
-        if (isTurning) {
-            double currentTime = System.currentTimeMillis();
-            
-            
-            
-            double currentTargetAngle = functionOfT(turnEndTime, totalTurnTime) * targetAngle;
-            
-            // Offset currentTargetAngle to 0-360
-            while(currentTargetAngle < 0) {
-                currentTargetAngle += 360;
-            }
-            currentTargetAngle %= 360;
-            
-            // Set the current angle as a function of time T
-            setRawAngle(currentTargetAngle);
-            
-            //double angleDifference = angleDifference(targetAngle, gyro.getAngle() - 180);
-            //boolean reachedTarget = Math.abs(angleDifference) < 1;
-            
-            boolean reachedTarget = currentTime > turnEndTime;
-            
-            if (reachedTarget) {
-                isTurning = false;
-                gyro.reset();
-            }
-        }
     }
 }
