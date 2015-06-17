@@ -26,19 +26,15 @@ public class Powertrain extends Subsystem {
     public Powertrain() {
     
         /* Initialize */
-        final Jaguar rearleftMotor = new Jaguar(
-                RobotMap.PWM_MOTOR_REAR_LEFT_PORT);
-        final Jaguar rearRightMotor = new Jaguar(
-                RobotMap.PWM_MOTOR_REAR_RIGHT_PORT);
-        final Jaguar frontLeftMotor = new Jaguar(
-                RobotMap.PWM_MOTOR_FRONT_LEFT_PORT);
-        final Jaguar frontRightMotor = new Jaguar(
-                RobotMap.PWM_MOTOR_FRONT_RIGHT_PORT);
+        final Jaguar rearleftMotor = new Jaguar(RobotMap.PWM_MOTOR_REAR_LEFT_PORT);
+        final Jaguar rearRightMotor = new Jaguar(RobotMap.PWM_MOTOR_REAR_RIGHT_PORT);
+        final Jaguar frontLeftMotor = new Jaguar(RobotMap.PWM_MOTOR_FRONT_LEFT_PORT);
+        final Jaguar frontRightMotor = new Jaguar(RobotMap.PWM_MOTOR_FRONT_RIGHT_PORT);
         
-        motors = new RobotDrive(frontLeftMotor, rearleftMotor, frontRightMotor,
-                rearRightMotor);
+        motors = new RobotDrive(frontLeftMotor, rearleftMotor, frontRightMotor, rearRightMotor);
         
         stop();
+        
     }
     
     @Override
@@ -85,7 +81,7 @@ public class Powertrain extends Subsystem {
      * @param y
      * @param rotation
      */
-    public void move(double x, double y, double rotation) {
+    public void move(final double x, final double y, final double rotation) {
     
         motors.mecanumDrive_Cartesian(x, y, rotation, 0);
     }
@@ -95,16 +91,16 @@ public class Powertrain extends Subsystem {
      * 
      * @param controller
      */
-    public void setAsTankdrive(XboxController controller) {
+    public void setAsTankdrive(final XboxController controller) {
     
         final double boostScale = .5; // Smaller makes non boost slower. Boost is always full speed.
         
-        final double x = inputFunction(controller.leftStick.getX())
-                * (controller.leftStick.get() ? 1 : boostScale);
-        final double y = inputFunction(controller.leftStick.getY())
-                * (controller.leftStick.get() ? 1 : boostScale);
-        final double turn = inputFunction(controller.rightStick.getX())
-                * RobotMap.ROTATE_SPEED;
+        final double x = inputFunction(controller.leftStick.getX()) *
+                         (controller.leftStick.get() ? 1 : boostScale);
+        final double y = inputFunction(controller.leftStick.getY()) *
+                         (controller.leftStick.get() ? 1 : boostScale);
+        final double turn = inputFunction(controller.rightStick.getX()) *
+                            RobotMap.ROTATE_SPEED;
         
         motors.mecanumDrive_Cartesian(x, -y, // We already corrected for the mistake that this method also corrects
                 turn, 0);
