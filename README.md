@@ -1,9 +1,7 @@
 2015RobotCode
 =============
-
 The code for the 2015 robot competing in Recycle Rush.
 =============
-
 Importing Project and WPIlib
 
 Go to your /wpilib/java/current/lib folder, and copy "WPILib.jar".
