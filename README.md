@@ -1,8 +1,7 @@
 2015RobotCode
 =============
 
-This is our robot code.
-
+The code for the 2015 robot competing in Recycle Rush.
 =============
 
 Importing Project and WPIlib
