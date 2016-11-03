@@ -3,7 +3,8 @@ package org.usfirst.frc.team4624.robot.subsystems;
 
 
 import org.usfirst.frc.team4624.robot.RobotMap;
-import edu.wpi.first.wpilibj.Gyro;
+
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
@@ -12,13 +13,13 @@ public class GyroSensor extends Subsystem {
     
     
     
-    Gyro gyroSensor;
+    AnalogGyro gyroSensor;
     
     
     
     public GyroSensor() {
     
-        gyroSensor = new Gyro(RobotMap.GYRO);
+        gyroSensor = new AnalogGyro(RobotMap.GYRO);
         gyroSensor.initGyro();
     }
     
